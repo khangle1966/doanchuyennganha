@@ -1,15 +1,10 @@
 <div id="container">
-  <div id="navbar">
-    <app-navbar></app-navbar>
+  <div id="sidebar">
+    <app-sidebar></app-sidebar>
   </div>
-  <div id="main">
-    <div id="sidebar">
-      <app-sidebar></app-sidebar>
-    </div>
-    <div id="content">
-      <tui-scrollbar class="scrollbar">
-        <router-outlet></router-outlet>
-      </tui-scrollbar>
-    </div>
+  <div id="content">
+    <tui-scrollbar class="scrollbar">
+      <router-outlet></router-outlet>
+    </tui-scrollbar>
   </div>
 </div>

@@ -6,8 +6,14 @@ import { BrowseComponent } from './components/browse/browse.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AnalysticComponent } from './components/analystic/analystic.component';
+import { CartComponent } from './components/cart/cart.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
   {
     path: '',
     component: LayoutComponent,
@@ -29,8 +35,8 @@ const routes: Routes = [
         component: SettingsComponent,
       },
       {
-        path: 'analytics',
-        component: AnalysticComponent,
+        path: 'cart',
+        component: CartComponent,
       },
     ],
   },
