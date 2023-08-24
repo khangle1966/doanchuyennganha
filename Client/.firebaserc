@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "gnosis-8eee0": {
+      "hosting": {
+        "Client": [
+          "gnosis-8eee0"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "gnosis-8eee0"
+  }
+}
