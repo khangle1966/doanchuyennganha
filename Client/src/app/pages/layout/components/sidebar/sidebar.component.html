@@ -1,1 +1,35 @@
-<p>sidebar works!</p>
+<div id="sidebar-container">
+  <div id="top">
+    <div id="logo">
+      <img src="assets/images/lisa.jpg" alt="logo" />
+    </div>
+    <form class="b-form" [formGroup]="searchForm">
+      <div id="searchbox">
+        <tui-input
+          tuiTextfieldSize="s"
+          formControlName="searchValue"
+          [tuiTextfieldLabelOutside]="true"
+          [tuiTextfieldCleaner]="true"
+        >
+          Search
+          <input tuiTextfield type="text" />
+        </tui-input>
+      </div>
+    </form>
+  </div>
+  <ul class="tui-list">
+    <li
+      [class]="
+        pageSelected == i
+          ? 'tui-list__item tui-list__item-active'
+          : 'tui-list__item'
+      "
+      *ngFor="let page of pages; let i = index"
+    >
+      <div class="tui-list__item-title" (click)="selected(page.id)">
+        <tui-svg src="{{ page.icon }}"></tui-svg>
+        {{ page.name }}
+      </div>
+    </li>
+  </ul>
+</div>
