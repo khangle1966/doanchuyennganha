@@ -9,6 +9,7 @@ import {
 import {
   TuiAccordionModule,
   TuiComboBoxModule,
+  TuiFilesModule,
   TuiMarkerIconModule,
   TuiPushModule,
   TuiStepperModule,
@@ -132,6 +133,7 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiRadioLabeledModule,
     TuiStepperModule,
     TuiPushModule,
+    TuiFilesModule
   ],
   exports: [
     FormsModule,
@@ -197,6 +199,7 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiRadioLabeledModule,
     TuiStepperModule,
     TuiPushModule,
+    TuiFilesModule,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

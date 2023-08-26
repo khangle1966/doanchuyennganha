@@ -21,7 +21,7 @@ export class UserService {
 
   async findOne(id: string): Promise<User> {
     try {
-      const userData = await this.userModel.findOne({ _id: id });
+      const userData = await this.userModel.findOne({ uid: id });
       return userData;
     } catch (error) {
       throw new HttpException(error.message, error.status);

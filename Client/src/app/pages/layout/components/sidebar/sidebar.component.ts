@@ -65,7 +65,8 @@ export class SidebarComponent {
     this.router.url === '/base/browse' ? (this.pageSelected = 1) : null;
     this.router.url === '/base/profile' ? (this.pageSelected = 2) : null;
     this.router.url === '/base/cart' ? (this.pageSelected = 3) : null;
-    this.router.url === '/base/settings' ? (this.pageSelected = 4) : null;
+    this.router.url.includes('/base/admin') ? (this.pageSelected = 4) : null;
+    this.router.url === '/base/settings' ? (this.pageSelected = 5) : null;
   }
 
   selected(index: number) {
