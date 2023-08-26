@@ -12,6 +12,7 @@
     padding: 0.625rem;
     .shadow(4);
     #lesson-list {
+      overflow: auto;
       width: 100%;
       height: calc(100% - 44px - 0.625rem);
       tui-island {
@@ -44,6 +45,16 @@
     width: 70%;
     min-width: 750px;
     padding: 0.625rem;
+    #course-content {
+      height: 100%;
+      width: 100%;
+      img {
+        height: 300px;
+        width: 300px;
+        display: flex;
+        margin: 0 auto;
+      }
+    }
   }
   .top {
     min-height: 44px;

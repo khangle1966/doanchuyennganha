@@ -7,15 +7,19 @@
         tuiIconButton
         type="button"
         icon="tuiIconPlusLarge"
+        (click)="addLesson()"
       ></button>
     </div>
     <div id="lesson-list">
       <tui-scrollbar class="scrollbar">
-        <tui-island *ngFor="let lesson of lessonList; let i = index">
+        <tui-island
+          *ngFor="let lesson of lessonList; let i = index"
+          (click)="selectLesson(lesson)"
+        >
           <div class="tui-island__content">
             <figure class="tui-island__figure">
               <div class="some-figure">
-                <img src="../../../../../../../assets/images/lisa.jpg" alt="" />
+                <img [src]="lesson.imageUrl" alt="" />
               </div>
             </figure>
             <div>
@@ -32,9 +36,38 @@
     </div>
   </div>
   <div id="right-side">
-    <div class="top">
-      <div class="tui-text_h6 title">Lesson Content</div>
-      <button size="m" tuiButton type="button" [disabled]="true">Save</button>
+    <div
+      id="course-content"
+      *ngIf="this.selectedLesson == null; else lessonContent"
+    >
+      <div class="tui-text_h3 tui-space_top-3 tui-space_bottom-3">
+        This is a course content !!!!
+      </div>
+      <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s, when an unknown printer took a galley of type and
+        scrambled it to make a type specimen book. It has survived not only five
+        centuries, but also the leap into electronic typesetting, remaining
+        essentially unchanged. It was popularised in the 1960s with the release
+        of Letraset sheets containing Lorem Ipsum passages, and more recently
+        with desktop publishing software like Aldus PageMaker including versions
+        of Lorem Ipsum.
+      </div>
+      <img
+        src="../../../../../../../assets/images/course.png"
+        class="tui-space_top-3 tui-space_bottom-3"
+      />
+      <a href="https://storyset.com/online">Online illustrations by Storyset</a>
     </div>
+    <ng-template #lessonContent>
+      <div class="top">
+        <div class="tui-text_h6 title">Lesson Content</div>
+        <button size="m" tuiButton type="button" [disabled]="true">Save</button>
+      </div>
+      <div id="editor">
+        <app-editor [content]="this.selectedLesson?.content"></app-editor>
+      </div>
+    </ng-template>
   </div>
 </div>
