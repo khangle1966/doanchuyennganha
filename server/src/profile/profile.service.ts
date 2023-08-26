@@ -60,7 +60,7 @@ export class ProfileService {
   }
   async findAll(): Promise<Profile[]> {
     try {
-      return await this.profileModel.find();
+      return await this.profileModel.find().exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

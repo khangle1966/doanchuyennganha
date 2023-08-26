@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { CourseModule } from './course/course.module';
+import { QuizBankModule } from './quiz-bank/quiz-bank.module';
 @Module({
   imports:
     [
@@ -16,6 +17,7 @@ import { CourseModule } from './course/course.module';
       ProfileModule,
       LessonsModule,
       CourseModule,
+      QuizBankModule,
     ],
   controllers: [AppController],
   providers: [AppService],

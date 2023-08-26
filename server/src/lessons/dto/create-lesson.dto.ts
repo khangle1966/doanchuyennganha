@@ -1,1 +1,1 @@
-export class CreateLessonDto {}
+export class CreateLessonDto { }
