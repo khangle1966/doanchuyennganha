@@ -9,7 +9,9 @@ import {
 import {
   TuiAccordionModule,
   TuiComboBoxModule,
+  TuiFilesModule,
   TuiMarkerIconModule,
+  TuiPushModule,
   TuiStepperModule,
 } from '@taiga-ui/kit';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
@@ -130,6 +132,8 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiTilesModule,
     TuiRadioLabeledModule,
     TuiStepperModule,
+    TuiPushModule,
+    TuiFilesModule
   ],
   exports: [
     FormsModule,
@@ -194,6 +198,8 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiTilesModule,
     TuiRadioLabeledModule,
     TuiStepperModule,
+    TuiPushModule,
+    TuiFilesModule
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

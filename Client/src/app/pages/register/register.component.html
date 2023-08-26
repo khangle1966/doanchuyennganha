@@ -1,69 +1,56 @@
-<div id="main">
+<!-- <div id="main">
     <div id="background">
-       <div class="triangle_bottomright"></div>
+        <div class="triangle_bottomright"></div>
     </div>
     <div id="form">
-       <div class="logo">
-          <img src="../../../assets/images/logo1.png" alt="">
-       </div>
-       <div class="register">
-        <p class="text-register">Register</p>
-       </div>
-       <div class="input">
-        <div class="inputtext">
-            <tui-input formControlName="testValue" style="width: 296px;">
-                Username
-                <input
-                    tuiTextfield
-                    type="email"
-                />
-            </tui-input>
-         </div>
-         <div class="inputemail">
-            <tui-input formControlName="testValue" style="width: 296px;">
-                Email
-                <input
-                    tuiTextfield
-                    type="email"
-                />
-            </tui-input>
-         </div>
-         <div class="inputpass" >
-            <tui-input formControlName="testValue" style="width: 296px;">
-                Password
-                <input
-                    tuiTextfield
-                    type="email"
-                />
-            </tui-input>
-         </div>
-       </div>
-       
-       <div class="account">
-        <button tuiButton type="button" appearance="primary" class="tui-space_right-3 tui-space_bottom-3" style="width: 296px; margin: 0;">
-            Create account
-        </button> 
-         </div>
-     <div class="line">
-         <hr style="width: 140px;"/>
-         <div style="padding: 0 5px 0 5px;">
-          <a>OR</a>
-          </div>
-             <hr style="width: 140px;"/>
+        <div class="logo">
+            <img src="../../../assets/images/logo1.png" alt="">
         </div>
-       <div class="google">
-        <button tuiButton type="button" appearance="primary" class="tui-space_right-3 tui-space_bottom-3" style="width: 296px; margin: 0;">
-            <img src="../../../assets/images/google1.png" alt="">
-            Sign in with Google
-        </button>
-       </div>
-       <div class="create">
-          <div class="left-account">
-             <a style="color: black; text-decoration: none;" href="Have already an account?">Have already an account?</a>
-          </div>
-          <div class="right-account">
-             <a routerLink="/login" style="color:#2A6C0D;" href="Login here">Login here</a>
-          </div>
-       </div>   
-    </div>
- </div>
+        <div class="register">
+            <p class="text-register">Create profile</p>
+        </div>
+        <form class="input" [formGroup]="testForm">
+
+                <tui-input formControlName="name" style="width: 296px;">
+                    Name
+                    <input tuiTextfield type="name" />
+                </tui-input>
+
+                <tui-input formControlName="age" style="width: 296px; margin-top: 1rem;">
+                    Age
+                    <input tuiTextfield type="age" />
+                </tui-input>
+
+                <form tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true" [formGroup]="form" [tuiTextfieldSize]="l">
+                    <tui-select formControlName="color" style="margin-top: 1rem;">
+                        Sex
+                        <tui-data-list-wrapper *tuiDataList [items]="items"></tui-data-list-wrapper>
+                    </tui-select>
+                </form>
+
+                <tui-input formControlName="avatar" style="width: 296px;margin-top: 1rem;">
+                    Avatar
+                    <input tuiTextfield type="avatar" />
+                </tui-input>
+
+                <tui-input formControlName="email" style="width: 296px;margin-top: 1rem;">
+                    Email
+                    <input tuiTextfield type="email" />
+                </tui-input>
+
+                <tui-input formControlName="cover" style="width: 296px;margin-top: 1rem;">
+                    Cover
+                    <input tuiTextfield type="cover" />
+                </tui-input>
+
+
+        </form>
+
+        <div class="account">
+            <button tuiButton type="button" appearance="primary" class="tui-space_right-3 tui-space_bottom-3"
+                style="width: 296px; margin: 0;">
+                Sign in
+            </button>
+        </div>
+
+    </div> -->

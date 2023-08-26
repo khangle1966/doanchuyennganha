@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,6 +9,8 @@ import { UserModule } from './user/user.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { CourseModule } from './course/course.module';
 import { QuizBankModule } from './quiz-bank/quiz-bank.module';
+import { QuizModule } from './quiz/quiz.module';
+import { QuestionModule } from './question/question.module';
 @Module({
   imports:
     [
@@ -18,7 +21,11 @@ import { QuizBankModule } from './quiz-bank/quiz-bank.module';
       LessonsModule,
       CourseModule,
       QuizBankModule,
+      QuizModule,
+      QuestionModule,
     ],
+
+
   controllers: [AppController],
   providers: [AppService],
 })
