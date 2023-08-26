@@ -1,1 +1,38 @@
-<p>lesson works!</p>
+<div id="lesson-container">
+  <div id="left-side">
+    <div class="top">
+      <div class="tui-text_h6 title">Lesson List</div>
+      <button
+        size="m"
+        tuiIconButton
+        type="button"
+        icon="tuiIconPlusLarge"
+      ></button>
+    </div>
+    <div id="lesson-list">
+      <tui-scrollbar class="scrollbar">
+        <tui-island *ngFor="let lesson of lessonList; let i = index">
+          <div class="tui-island__content">
+            <figure class="tui-island__figure">
+              <div class="some-figure"></div>
+            </figure>
+            <div>
+              <h3 class="tui-island__title">
+                {{ lesson.title }}
+              </h3>
+              <p class="tui-island__paragraph">
+                {{ lesson.description }}
+              </p>
+            </div>
+          </div>
+        </tui-island>
+      </tui-scrollbar>
+    </div>
+  </div>
+  <div id="right-side">
+    <div class="top">
+      <div class="tui-text_h6 title">Lesson Content</div>
+      <button size="m" tuiButton type="button" [disabled]="true">Save</button>
+    </div>
+  </div>
+</div>
