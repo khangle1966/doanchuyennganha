@@ -46,6 +46,12 @@ export class SidebarComponent {
     },
     {
       id: 4,
+      name: 'ADMIN',
+      link: 'base/admin',
+      icon: 'tuiIconCpuLarge',
+    },
+    {
+      id: 5,
       name: 'SETTINGS',
       link: 'base/settings',
       icon: 'tuiIconSettingsLarge',
