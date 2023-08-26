@@ -10,6 +10,7 @@ import {
   TuiAccordionModule,
   TuiComboBoxModule,
   TuiMarkerIconModule,
+  TuiPushModule,
   TuiStepperModule,
 } from '@taiga-ui/kit';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
@@ -130,6 +131,7 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiTilesModule,
     TuiRadioLabeledModule,
     TuiStepperModule,
+    TuiPushModule,
   ],
   exports: [
     FormsModule,
@@ -194,6 +196,7 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiTilesModule,
     TuiRadioLabeledModule,
     TuiStepperModule,
+    TuiPushModule,
   ],
 })
 export class SharedModule {}
