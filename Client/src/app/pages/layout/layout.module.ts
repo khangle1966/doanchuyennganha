@@ -15,6 +15,9 @@ import { ReviewComponent } from './components/review/review.component';
 import { CartComponent } from './components/cart/cart.component';
 import { AnalysticComponent } from './components/analystic/analystic.component';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
+import { AdminComponent } from './components/admin/admin.component';
+import { CourseFormComponent } from './components/admin/components/course-form/course-form.component';
+import { LessonComponent } from './components/admin/components/lesson/lesson.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { SharedModule } from 'src/app/shared/shared/shared.module';
     ReviewComponent,
     CartComponent,
     AnalysticComponent,
+    AdminComponent,
+    CourseFormComponent,
+    LessonComponent,
   ],
   imports: [CommonModule, LayoutRoutingModule, SharedModule],
 })

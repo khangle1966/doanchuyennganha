@@ -1,0 +1,35 @@
+#admin-container {
+  width: 100%;
+  height: 100%;
+  padding: 1.25rem;
+  .filter-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .btn-grp {
+      display: flex;
+      flex-direction: row;
+      gap: 1.25rem;
+    }
+  }
+  table {
+    tbody {
+      tr {
+        .tui-table__td {
+          border-right: 1px solid var(--tui-base-04);
+        }
+        .tui-table__td_last {
+          border-right: none;
+        }
+      }
+    }
+  }
+}
+
+#right-sidebar {
+  overflow-y: auto;
+  overflow-x: auto;
+  width: 50rem;
+  padding: 1.875rem 0px 1.875rem 1.875rem;
+  height: 100%;
+}

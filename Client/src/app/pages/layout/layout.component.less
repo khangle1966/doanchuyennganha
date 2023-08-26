@@ -2,29 +2,22 @@
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  #navbar {
-    width: 100%;
-    height: 3.125rem;
-    background-color: var(--tui-primary);
+  flex-direction: row;
+  background-color: var(--tui-primary);
+
+  #sidebar {
+    height: 100%;
+    width: 15.625rem;
+    // background-color: var(--tui-primary);
   }
-  #main {
-    width: 100%;
-    height: calc(100% - 3.125rem);
-    display: flex;
-    flex-direction: row;
-    #sidebar {
+  #content {
+    border-top-left-radius: 1.25rem;
+    border-bottom-left-radius: 1.25rem;
+    width: calc(100% - 15.625rem);
+    height: 100%;
+    background-color: #fdfdf6;
+    .scrollbar {
       height: 100%;
-      width: 12.5rem;
-      background-color: var(--tui-primary);
-    }
-    #content {
-      width: calc(100% - 12.5rem);
-      height: 100%;
-      background-color: var(--tui-base-01);
-      .scrollbar {
-        height: 100%;
-      }
     }
   }
 }
