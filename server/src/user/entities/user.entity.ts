@@ -1,16 +1,17 @@
+/* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsEmail } from 'class-validator';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: true })
 export class User {
-  @Prop({ required: true, unique: true })
+  @Prop({ default: null })
   uid: string;
 
   @IsEmail()
-  @Prop({ required: true, unique: true })
+  @Prop({ default: null })
   email: string;
 
   @Prop()

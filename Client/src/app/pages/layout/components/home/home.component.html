@@ -6,7 +6,7 @@
                 <p>Sat, 24th Aug 2023</p>
             </div>
             <div class="search">
-                <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [(ngModel)]="search" [tuiTextfieldSize]="'m'" >
+                <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [(ngModel)]="search" [tuiTextfieldSize]="'m'">
                     Search
                 </tui-input>
             </div>
@@ -14,45 +14,29 @@
         <div id="body">
             <div class="onGoing">
                 <div class="filter">
-                    <form >
-                        <tui-filter formControlName="filters" size="m" [items]="items"></tui-filter>
+                    <form>
+                        <!-- <tui-filter formControlName="filters" size="m" [items]="items"></tui-filter> -->
                     </form>
-            
+
                 </div>
 
-                <button
-                    tuiIconButton
-                    type="button"
-                    class="tui-space_right-3 tui-space_bottom-3"
-                    icon="tuiIconPlusLarge"
-                    [size]="'m'"
-                ></button>
-    
+                <button tuiIconButton type="button" class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconPlusLarge"
+                    [size]="'m'"></button>
+
             </div>
             <tui-scrollbar class="box">
                 <div class="list_course">
                     <tui-push class="cart_course" *ngFor="let item of course" heading="{{item.name}}">
-                        <img
-                            src="{{item.imgURL}}"
-                            alt=""
-                        />
+                        <img src="{{item.imgURL}}" alt="" />
                         {{item.category}}
 
                         <div class="btn_course">
-                            <button
-                                tuiButton
-                                type="button"
-                                class="tui-space_right-3 tui-space_bottom-3"
-                            >
+                            <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3">
                                 Start
                             </button>
 
-                            <button
-                                tuiButton
-                                type="button"
-                                appearance="flat"
-                                class="tui-space_right-3 tui-space_bottom-3"
-                            >
+                            <button tuiButton type="button" appearance="flat"
+                                class="tui-space_right-3 tui-space_bottom-3">
                                 Reset
                             </button>
                         </div>
