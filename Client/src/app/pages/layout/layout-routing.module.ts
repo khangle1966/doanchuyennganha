@@ -7,6 +7,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AnalysticComponent } from './components/analystic/analystic.component';
 import { CartComponent } from './components/cart/cart.component';
+import { QuizComponent } from './components/quiz/quiz.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
         path: 'cart',
         component: CartComponent,
       },
+      {
+        path: 'quiz',
+        component: QuizComponent
+      }
     ],
   },
 ];
