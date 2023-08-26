@@ -1,0 +1,131 @@
+<ng-template #icon>
+  <tui-svg src="tuiIconPlusLarge"></tui-svg>
+</ng-template>
+<form [formGroup]="courseForm" class="col-form">
+  <div class="top-header">
+    <h5
+      class="tui-form__header tui-form__header_margin-top_none"
+      id="role-form-title"
+      *ngIf="!isEdit; else editTitle"
+    >
+      Create New Course
+    </h5>
+    <ng-template #editTitle>
+      <h5
+        class="tui-form__header tui-form__header_margin-top_none"
+        id="role-form-title"
+      >
+        Edit Course Info
+      </h5>
+    </ng-template>
+    <button
+      *ngIf="isEdit"
+      tuiButton
+      size="m"
+      type="button"
+      appearance="primary"
+      (click)="editLessons()"
+    >
+      Edit Lesson
+    </button>
+  </div>
+
+  <div class="tui-form__row">
+    <tui-input tuiTextfieldExampleText="Enter ID" formControlName="_id">
+      <span class="tui-required">ID</span>
+    </tui-input>
+    <tui-error
+      formControlName="_id"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+
+  <div class="tui-form__row">
+    <tui-input tuiTextfieldExampleText="Enter Role Name" formControlName="name">
+      <span class="tui-required"> Name</span>
+    </tui-input>
+    <tui-error
+      formControlName="name"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input
+      tuiTextfieldExampleText="Enter Description"
+      formControlName="description"
+    >
+      <span class="tui-required"> Description</span>
+    </tui-input>
+    <tui-error
+      formControlName="description"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input
+      tuiTextfieldExampleText="Enter Category"
+      formControlName="category"
+    >
+      <span class="tui-required"> Category</span>
+    </tui-input>
+    <tui-error
+      formControlName="category"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input tuiTextfieldExampleText="Enter Price" formControlName="price">
+      <span class="tui-required"> Price</span>
+    </tui-input>
+    <tui-error
+      formControlName="price"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input
+      tuiTextfieldExampleText="Enter Image Url"
+      formControlName="imageUrl"
+    >
+      <span class="tui-required">Image Url</span>
+    </tui-input>
+    <tui-error
+      formControlName="imageUrl"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+
+  <div id="action-buts">
+    <button
+      tuiButton
+      type="button"
+      appearance="accent"
+      size="m"
+      id="cancel-but"
+      (click)="toggle(false)"
+    >
+      Cancel
+    </button>
+    <button
+      tuiButton
+      size="m"
+      type="button"
+      appearance="primary"
+      [disabled]="courseForm.invalid"
+      *ngIf="!isEdit; else editButton"
+    >
+      Create
+    </button>
+    <ng-template #editButton>
+      <button
+        tuiButton
+        size="m"
+        type="button"
+        appearance="primary"
+        [disabled]="courseForm.invalid"
+      >
+        Update
+      </button>
+    </ng-template>
+  </div>
+</form>

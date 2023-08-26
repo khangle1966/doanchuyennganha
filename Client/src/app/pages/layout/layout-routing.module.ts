@@ -7,6 +7,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AnalysticComponent } from './components/analystic/analystic.component';
 import { CartComponent } from './components/cart/cart.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { LessonComponent } from './components/admin/components/lesson/lesson.component';
+import { QuizComponent } from './components/quiz/quiz.component';
 
 const routes: Routes = [
   {
@@ -37,6 +40,18 @@ const routes: Routes = [
       {
         path: 'cart',
         component: CartComponent,
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
+      },
+      {
+        path: 'admin/course/:id',
+        component: LessonComponent,
+      },
+      {
+        path: 'quiz',
+        component: QuizComponent,
       },
     ],
   },
