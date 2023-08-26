@@ -11,6 +11,8 @@ import {
   TuiComboBoxModule,
   TuiMarkerIconModule,
   TuiStepperModule,
+  TuiPushModule,
+  TuiFilterModule,
 } from '@taiga-ui/kit';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
 import { TuiActiveZoneModule, TuiValidatorModule } from '@taiga-ui/cdk';
@@ -130,6 +132,8 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiTilesModule,
     TuiRadioLabeledModule,
     TuiStepperModule,
+    TuiPushModule,
+    TuiFilterModule,
   ],
   exports: [
     FormsModule,
@@ -194,6 +198,8 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiTilesModule,
     TuiRadioLabeledModule,
     TuiStepperModule,
+    TuiPushModule,
+    TuiFilterModule,
   ],
 })
 export class SharedModule {}
