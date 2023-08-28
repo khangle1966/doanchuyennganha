@@ -30,6 +30,7 @@
     flex-direction: column;
     margin-top: 0.625rem;
     gap: 1.563rem;
+    overflow: auto;
 
     .tui-list__item {
       .tui-list__item-title {
@@ -51,3 +52,17 @@
     }
   }
 }
+/* width */
+::-webkit-scrollbar {
+  width: 0rem;
+  min-height: 1.25rem;
+  height: 51%;
+}
+
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+// }
+
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+// }

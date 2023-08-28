@@ -44,7 +44,7 @@ import { QuillModule } from 'ngx-quill';
     CommonModule,
     LayoutRoutingModule,
     SharedModule,
-    QuillModule.forRoot(),
+    QuillModule.forRoot({}),
   ],
 })
 export class LayoutModule {}

@@ -1,5 +1,5 @@
-<quill-editor (onContentChanged)="notify($event)">
-  <!-- <div quill-editor-toolbar>
+<!-- <quill-editor (onContentChanged)="notify($event)"> -->
+<!-- <div quill-editor-toolbar>
       <span class="ql-formats">
         <select class="ql-font">
           <option selected></option>
@@ -38,6 +38,16 @@
         <button class="ql-image"></button>
       </span>
     </div> -->
-</quill-editor>
+<!-- </quill-editor> -->
 
 <!-- <quill-view [content]="content" format="object" theme="snow"></quill-view> -->
+
+<quill-editor
+  [modules]="editor_modules"
+  [(ngModel)]="content"
+  trackChanges="all"
+  (onFocus)="focus($event)"
+  (onEditorChanged)="changedEditor($event)"
+  (onBlur)="blur($event)"
+  (onEditorCreated)="addBindingCreated($event)"
+></quill-editor>
