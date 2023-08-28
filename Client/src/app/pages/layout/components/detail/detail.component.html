@@ -1,1 +1,99 @@
-<p>detail works!</p>
+<div id="detail-container">
+    <div id="detail-box">
+        <div id="detail-nav">
+            <div class="nav-left">
+                <h4 class="nav-home" (click)="backhome()">Home</h4>
+                <h4>
+                    <tui-svg src="tuiIconChevronsRight"></tui-svg>
+                </h4>
+                <h4 (click)="backcourse()">Browse Course</h4>
+                <h4>
+                    <tui-svg src="tuiIconChevronsRight"></tui-svg>
+                </h4>
+                <h4>Detail Course</h4>
+            </div>
+            <div class="nav-right">
+                <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [tuiTextfieldSize]="'m'" [(ngModel)]="search">
+                    Search
+                </tui-input>
+            </div>
+        </div>
+        <div class="nav-content">
+        </div>
+        <div id="detail-content">
+            <div class="content-left">
+                <div class="left-top">
+                    <div class="top-ima">
+                        <img src="../../../../../assets/images/webdev.jpg" alt="">
+                    </div>
+                </div>
+                <div class="left-bot">
+                    <div class="bot-right">
+                        <h2>SKILL</h2>
+                        <ul class="tui-list">
+                            <li class="tui-list__item">Speaking Skill</li>
+                            <li class="tui-list__item">Writing Skill</li>
+                            <li class="tui-list__item">Reading Skill</li>
+                            <li class="tui-list__item">Vocabulary and Grammar</li>
+                        </ul>
+                    </div>
+                    <div class="bot-left">
+                        <h2>CERTIFICATE</h2>
+                        <ul class="tui-list">
+                            <li class="tui-list__item">Certificate of completion of the course at Gnosis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="right-top">
+                    <div class="sub-content">
+                        <h1>Ielts</h1>
+                        <p>English</p>
+                        <div class="ic-star">
+                            <tui-svg src="tuiIconStarLarge"></tui-svg>
+                            <tui-svg src="tuiIconStarLarge"></tui-svg>
+                            <tui-svg src="tuiIconStarLarge"></tui-svg>
+                            <tui-svg src="tuiIconStarLarge"></tui-svg>
+                            <tui-svg src="tuiIconStarLarge"></tui-svg>
+                        </div>
+                        <h2>$1.900</h2>
+                    </div>
+                    <div class="sub-btn">
+                        <button
+                        tuiButton
+                        type="button"
+                        appearance="primary"
+                        class="tui-space_right-3 tui-space_bottom-3"
+                        size="m"
+                    >
+                        ADD TO CART
+                    </button>
+                    </div>
+                </div>
+                <div class="top-bot"> 
+                </div>
+                <div class="right-bot">
+                    <div class="des">
+                        <!-- <span>Description</span> -->
+                        <tui-tabs [tuiTextfieldSize]="'l'">
+                            <button
+                                tuiTab
+                            >
+                            Description
+                            </button>
+                            </tui-tabs>
+                    </div>
+                    <tui-scrollbar class="box">
+                    <div class="txt-bot">
+                        <p> Learn English- Ielts 5.5 with a high-quality course!
+                            Welcome to our tailored and effective English learning program, offering you the opportunity to study and develop your language skills at your own pace and style. Our course focuses on building a strong foundation in grammar, vocabulary, and communication skills, from basic to advanced levels.
+                            Designed by experienced education experts, our course combines traditional teaching methods with project-based learning. We provide diverse learning materials, including instructional videos, practical exercises, regular assessments, and engaging communication activities. Beyond delivering knowledge, we create an exciting environment for you to apply what you've learned and develop your English skills for daily life.
+                            With our course, you can study anytime, anywhere through our convenient online platform. We commit to supporting and facilitating your learning goals. Whether you're a beginner or already have some basic knowledge, our English course will help you enhance your communication skills with confidence and proficiency.
+                            Join our course to explore a new world through the English language and establish a solid foundation for your future!</p>
+                    </div>
+                    </tui-scrollbar>
+                </div>
+            </div>
+        </div>
+    </div>

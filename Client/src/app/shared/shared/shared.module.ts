@@ -138,8 +138,7 @@ import { TuiCalendarModule } from '@taiga-ui/core';
     TuiStepperModule,
     TuiPushModule,
     TuiFilesModule,
-    TuiFilterModule,
-    TuiCalendarModule
+    TuiCalendarModule,
   ],
   exports: [
     FormsModule,
@@ -206,8 +205,7 @@ import { TuiCalendarModule } from '@taiga-ui/core';
     TuiStepperModule,
     TuiPushModule,
     TuiFilesModule,
-    TuiFilterModule,
-    TuiCalendarModule
+    TuiCalendarModule,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

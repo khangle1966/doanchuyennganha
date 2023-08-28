@@ -1,4 +1,4 @@
-<!-- <div id="main">
+<div id="main">
     <div id="background">
         <div class="triangle_bottomright"></div>
     </div>
@@ -9,32 +9,33 @@
         <div class="register">
             <p class="text-register">Create profile</p>
         </div>
-        <form class="input" [formGroup]="testForm">
+        <form class="input" [formGroup]="testForm" >
 
                 <tui-input formControlName="name" style="width: 296px;">
                     Name
                     <input tuiTextfield type="name" />
                 </tui-input>
+                <div *ngIf="testForm.controls.name.invalid && testForm.controls.name.value" class="error-message">
+                    Please enter a valid name (letters only).
+                </div>
 
                 <tui-input formControlName="age" style="width: 296px; margin-top: 1rem;">
                     Age
                     <input tuiTextfield type="age" />
                 </tui-input>
+                <div *ngIf="testForm.controls.age.invalid && testForm.controls.age.value" class="error-message">
+                    Please enter a valid age (numbers only).
+                </div>
 
-                <form tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true" [formGroup]="form" [tuiTextfieldSize]="l">
+                <form tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true" [formGroup]="form" [tuiTextfieldSize]="'l'" >
                     <tui-select formControlName="color" style="margin-top: 1rem;">
-                        Sex
+                        Gender
                         <tui-data-list-wrapper *tuiDataList [items]="items"></tui-data-list-wrapper>
                     </tui-select>
                 </form>
 
-                <tui-input formControlName="avatar" style="width: 296px;margin-top: 1rem;">
-                    Avatar
-                    <input tuiTextfield type="avatar" />
-                </tui-input>
-
                 <tui-input formControlName="email" style="width: 296px;margin-top: 1rem;">
-                    Email
+                    Email: {{ email }}
                     <input tuiTextfield type="email" />
                 </tui-input>
 
@@ -48,9 +49,10 @@
 
         <div class="account">
             <button tuiButton type="button" appearance="primary" class="tui-space_right-3 tui-space_bottom-3"
-                style="width: 296px; margin: 0;">
+                style="width: 296px; margin: 0; font-size: 23px;"
+                >
                 Sign in
             </button>
         </div>
 
-    </div> -->
+    </div>

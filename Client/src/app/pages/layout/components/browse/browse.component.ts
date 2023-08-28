@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 export class BrowseComponent {
   
   constructor(private router:Router){}
-  description(){
-    // this.router.navigate(['/detailcourse']);
+  description(id:string){
+    this.router.navigate([`/base/browse/detail/${id}`]);
    }
   backhome(){
     this.router.navigate(['/base/home']);
@@ -19,40 +19,66 @@ export class BrowseComponent {
   
   course = [
   {
+    _id:'123',
     nameCourse: 'Front-End',
     categoryCourse: 'Web Developer',
     imgUrl: '../../../../../assets/images/webdev.jpg'
   },
   {
+    _id:'456',
     nameCourse: 'Front-End',
     categoryCourse: 'Web Developer',
     imgUrl: '../../../../../assets/images/webdev.jpg'
   },
   {
+    _id:'678',
     nameCourse: 'Front-End',
     categoryCourse: 'Web Developer',
     imgUrl: '../../../../../assets/images/webdev.jpg'
   },
   {
+    _id:'346',
     nameCourse: 'Front-End',
     categoryCourse: 'Web Developer',
     imgUrl: '../../../../../assets/images/webdev.jpg'
   },
   {
+    _id:'120',
     nameCourse: 'Front-End',
     categoryCourse: 'Web Developer',
     imgUrl: '../../../../../assets/images/webdev.jpg'
   },
   {
+    _id:'121',
     nameCourse: 'Front-End',
     categoryCourse: 'Web Developer',
     imgUrl: '../../../../../assets/images/webdev.jpg'
   },
     {
+      _id:'133',
     nameCourse: 'Front-End',
     categoryCourse: 'Web Developer',
     imgUrl: '../../../../../assets/images/webdev.jpg'
   },
+  {
+    _id:'153',
+    nameCourse: 'Front-End',
+    categoryCourse: 'Web Developer',
+    imgUrl: '../../../../../assets/images/webdev.jpg'
+  },
+  {
+    _id:'173',
+    nameCourse: 'Front-End',
+    categoryCourse: 'Web Developer',
+    imgUrl: '../../../../../assets/images/webdev.jpg'
+  },
+  {
+    _id:'1223',
+    nameCourse: 'Front-End',
+    categoryCourse: 'Web Developer',
+    imgUrl: '../../../../../assets/images/webdev.jpg'
+  },
+  
 ]
    
   search = '';
