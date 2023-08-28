@@ -9,8 +9,7 @@ import { Course } from 'src/app/models/Course.model';
 })
 export class CourseFormComponent {
   @Output('toggle') toggleEvent: EventEmitter<boolean> = new EventEmitter();
-  @Output('editLessons') editLessonsEvent: EventEmitter<boolean> =
-    new EventEmitter();
+  @Output('editLessons') editLessonsEvent: EventEmitter<boolean> = new EventEmitter();
   @Input('isEdit') isEdit: boolean = false;
   @Input('course') course: Course | null = null;
 

@@ -63,17 +63,46 @@ export class HomeComponent {
       name:'Phát triển Web',
       category:'Web Development',
       imgURL:'../../.././../../assets/images/Picture.png',
+    },
+    {
+      id:'',
+      name:'Phát triển Web',
+      category:'Web Development',
+      imgURL:'../../.././../../assets/images/Picture.png',
+    },
+    {
+      id:'',
+      name:'Phát triển Web',
+      category:'Web Development',
+      imgURL:'../../.././../../assets/images/Picture.png',
+    },
+    {
+      id:'',
+      name:'Phát triển Web',
+      category:'Web Development',
+      imgURL:'../../.././../../assets/images/Picture.png',
+    },
+    {
+      id:'',
+      name:'Phát triển Web',
+      category:'Web Development',
+      imgURL:'../../.././../../assets/images/Picture.png',
     }
   ];
 
   
-  readonly items = [
-      'Chưa học',
-      'Đã học',
-      'Đã học xong',
-  ];
-  
-  
+  // items = [
+  //     'Chưa học',
+  //     'Đã học',
+  //     'Đã học xong',
+  // ];
+
+  readonly testForm = new FormGroup({
+    testValue: new FormControl('orange'),
+  });
+
+  readonly courses = ['Chưa học', 'Đã học', 'Đã học xong'];
+
 
 } 
 
