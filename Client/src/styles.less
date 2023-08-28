@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@taiga-ui/core/styles/taiga-ui-local.less";
-@import "~quill-emoji/dist/quill-emoji.css";
-@import "~quill/dist/quill.snow.css";
+@import "quill-emoji/dist/quill-emoji.css";
+@import "quill/dist/quill.snow.css";
 
 tui-root {
   width: 100vw;
@@ -156,4 +156,14 @@ tui-root {
   --tui-chart-2: var(--tui-support-21);
   --tui-chart-3: var(--tui-support-11);
   --tui-chart-4: var(--tui-base-05);
+}
+
+quill-editor {
+  display: block;
+}
+
+.ql-container {
+  // height: 90% !important;
+  width: 100%;
+  height: calc(100% - 2.75rem - 1.25rem) !important;
 }

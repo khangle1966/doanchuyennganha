@@ -45,7 +45,6 @@
     width: 70%;
     min-width: 750px;
     padding: 0.625rem;
-    padding-right: 0;
 
     #course-content {
       overflow: auto;
@@ -58,9 +57,13 @@
         margin: 0 auto;
       }
     }
+    #editor {
+      height: calc(100% - 2.75rem - 1.25rem);
+      width: 100%;
+    }
   }
   .top {
-    min-height: 44px;
+    min-height: 2.75rem;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -69,7 +72,20 @@
       display: flex;
       align-items: center;
     }
+    .btn-grp {
+      display: flex;
+      flex-direction: row;
+      gap: 0.625rem;
+    }
   }
+}
+
+#right-sidebar {
+  overflow: auto;
+  // width: 100%;
+  width: 40rem;
+  padding: 1.875rem 0px 1.875rem 1.875rem;
+  height: 100%;
 }
 
 /* width */

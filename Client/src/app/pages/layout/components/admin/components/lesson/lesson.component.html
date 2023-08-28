@@ -63,10 +63,66 @@
     <ng-template #lessonContent>
       <div class="top">
         <div class="tui-text_h6 title">Lesson Content</div>
-        <button size="m" tuiButton type="button" [disabled]="true">Save</button>
+        <div class="btn-grp">
+          <button
+            size="m"
+            tuiButton
+            type="button"
+            appearance="primary"
+            (click)="openEditSidebar(true)"
+            (tuiActiveZoneChange)="openEditSidebar($event)"
+          >
+            Edit Information
+            <tui-scrollbar
+              *tuiSidebar="this.openEdit; direction: 'right'; autoWidth: true"
+              id="right-sidebar"
+            >
+              <app-lesson-info-form
+                [lesson]="this.selectedLesson"
+                (toggle)="openEditSidebar($event)"
+                (submit)="updateLessonInfo($event)"
+              >
+              </app-lesson-info-form>
+            </tui-scrollbar>
+          </button>
+          <button
+            size="m"
+            tuiButton
+            type="button"
+            appearance="secondary-destructive"
+            (click)="isPreview = !isPreview"
+            *ngIf="isPreview; else previewBtn"
+          >
+            Editor
+          </button>
+          <ng-template #previewBtn>
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              (click)="isPreview = !isPreview"
+              appearance="secondary"
+            >
+              Preview
+            </button>
+          </ng-template>
+          <button
+            size="m"
+            tuiButton
+            type="button"
+            (click)="saveLessonContent()"
+          >
+            Save
+          </button>
+        </div>
       </div>
       <div id="editor">
-        <app-editor [content]="this.selectedLesson?.content"></app-editor>
+        <app-editor
+          [content]="this.selectedLesson?.content"
+          [isPreview]="isPreview"
+          [isSave]="isSave"
+          (save)="updateLessonContent($event)"
+        ></app-editor>
       </div>
     </ng-template>
   </div>

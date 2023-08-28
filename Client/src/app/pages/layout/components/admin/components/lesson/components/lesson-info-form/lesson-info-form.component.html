@@ -1,0 +1,96 @@
+<ng-template #icon>
+  <tui-svg src="tuiIconPlusLarge"></tui-svg>
+</ng-template>
+<form [formGroup]="lessonForm" class="col-form">
+  <div class="top-header">
+    <h5
+      class="tui-form__header tui-form__header_margin-top_none"
+      id="role-form-title"
+    >
+      Edit Lesson Info
+    </h5>
+  </div>
+
+  <div class="tui-form__row">
+    <tui-input tuiTextfieldExampleText="Enter ID" formControlName="_id">
+      <span class="tui-required">ID</span>
+    </tui-input>
+    <tui-error
+      formControlName="_id"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input
+      tuiTextfieldExampleText="Enter Course ID"
+      formControlName="courseId"
+    >
+      <span class="tui-required">Course ID</span>
+    </tui-input>
+    <tui-error
+      formControlName="courseId"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+
+  <div class="tui-form__row">
+    <tui-input
+      tuiTextfieldExampleText="Enter Lesson Title"
+      formControlName="title"
+    >
+      <span class="tui-required">Title</span>
+    </tui-input>
+    <tui-error
+      formControlName="title"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input
+      tuiTextfieldExampleText="Enter Lesson Description"
+      formControlName="description"
+    >
+      <span class="tui-required"> Description</span>
+    </tui-input>
+    <tui-error
+      formControlName="description"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input
+      tuiTextfieldExampleText="Enter Lesson Image Url"
+      formControlName="imageUrl"
+    >
+      <span class="tui-required">Image Url</span>
+    </tui-input>
+    <tui-error
+      formControlName="imageUrl"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+
+  <div id="action-buts">
+    <button
+      tuiButton
+      type="button"
+      appearance="accent"
+      size="m"
+      id="cancel-but"
+      (click)="toggle(false)"
+    >
+      Cancel
+    </button>
+
+    <button
+      tuiButton
+      size="m"
+      type="button"
+      appearance="primary"
+      [disabled]="lessonForm.invalid"
+      (click)="updateLesson(); toggle(false)"
+    >
+      Update
+    </button>
+  </div>
+</form>
