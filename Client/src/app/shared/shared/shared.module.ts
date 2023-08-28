@@ -136,8 +136,8 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
     TuiStepperModule,
     TuiPushModule,
     TuiFilesModule,
-    TuiTabsModule
-    TuiOverscrollModule,
+    TuiTabsModule,
+    TuiOverscrollModule
 
   ],
   exports: [
