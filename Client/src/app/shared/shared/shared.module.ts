@@ -65,6 +65,8 @@ import { TuiRingChartModule } from '@taiga-ui/addon-charts';
 import { TuiProgressModule } from '@taiga-ui/kit';
 import { TuiTilesModule } from '@taiga-ui/kit';
 import { TuiRadioLabeledModule } from '@taiga-ui/kit';
+import {TuiTabsModule} from '@taiga-ui/kit';
+import { TuiOverscrollModule } from '@taiga-ui/cdk';
 
 @NgModule({
   declarations: [],
@@ -133,7 +135,10 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiRadioLabeledModule,
     TuiStepperModule,
     TuiPushModule,
-    TuiFilesModule
+    TuiFilesModule,
+    TuiTabsModule
+    TuiOverscrollModule,
+
   ],
   exports: [
     FormsModule,
@@ -199,7 +204,10 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiRadioLabeledModule,
     TuiStepperModule,
     TuiPushModule,
-    TuiFilesModule
+    TuiFilesModule,
+    TuiTabsModule,
+    TuiOverscrollModule,
+
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

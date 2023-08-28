@@ -1,1 +1,90 @@
-<p>cart works!</p>
+<div id="cart-container">
+    <div id="cart-box">
+        <div id="detail-nav">
+            <div class="nav-left">
+                <h4 class="nav-home" (click)="backhome()">Home</h4>
+                <h4>
+                    <tui-svg src="tuiIconChevronsRight"></tui-svg>
+                </h4>
+                <h4>Cart</h4>
+            </div>
+            <div class="nav-right">
+                <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [tuiTextfieldSize]="'m'" [(ngModel)]="search">
+                    Search
+                </tui-input>
+            </div>
+        </div>
+        <div class="nav-content">
+        </div>
+        <div id="cart-content">
+            <div id="course-cart">
+                <div id="title-course">
+                    <h2>You have 2 course in your cart</h2>
+                </div>
+                <hr>
+                <div id="course-box">
+                    <div id="product-course">
+                        <div class="course-ima">
+                            <img src="../../../../../assets/images/webdev.jpg">
+                        </div>
+                        <div class="course-cont">
+                            <h2>Front-End</h2>
+                            <p>$9.878</p>
+                        </div>
+                        <div class="course-ic">
+                            <tui-svg src="tuiIconCloseLarge"></tui-svg>
+                        </div>
+                    </div>
+                    <div id="product-course">
+                        <div class="course-ima">
+                            <img src="../../../../../assets/images/webdev.jpg">
+                        </div>
+                        <div class="course-cont">
+                            <h2>Front-End</h2>
+                            <p>$9.878</p>
+                        </div>
+                        <div class="course-ic">
+                            <tui-svg src="tuiIconCloseLarge"></tui-svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cart-box">
+                <div id="order-cart">
+                    <div class="top-cart">
+                        <h2>
+                            Order
+                        </h2>
+                    </div>
+
+                    <div class="center-cart">
+                        <div class="top-center">
+
+                        </div>
+                        <div class="price-cart">
+                            <span>Provisional</span>
+                            <span>$19.756</span>
+                        </div>
+                        <div class="count-cart">
+                            <span>Discount</span>
+                            <span>0%</span>
+                        </div>
+                        <div class="top-center">
+
+                        </div>
+                        <div class="total-cart">
+                            <span>Total</span>
+                            <span>$19.756</span>
+                        </div>
+                    </div>
+                    <div class="bot-cart">
+                        <button tuiButton type="button" appearance="primary"
+                            class="tui-space_right-3 tui-space_bottom-3" (click)="buyButton()">
+                            Buy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

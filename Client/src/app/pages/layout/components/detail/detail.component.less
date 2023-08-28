@@ -1,0 +1,161 @@
+#detail-container {
+    #detail-box {
+
+        #detail-nav {
+
+            margin: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .nav-left {
+                display: flex;
+                justify-content: row;
+                align-items: center;
+                color: var(--tui-primary);
+
+                .nav-home {
+                    cursor: pointer;
+                }
+            }
+
+            .nav-right {
+                width: 30%;
+            }
+        }
+
+        .nav-content {
+            border: 1px solid var(--tui-base-05);
+            margin: 0 2rem;
+        }
+
+        #detail-content {
+
+            // width: 100%;
+            height: 100%;
+            margin: 1rem 4rem;
+            display: flex;
+            justify-content: space-between;
+
+            .content-left {
+                margin-top: 1rem;
+                width: 50%;
+                // border: 1px solid black;
+                border-right: 1px solid var( --tui-base-05);
+
+                .left-top {
+                    // border: 1px solid black;
+                    // height: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .top-ima {
+                        display: flex;
+                        margin: 0 auto;
+                        padding: 1rem;
+                        background-color: white;
+                        border: 0.02rem solid var(--tui-base-05);
+                        border-radius: var(--tui-radius-m);
+                        width: 90%;
+
+                        img {
+                            display: flex;
+                            margin: 0 auto;
+                            max-width: 100%;
+                            max-height: auto;
+                            object-fit: cover;
+                            border-radius: var(--tui-radius-m);
+                        }
+                    }
+                }
+
+                .left-bot {
+                    margin-top: 4%;
+                    width: 100%;
+                    display: flex;
+
+                    // justify-content: center;
+                    h2 {
+                        text-align: center;
+                    }
+
+                    .bot-right {
+                        width: 50%;
+                        border-right: 1px solid var(--tui-base-06);
+                    }
+
+                    .tui-list {
+                        margin-left: 2rem;
+                    }
+                }
+
+
+
+            }
+
+            .content-right {
+                margin-top: 1rem;
+                width: 50%;
+                margin-left: 2rem;
+                height: 100%;
+
+                .right-top {
+                    margin-left: 1rem;
+                    display: flex;
+                    justify-content: space-between;
+
+                    .sub-content {
+                        p{
+                            font: var(--tui-font-text-l);
+                        }
+                        .ic-star {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            gap: 0.5rem;
+                            cursor: pointer;
+                        }
+                    }
+
+                    .sub-btn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: flex-end;
+                    }
+                }
+
+                .top-bot {
+                    border-top: 1px solid var( --tui-base-05);
+                }
+
+                .right-bot {
+                    height: 20%;
+
+                    .des {
+                        margin: .25rem 2rem;  
+
+                        ::ng-deep t-highlight{
+                            font:var(--tui-font-heading-4);
+                        }
+                    }
+
+                    .box {
+                        max-height: 25rem;
+                        // border: 1px solid var(--tui-base-09);
+
+                        .txt-bot {
+                            margin: 0 1rem;
+
+                            p {
+                                text-indent: 1rem;
+                                text-align: justify;
+                                font: var(--tui-font-text-l-2);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

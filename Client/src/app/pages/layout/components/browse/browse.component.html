@@ -26,51 +26,51 @@
             <div class="slide-track">
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
                 <div class="slide">
                     70% off all course today
-                    <img src="../../../../../assets/images/hanh1.png" height="40" width="40" alt="" />
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
         <div id="browse-course">
             <tui-scrollbar class ="main-rol">
             <div class="main" >
-                <tui-push class="course" (click)="description()" *ngFor="let item of course" heading={{item.nameCourse}}>
+                <tui-push class="course"  *ngFor="let item of course; let i=index;" heading={{item.nameCourse}}>
                     <img [src]=item.imgUrl alt="" />
                     <!-- <tui-svg src="tuiIconSettingsLarge"></tui-svg> -->
                     <p>
@@ -113,7 +113,7 @@
                     </p>
                     <div class="btn-course">
                         <button tuiButton type="button" appearance="secondary"
-                            class="tui-space_right-3 tui-space_bottom-3" >
+                            class="tui-space_right-3 tui-space_bottom-3" (click)="description(item._id)">
                             Detail
                         </button>
                         <button tuiButton type="button" appearance="flat" class="tui-space_right-3 tui-space_bottom-3"
