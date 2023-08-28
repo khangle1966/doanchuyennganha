@@ -1,52 +1,130 @@
 <div id="home_container">
-    <div id="myCourse">
-        <div id="header">
-            <div class="title">
-                <h1>WELCOME MEO TO GNOSIS</h1>
-                <p>Sat, 24th Aug 2023</p>
-            </div>
-            <div class="search">
-                <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [(ngModel)]="search" [tuiTextfieldSize]="'m'">
-                    Search
-                </tui-input>
-            </div>
-        </div>
-        <div id="body">
-            <div class="onGoing">
-                <div class="filter">
-                    <form>
-                        <!-- <tui-filter formControlName="filters" size="m" [items]="items"></tui-filter> -->
-                    </form>
-
+    <div id="myCourse_box">
+        <div id="myCourse">
+            <div id="header">
+                <div class="title">
+                    <h1>WELCOME MEO TO GNOSIS</h1>
+                    <p>Sat, 24th Aug 2023</p>
                 </div>
-
-                <button tuiIconButton type="button" class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconPlusLarge"
-                    [size]="'m'"></button>
-
-            </div>
-            <tui-scrollbar class="box">
-                <div class="list_course">
-                    <tui-push class="cart_course" *ngFor="let item of course" heading="{{item.name}}">
-                        <img src="{{item.imgURL}}" alt="" />
-                        {{item.category}}
-
-                        <div class="btn_course">
-                            <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3">
-                                Start
-                            </button>
-
-                            <button tuiButton type="button" appearance="flat"
-                                class="tui-space_right-3 tui-space_bottom-3">
-                                Reset
-                            </button>
-                        </div>
-                    </tui-push>
+                <div class="search">
+                    <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [(ngModel)]="search" [tuiTextfieldSize]="'m'">
+                        Search
+                    </tui-input>
                 </div>
-            </tui-scrollbar>
-        </div>
+            </div>
+            <div id="body">
+                <div class="onGoing">
+                    <div class="filter">
+                            <form
+                            class="group"
+                            [formGroup]="testForm"
+                            >
+                            <div
+                                tuiGroup
+                                class="group"
+                                [collapsed]="true"
+                            >
+                                <tui-radio-block
+                                    *ngFor="let course of courses"
+                                    contentAlign="right"
+                                    formControlName="testValue"
+                                    size="l"
+                                    [hideRadio]="true"
+                                    [item]="course"
+                                >
+                                    {{ course }}
+                                </tui-radio-block>
+                            </div>
+                        </form>
+                    </div>
+                    
 
+                    <button tuiIconButton type="button" class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconPlusLarge"
+                        [size]="'m'"></button>
+                </div>
+                <tui-scrollbar class="box">
+                    <div class="list_course">
+                        <tui-push class="cart_course" *ngFor="let item of course" heading="{{item.name}}">
+                            <img src="{{item.imgURL}}" alt="" />
+                            {{item.category}}
+
+                            <div class="btn_course">
+                                <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3">
+                                    Start
+                                </button>
+
+                                <button tuiButton type="button" appearance="flat"
+                                    class="tui-space_right-3 tui-space_bottom-3">
+                                    Reset
+                                </button>
+                            </div>
+                        </tui-push>
+                    </div>
+                </tui-scrollbar>
+            </div>
+
+        </div>
     </div>
-    <div id="myProfie">
-        asda
+    <div id="myProfile">
+        <div id="myProfile_cart">
+            <div class="myProfile_header">
+                <h2>PROFILE USER</h2>
+                <button
+                        tuiButton
+                        type="button"
+                        class="tui-space_right-3 tui-space_bottom-3"
+                        icon="tuiIconEdit3"
+                        [size]="'s'"
+                    >
+                        Edit
+                </button>
+            </div>
+            <div class="myProfile_body">
+                <div class="avatar" >
+                    <tui-avatar
+                    text="alex inkin"
+                    class="tui-space_top-1"
+                    [size]="'xl'"
+                    ></tui-avatar>
+                </div>
+                
+
+                <p class="name">Phùng Minh Khoa</p>
+                <p class="email">Khoachoco@gmail.com</p>
+                
+                <div class="member">
+                    <span class="material-symbols-outlined">
+                        diamond
+                    </span>
+                    <p>Member Gnosis</p>
+                </div>
+                
+                <div class="progress">
+                    <div class="rating">
+                        <p class="number">10</p>
+                        <p class="text">Rating</p>
+                    </div>
+                    <div class="line"></div>
+                    <div class="time">
+                        <p class="number">2h</p>
+                        <p class="text">Time</p>
+                    </div>
+                    <div class="line"></div>
+                    <div class="course">
+                        <p class="number">12</p>
+                        <p class="text">Course</p>
+                    </div>
+                </div>
+
+                <div class="calender">
+                    <tui-calendar [showAdjacent]="false"></tui-calendar>
+                </div>
+                
+                <div class="text_under">
+                    <p>Learn with passion, excel with dedication, and keep studying to infinity</p>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
