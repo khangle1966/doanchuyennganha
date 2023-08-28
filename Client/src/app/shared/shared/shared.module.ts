@@ -13,6 +13,9 @@ import {
   TuiMarkerIconModule,
   TuiPushModule,
   TuiStepperModule,
+  TuiFilterComponent,
+  TuiFilterModule,
+  
 } from '@taiga-ui/kit';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
 import { TuiActiveZoneModule, TuiValidatorModule } from '@taiga-ui/cdk';
@@ -65,6 +68,7 @@ import { TuiRingChartModule } from '@taiga-ui/addon-charts';
 import { TuiProgressModule } from '@taiga-ui/kit';
 import { TuiTilesModule } from '@taiga-ui/kit';
 import { TuiRadioLabeledModule } from '@taiga-ui/kit';
+import { TuiCalendarModule } from '@taiga-ui/core';
 
 @NgModule({
   declarations: [],
@@ -133,7 +137,9 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiRadioLabeledModule,
     TuiStepperModule,
     TuiPushModule,
-    TuiFilesModule
+    TuiFilesModule,
+    TuiFilterModule,
+    TuiCalendarModule
   ],
   exports: [
     FormsModule,
@@ -199,7 +205,9 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
     TuiRadioLabeledModule,
     TuiStepperModule,
     TuiPushModule,
-    TuiFilesModule
+    TuiFilesModule,
+    TuiFilterModule,
+    TuiCalendarModule
   ],
 })
 export class SharedModule { }
