@@ -7,7 +7,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.useGlobalPipes(new ValidationPipe());
 
-
   admin.initializeApp({
     credential: admin.credential.cert('./firebase-key.json'),
   });

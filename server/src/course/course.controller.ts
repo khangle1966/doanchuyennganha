@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query, HttpException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+  Query,
+  HttpException,
+} from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
@@ -7,7 +18,7 @@ import { Course } from './entities/course.entity';
 
 @Controller('v1/course')
 export class CourseController {
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService) {}
 
   @Post()
   async create(@Body() createCourseDto: CreateCourseDto): Promise<Course> {
@@ -62,8 +73,6 @@ export class CourseController {
       throw new HttpException(error.message, error.status);
     }
   }
-
-
 
   @Put(':id/buy')
   async buyCourse(

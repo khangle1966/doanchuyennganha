@@ -9,8 +9,7 @@ import { Model } from 'mongoose';
 export class QuizBankService {
   constructor(
     @InjectModel(QuizBank.name) private quizBankModel: Model<QuizBank>,
-
-  ) { }
+  ) {}
 
   async create(createQuizBankDto: CreateQuizBankDto): Promise<QuizBank> {
     try {
@@ -20,8 +19,6 @@ export class QuizBankService {
       throw new HttpException(error.message, error.status);
     }
   }
-
-
 
   async findAll() {
     try {
@@ -48,8 +45,7 @@ export class QuizBankService {
         { new: true },
       );
       return updatedQuizBank;
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
@@ -64,5 +60,4 @@ export class QuizBankService {
       throw new HttpException(error.message, error.status);
     }
   }
-
 }

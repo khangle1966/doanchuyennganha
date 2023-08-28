@@ -8,7 +8,7 @@ import { Profile } from 'src/profile/entities/profile.entity';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) { }
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
@@ -54,8 +54,7 @@ export class UserService {
     try {
       const users = this.userModel.find();
       return users;
-    } catch
-    (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }

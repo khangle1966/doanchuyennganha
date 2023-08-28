@@ -23,7 +23,7 @@ export class UserController {
     private userService: UserService,
     private authService: AuthService,
     private profileService: ProfileService,
-  ) { }
+  ) {}
 
   @Post()
   async create(@Headers() headers: any): Promise<User> {
@@ -108,10 +108,8 @@ export class UserController {
     }
   }
 
-
   @Get()
   findAll() {
     return this.userService.findAll();
   }
-
 }

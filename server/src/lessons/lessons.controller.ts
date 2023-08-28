@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpException,
+  HttpStatus,
+  Put,
+} from '@nestjs/common';
 import { LessonsService } from './lessons.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
@@ -14,12 +25,15 @@ export class LessonsController {
   }
 
   @Post()
-  async create(@Body() createLessonDto: CreateLessonDto){
+  async create(@Body() createLessonDto: CreateLessonDto) {
     try {
       const createdLesson = await this.lessonsService.create(createLessonDto);
       return { message: 'Lesson created successfully', lesson: createdLesson };
     } catch (error) {
-      throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -34,15 +48,20 @@ export class LessonsController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateLessonDto: UpdateLessonDto): Promise<Lesson> {
+  async update(
+    @Param('id') id: string,
+    @Body() updateLessonDto: UpdateLessonDto,
+  ): Promise<Lesson> {
     try {
-      const updatedLesson = await this.lessonsService.update(id, updateLessonDto);
+      const updatedLesson = await this.lessonsService.update(
+        id,
+        updateLessonDto,
+      );
       return updatedLesson;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
-
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<Lesson> {
@@ -53,6 +72,4 @@ export class LessonsController {
       throw new HttpException(error.message, error.status);
     }
   }
-
-  
 }

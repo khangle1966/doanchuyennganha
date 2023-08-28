@@ -11,7 +11,7 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private readonly authService: AuthService) {}
 
   async use(req: any, res: any, next: () => void) {
-    let idToken = req.headers['authorization'];
+    const idToken = req.headers['authorization'];
     if (idToken == undefined) {
       throw new HttpException('No token provided', HttpStatus.UNAUTHORIZED);
     }
@@ -19,7 +19,7 @@ export class AuthMiddleware implements NestMiddleware {
     const bearer = idToken.split(' ');
     const token = bearer[1];
     try {
-      let verifiedToken = await this.authService.verifyToken(token);
+      const verifiedToken = await this.authService.verifyToken(token);
       if (verifiedToken == null) {
         throw new HttpException('Invalid token', HttpStatus.FORBIDDEN);
       }

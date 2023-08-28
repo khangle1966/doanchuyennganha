@@ -10,7 +10,7 @@ export class LessonsService {
   createLesson(createLessonDto: CreateLessonDto) {
     throw new Error('Method not implemented.');
   }
-  constructor(@InjectModel(Lesson.name) private lessonModel: Model<Lesson>){}
+  constructor(@InjectModel(Lesson.name) private lessonModel: Model<Lesson>) {}
 
   async create(createLessonDto: CreateLessonDto): Promise<Lesson> {
     try {
@@ -27,9 +27,9 @@ export class LessonsService {
   }
 
   async getById(id: string): Promise<Lesson> {
-    try{
+    try {
       return await this.lessonModel.findById(id).exec();
-    }catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
@@ -43,11 +43,12 @@ export class LessonsService {
   }
 
   async update(id: string, updateLessonDto: UpdateLessonDto): Promise<Lesson> {
-    try{
+    try {
       return this.lessonModel.findByIdAndUpdate(
-        {_id:id},
-        {...updateLessonDto}, 
-        { new: true });
+        { _id: id },
+        { ...updateLessonDto },
+        { new: true },
+      );
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
@@ -61,6 +62,4 @@ export class LessonsService {
       throw new HttpException(error.message, error.status);
     }
   }
-
-
 }

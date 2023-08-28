@@ -6,10 +6,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: QuizBank.name, schema: QuizBankSchema }]),
+    MongooseModule.forFeature([
+      { name: QuizBank.name, schema: QuizBankSchema },
+    ]),
   ],
   controllers: [QuizBankController],
   providers: [QuizBankService],
-  exports: [QuizBankService]
+  exports: [QuizBankService],
 })
-export class QuizBankModule { }
+export class QuizBankModule {}
