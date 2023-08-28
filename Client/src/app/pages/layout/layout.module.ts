@@ -18,6 +18,8 @@ import { SharedModule } from 'src/app/shared/shared/shared.module';
 import { AdminComponent } from './components/admin/admin.component';
 import { CourseFormComponent } from './components/admin/components/course-form/course-form.component';
 import { LessonComponent } from './components/admin/components/lesson/lesson.component';
+import { EditorComponent } from './components/admin/components/lesson/components/editor/editor.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,13 @@ import { LessonComponent } from './components/admin/components/lesson/lesson.com
     AdminComponent,
     CourseFormComponent,
     LessonComponent,
+    EditorComponent,
   ],
-  imports: [CommonModule, LayoutRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    LayoutRoutingModule,
+    SharedModule,
+    QuillModule.forRoot(),
+  ],
 })
 export class LayoutModule {}
