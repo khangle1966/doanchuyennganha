@@ -4,13 +4,14 @@ import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { Lesson } from './entities/lesson.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import e from 'express';
 
 @Injectable()
 export class LessonsService {
   createLesson(createLessonDto: CreateLessonDto) {
     throw new Error('Method not implemented.');
   }
-  constructor(@InjectModel(Lesson.name) private lessonModel: Model<Lesson>) {}
+  constructor(@InjectModel(Lesson.name) private lessonModel: Model<Lesson>) { }
 
   async create(createLessonDto: CreateLessonDto): Promise<Lesson> {
     try {
@@ -20,8 +21,7 @@ export class LessonsService {
       return await newLesson.save();
     } catch (error) {
       throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        error.message, error.status
       );
     }
   }
@@ -47,8 +47,7 @@ export class LessonsService {
       return this.lessonModel.findByIdAndUpdate(
         { _id: id },
         { ...updateLessonDto },
-        { new: true },
-      );
+        { new: true });
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

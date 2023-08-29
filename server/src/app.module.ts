@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -11,6 +11,7 @@ import { CourseModule } from './course/course.module';
 import { QuizBankModule } from './quiz-bank/quiz-bank.module';
 import { QuizModule } from './quiz/quiz.module';
 import { QuestionModule } from './question/question.module';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 @Module({
   imports:
     [
@@ -29,4 +30,10 @@ import { QuestionModule } from './question/question.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
