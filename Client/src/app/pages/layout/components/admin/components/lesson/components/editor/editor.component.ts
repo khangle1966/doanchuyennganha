@@ -28,7 +28,8 @@ export class EditorComponent implements OnInit {
   @Input('content')
   set contentInput(contentVal: string | undefined) {
     if (contentVal == undefined) return;
-    console.log(contentVal);
+    console.log(JSON.parse(contentVal));
+    this.contentParsed = JSON.parse(contentVal);
     this.content = JSON.parse(contentVal);
   }
   @Input('isPreview') isPreview!: boolean;

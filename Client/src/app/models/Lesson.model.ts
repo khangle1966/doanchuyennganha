@@ -2,7 +2,7 @@ export interface Lesson {
   _id: string;
   courseId: string;
   title: string;
-  content: string;
+  content: any;
   imageUrl: string;
   description: string;
 }

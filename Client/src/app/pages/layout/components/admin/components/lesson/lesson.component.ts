@@ -12,23 +12,24 @@ export class LessonComponent implements OnInit {
 
   constructor() {}
 
-  dummyContent = {
-    ops: [
-      { insert: 'Lesson 1693245621273 content' },
-      { attributes: { header: 3 }, insert: '\n' },
-      { insert: '\n' },
-    ],
-  };
-
-  ngOnInit(): void {
-    console.log(this.lessonList[0].content);
+  generateDummyContent(lessonTitle: string) {
+    let dummyContent = {
+      ops: [
+        { insert: `${lessonTitle} content` },
+        { attributes: { header: 3 }, insert: '\n' },
+        { insert: '\n' },
+      ],
+    };
+    return JSON.stringify(dummyContent);
   }
+
+  ngOnInit(): void {}
 
   lessonList: Lesson[] = [
     {
       _id: '1',
       title: 'Lesson ' + Date.now().toString(),
-      content: this.dummyContent.toString(),
+      content: this.generateDummyContent('Lesson ' + Date.now().toString()),
       imageUrl: '../../../../../../../assets/images/lisa.jpg',
       courseId: '1',
       description:
