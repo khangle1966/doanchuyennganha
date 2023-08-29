@@ -7,13 +7,12 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class QuestionService {
-  constructor(
-    @InjectModel(Question.name) private questionModel: Model<Question>,
-  ) {}
+
+  constructor(@InjectModel(Question.name) private questionModel: Model<Question>) { }
+
 
   async create(createCourseDto: CreateQuestionDto): Promise<Question> {
     try {
-      // console.log(createCourseDto);
       const createdCat = new this.questionModel(createCourseDto);
       return createdCat.save();
     } catch (error) {

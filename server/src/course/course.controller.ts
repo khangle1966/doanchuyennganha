@@ -89,4 +89,17 @@ export class CourseController {
       throw new HttpException(error.message, error.status);
     }
   }
+
+  @Get(':id/courses/profile')
+  async getProfileCourses(
+    @Param('id') profileId: string,
+  ): Promise<Course[]> {
+    try {
+      const courses = await this.courseService.getProfileCourses(profileId);
+      return courses;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
 }
