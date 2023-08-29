@@ -7,9 +7,11 @@ export class CreateProfileDto {
     public country: string,
     public avatar: string,
     public sex: string,
-    public courses: string[],
     public bio: string,
     public notifications: string[],
     public messages: string[],
+    public completeCourse: string[],
+    public ongoingCourse: string[],
+    public courses: string[],
   ) {}
 }

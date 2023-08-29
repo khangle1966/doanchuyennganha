@@ -103,4 +103,21 @@ export class ProfileController {
       throw error;
     }
   }
+
+  // @Get(':id/courses')
+  // async getAllCourseOfProfile(@Query('id') id: string) {
+  //   try {
+  //     const profile = await this.profileService.getAllCourse(id);
+  //     if (!profile) {
+  //       throw new HttpException('Profile not found', HttpStatus.BAD_REQUEST);
+  //     }
+  //     return profile;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
+
+
+
+  
 }

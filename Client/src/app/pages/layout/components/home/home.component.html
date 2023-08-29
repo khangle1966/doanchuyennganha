@@ -7,7 +7,7 @@
                     <p>Sat, 24th Aug 2023</p>
                 </div>
                 <div class="search">
-                    <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [(ngModel)]="search" [tuiTextfieldSize]="'m'">
+                    <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [(ngModel)]="search" [tuiTextfieldSize]="'l'">
                         Search
                     </tui-input>
                 </div>
@@ -38,9 +38,8 @@
                         </form>
                     </div>
                     
-
                     <button tuiIconButton type="button" class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconPlusLarge"
-                        [size]="'m'"></button>
+                        [size]="'m'" ></button>
                 </div>
                 <tui-scrollbar class="box">
                     <div class="list_course">
@@ -75,6 +74,7 @@
                         class="tui-space_right-3 tui-space_bottom-3"
                         icon="tuiIconEdit3"
                         [size]="'s'"
+                        (click)="toEdit()"
                     >
                         Edit
                 </button>

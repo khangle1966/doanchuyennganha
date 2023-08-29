@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsEmail } from 'class-validator';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { Course } from 'src/course/entities/course.entity';
 
 export type ProfileDocument = HydratedDocument<Profile>;
 
@@ -31,8 +32,8 @@ export class Profile {
   @Prop({ default: null })
   bio: string;
 
-  @Prop({ default: [] })
-  courses: string[];
+  // @Prop({ default: [] })
+  // courses: string[];
 
   @Prop({ default: null })
   notifications: string[];
@@ -43,6 +44,24 @@ export class Profile {
     default: null,
   })
   messages: string[];
+
+  @Prop({
+    type: [{type: mongoose.Schema.Types.ObjectId}],
+    ref: 'Course', 
+  })
+  completeCourse: Course[];
+
+  @Prop({
+    type: [{type: mongoose.Schema.Types.ObjectId}],
+    ref: 'Course',
+  })
+  ongoingCourse: Course[];
+
+  @Prop({
+    type: [{type: mongoose.Schema.Types.ObjectId}],
+    ref: 'Course',
+  })
+  courses: Course[];
 }
 
 export const ProfileSchema = SchemaFactory.createForClass(Profile);

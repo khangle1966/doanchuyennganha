@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy,Component } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
+import { Router } from '@angular/router';
 import {TuiBooleanHandler} from '@taiga-ui/cdk';
 
 
@@ -101,8 +102,12 @@ export class HomeComponent {
     testValue: new FormControl('orange'),
   });
 
-  readonly courses = ['Chưa học', 'Đã học', 'Đã học xong'];
+  readonly courses = ['Chưa học', 'Đang học', 'Đã học xong'];
 
+  constructor(private router:Router) {}
+  toEdit(){
+    this.router.navigate(['/base/profile']);
+  }
 
 } 
 

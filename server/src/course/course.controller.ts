@@ -15,6 +15,7 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Profile } from 'src/profile/entities/profile.entity';
 import { Course } from './entities/course.entity';
+import { error } from 'console';
 
 @Controller('v1/course')
 export class CourseController {
@@ -83,6 +84,48 @@ export class CourseController {
   ): Promise<Profile> {
     try {
       const profile = await this.courseService.buyCourse(courseId, userId);
+      return profile;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Put(':id/ongoing')
+  async ongoingCourse(
+    @Param('id') courseId: string,
+    //id == ObjectId
+    @Query('uid') userId: string,
+    //uid == idProfile
+  ): Promise<Profile> {
+    try {
+      const profile = await this.courseService.ongoingCourse(courseId, userId);
+      if(profile) {
+        const profiles = await this.courseService.removeCourse(courseId, userId);
+        return profiles;
+      }else{
+        throw new HttpException('Course not found', 404);
+      }
+      return profile;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Put(':id/complete')
+  async completeCourse(
+    @Param('id') courseId: string,
+    //id == ObjectId
+    @Query('uid') userId: string,
+    //uid == idProfile
+  ): Promise<Profile> {
+    try {
+      const profile = await this.courseService.completeCourse(courseId, userId);
+      if(profile) {
+        const profiles = await this.courseService.removeOngoingCourse(courseId, userId);
+        return profiles;
+      }else{
+        throw new HttpException('Course not found', 404);
+      }
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
