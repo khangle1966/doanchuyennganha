@@ -36,9 +36,20 @@
               "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
               "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
               "node_modules/@taiga-ui/styles/taiga-ui-global.less",
-              "src/styles.less"
+              "src/styles.less",
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.snow.css",
+              "./node_modules/quill-emoji/dist/quill-emoji.css"
             ],
-            "scripts": ["./node_modules/quill/dist/quill.min.js"]
+            "scripts": ["./node_modules/quill/dist/quill.min.js"],
+            "allowedCommonJsDependencies": [
+              "text-mask-core",
+              "dompurify",
+              "quill",
+              "quill-emoji/dist/quill-emoji.js",
+              "quill-image-resize-module"
+            ]
           },
           "configurations": {
             "production": {
@@ -93,10 +104,7 @@
             "inlineStyleLanguage": "less",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.less"],
-            "scripts": [
-              "./node_modules/quill-emoji/dist/quill-emoji.js",
-              "./node_modules/quill/dist/quill.min.js"
-            ]
+            "scripts": []
           }
         },
         "deploy": {

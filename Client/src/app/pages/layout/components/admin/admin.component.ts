@@ -25,7 +25,9 @@ export class AdminComponent implements OnInit {
       author: 'Google',
       date_Created: '2021-07-01',
       date_Updated: '2021-07-01',
-      imageUrl: 'https://angular.io/assets/images/logos/angular/angular.svg',
+      img: 'https://angular.io/assets/images/logos/angular/angular.svg',
+      rating: 4.5,
+      language: 'English',
     },
     {
       _id: '2',
@@ -36,8 +38,9 @@ export class AdminComponent implements OnInit {
       author: 'Facebook',
       date_Created: '2021-07-01',
       date_Updated: '2021-07-01',
-      imageUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png',
+      rating: 4.5,
+      language: 'English',
     },
     {
       _id: '3',
@@ -48,7 +51,9 @@ export class AdminComponent implements OnInit {
       author: 'Evan You',
       date_Created: '2021-07-01',
       date_Updated: '2021-07-01',
-      imageUrl: 'https://vuejs.org/images/logo.png',
+      img: 'https://vuejs.org/images/logo.png',
+      rating: 4.5,
+      language: 'English',
     },
     {
       _id: '4',
@@ -59,8 +64,9 @@ export class AdminComponent implements OnInit {
       author: 'Rich Harris',
       date_Created: '2021-07-01',
       date_Updated: '2021-07-01',
-      imageUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Svelte_Logo.svg/1200px-Svelte_Logo.svg.png',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Svelte_Logo.svg/1200px-Svelte_Logo.svg.png',
+      rating: 4.5,
+      language: 'English',
     },
     {
       _id: '5',
@@ -71,8 +77,9 @@ export class AdminComponent implements OnInit {
       author: 'Yehuda Katz',
       date_Created: '2021-07-01',
       date_Updated: '2021-07-01',
-      imageUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Ember-logo.svg/1200px-Ember-logo.svg.png',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Ember-logo.svg/1200px-Ember-logo.svg.png',
+      rating: 4.5,
+      language: 'English',
     },
   ];
 
@@ -90,6 +97,7 @@ export class AdminComponent implements OnInit {
 
   openEdit = false;
   openEditSidebar(open: boolean): void {
+    console.log('openEditSidebar: ', open);
     if (open != this.openEdit) {
       this.openEdit = open;
     }
@@ -102,13 +110,18 @@ export class AdminComponent implements OnInit {
   }
 
   editLessons($event: boolean) {
-    if ($event) {
-      this.openEditSidebar($event);
-      if (this.selectCourse != null) {
-        this.router.navigateByUrl(
-          `/base/admin/course/${this.selectCourse._id}`
-        );
-      }
+    this.openEditSidebar($event);
+    if (this.selectCourse != null) {
+      this.router.navigateByUrl(`/base/admin/course/${this.selectCourse._id}`);
+    }
+  }
+
+  editQuiz($event: boolean) {
+    this.openEditSidebar($event);
+    if (this.selectCourse != null) {
+      this.router.navigateByUrl(
+        `/base/admin/course/${this.selectCourse._id}/quiz`
+      );
     }
   }
 }

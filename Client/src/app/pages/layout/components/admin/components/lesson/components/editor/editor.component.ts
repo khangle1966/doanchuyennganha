@@ -1,17 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
-import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import Quill from 'quill';
 import 'quill-emoji/dist/quill-emoji.js';
 import ImageResize from 'quill-image-resize-module';
 import { ImageDrop } from 'quill-image-drop-module';
+import { ContentChange, EditorChangeSelection } from 'ngx-quill';
 Quill.register('modules/imageResize', ImageResize);
 Quill.register('modules/imageDrop', ImageDrop);
 
@@ -19,33 +12,30 @@ Quill.register('modules/imageDrop', ImageDrop);
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.less'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class EditorComponent implements OnInit {
-  contentParsed: any;
   content: any;
   @Output('save') saveEvent: EventEmitter<string> = new EventEmitter();
   @Input('content')
   set contentInput(contentVal: string | undefined) {
     if (contentVal == undefined) return;
-    console.log(JSON.parse(contentVal));
-    this.contentParsed = JSON.parse(contentVal);
+    console.log('raw', JSON.parse(contentVal));
     this.content = JSON.parse(contentVal);
   }
   @Input('isPreview') isPreview!: boolean;
   @Input('isSave')
   set isSaveInput(isSave: boolean) {
     if (isSave) {
+      this.saveEvent.emit(JSON.stringify(this.content));
     }
   }
   ngOnInit(): void {}
 
   editor_modules = {};
   constructor() {
-    this.contentParsed = this.content;
     this.editor_modules = {
       'emoji-shortname': true,
-      'emoji-textarea': true,
+      'emoji-textarea': false,
       'emoji-toolbar': true,
       toolbar: [
         ['emoji'],
@@ -77,13 +67,9 @@ export class EditorComponent implements OnInit {
     console.log('editor-created', event);
   }
 
-  changedEditor(event: any) {
+  changedContent(event: ContentChange | EditorChangeSelection) {
     // tslint:disable-next-line:no-console
     console.log('editor-change', event);
-    if (event.content != undefined) {
-      this.contentParsed = event.content;
-      console.log(JSON.stringify(this.contentParsed));
-    }
   }
 
   focus($event: any) {
