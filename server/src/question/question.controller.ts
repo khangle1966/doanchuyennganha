@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpException,
+  HttpStatus,
+  Put,
+} from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
@@ -11,11 +22,16 @@ export class QuestionController {
   @Post()
   async create(@Body() createQuestionDto: CreateQuestionDto) {
     try {
-      const createQuestion = await this.questionService.create(createQuestionDto);
+      const createQuestion = await this.questionService.create(
+        createQuestionDto,
+      );
       console.log(createQuestion);
       return createQuestion;
     } catch (error) {
-      throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -38,7 +54,7 @@ export class QuestionController {
       throw new HttpException(error.message, error.status);
     }
   }
-  
+
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -51,7 +67,7 @@ export class QuestionController {
       throw new HttpException(error.message, error.status);
     }
   }
-  
+
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<Question> {
     try {

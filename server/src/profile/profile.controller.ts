@@ -21,7 +21,7 @@ export class ProfileController {
   constructor(
     private profileService: ProfileService,
     private userService: UserService,
-  ) { }
+  ) {}
 
   @Post()
   async create(@Body() createProfileDto: CreateProfileDto): Promise<Profile> {
@@ -102,6 +102,5 @@ export class ProfileController {
     } catch (error) {
       throw error;
     }
-
   }
 }

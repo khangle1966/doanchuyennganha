@@ -3,18 +3,14 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Course } from './entities/course.entity';
-import { Model, SaveOptions } from 'mongoose';
+import { Model } from 'mongoose';
 import { Profile } from 'src/profile/entities/profile.entity';
-
-
 
 @Injectable()
 export class CourseService {
-
   constructor(
     @InjectModel(Course.name) private courseModel: Model<Course>,
-    @InjectModel(Profile.name) private profileModel: Model<Profile>
-
+    @InjectModel(Profile.name) private profileModel: Model<Profile>,
   ) { }
 
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
@@ -22,18 +18,15 @@ export class CourseService {
       console.log(createCourseDto);
       const createdCat = new this.courseModel(createCourseDto);
       return createdCat.save();
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
 
-
   async findAll(): Promise<Course[]> {
     try {
       return await this.courseModel.find().exec();
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
@@ -41,18 +34,19 @@ export class CourseService {
   async findOne(id: string): Promise<Course> {
     try {
       return await this.courseModel.findById(id).exec();
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
 
   async update(id: string, updateCourseDto: UpdateCourseDto): Promise<Course> {
     try {
-      const updateCourse = await this.courseModel.findOneAndUpdate({ _id: id },
-        { ...updateCourseDto }, { new: true });
+      const updateCourse = await this.courseModel.findOneAndUpdate(
+        { _id: id },
+        { ...updateCourseDto },
+        { new: true },
+      );
       return updateCourse;
-
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
@@ -87,7 +81,6 @@ export class CourseService {
       courseUpdate,
       courseOptions,
     );
-
 
     return profile;
   }

@@ -1,25 +1,7 @@
-import { Component,ChangeDetectionStrategy } from '@angular/core';
+import { Component,ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TuiCurrency } from '@taiga-ui/addon-commerce';
-import { TuiDay, TuiTime } from '@taiga-ui/cdk';
-
-class User {
-  constructor(readonly firstName: string, readonly lastName: string) {}
-
-  toString(): string {
-    return `${this.firstName} ${this.lastName}`;
-  }
-}
-
-class Account {
-  constructor(
-    readonly id: string,
-    readonly name: string,
-    readonly amount: number,
-    readonly currency: TuiCurrency,
-    readonly cardSvg: string
-  ) {}
-}
+import { Course } from 'src/app/models/Course.model';
+import { Profile } from 'src/app/models/Profile.model';
 
 @Component({
   selector: 'app-profile',
@@ -28,66 +10,40 @@ class Account {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
-  readonly svgIcons = {
-    common: `https://ng-web-apis.github.io/dist/assets/images/common.svg`,
-    universal: `https://ng-web-apis.github.io/dist/assets/images/universal.svg`,
-    intersection: `https://ng-web-apis.github.io/dist/assets/images/intersection-observer.svg`,
-    mutation: `https://ng-web-apis.github.io/dist/assets/images/mutation-observer.svg`,
-  };
+  @Input('isEdit') isEdit: boolean = false;
+  @Input('course') course: Course | null = null;
+  @Input('profile') profile: Profile | null = null;
 
-  persons = [new User(`Roman`, `Sedov`), new User(`Alex`, `Inkin`)];
-
-  accounts = [
-    new Account(
-      `1`,
-      `Common`,
-      24876.55,
-      TuiCurrency.Ruble,
-      this.svgIcons.common
-    ),
-    new Account(
-      `2`,
-      `Universal`,
-      335,
-      TuiCurrency.Dollar,
-      this.svgIcons.universal
-    ),
-    new Account(
-      `3`,
-      `Intersection`,
-      10000,
-      TuiCurrency.Euro,
-      this.svgIcons.intersection
-    ),
-    new Account(
-      `4`,
-      `Mutation`,
-      100,
-      TuiCurrency.Pound,
-      this.svgIcons.mutation
-    ),
-  ];
-
-  testForm = new FormGroup({
-    nameValue: new FormControl(``, Validators.required),
-    textValue: new FormControl(``, Validators.required),
-    passwordValue: new FormControl(``, Validators.required),
-    phoneValue: new FormControl(``, Validators.required),
-    moneyValue: new FormControl(`100`, Validators.required),
-    periodValue: new FormControl(new TuiDay(2017, 2, 15), Validators.required),
-    timeValue: new FormControl(new TuiTime(12, 30), Validators.required),
-    personValue: new FormControl(this.persons[0]),
-    quantityValue: new FormControl(50_000, Validators.required),
-    radioValue: new FormControl(`with-commission`),
-    accountWherefrom: new FormControl(null),
-    accountWhere: new FormControl(null),
-    checkboxValue: new FormControl(false),
-    osnoValue: new FormControl(false),
-    usnValue: new FormControl(false),
-    eshnValue: new FormControl(false),
-    envdValue: new FormControl(false),
-    usn2Value: new FormControl(false),
-    patentValue: new FormControl(false),
+  courseForm: FormGroup = new FormGroup({
+    _id: new FormControl({ value: '', disabled: true }, Validators.required),
+    name: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    price: new FormControl(null, Validators.required),
+    imageUrl: new FormControl('', Validators.required),
   });
 
+  
+
+  ngOnInit(): void {
+    console.log(this.course);
+    if (this.isEdit) {
+      if (this.course != null) {
+        this.courseForm = new FormGroup({
+          _id: new FormControl(
+            { value: this.course._id, disabled: true },
+            Validators.required
+          ),
+          name: new FormControl(this.course.name, Validators.required),
+          category: new FormControl(this.course.category, Validators.required),
+          description: new FormControl(
+            this.course.description,
+            Validators.required
+          ),
+          price: new FormControl(this.course.price, Validators.required),
+          imageUrl: new FormControl(this.course.imageUrl, Validators.required),
+        });
+      }
+    }
+  }
 }

@@ -10,6 +10,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { LessonComponent } from './components/admin/components/lesson/lesson.component';
 import { QuizComponent } from './components/quiz/quiz.component';
+import { DetailComponent } from './components/detail/detail.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
       {
         path: 'quiz',
         component: QuizComponent,
+      },
+      {
+        path: 'browse/detail/:id',
+        component: DetailComponent,
       },
     ],
   },

@@ -1,29 +1,66 @@
 <div id="admin-container">
   <div class="tui-text_h4 tui-space_top-3 tui-space_bottom-3">Course List</div>
   <div class="filter-group">
-    <form class="b-form" [formGroup]="searchForm" class="tui-space_top-3 tui-space_bottom-3">
-      <tui-input formControlName="searchValue" [tuiTextfieldIcon]="'tuiIconSearchLarge'" [tuiTextfieldCleaner]="true"
-        [tuiTextfieldSize]="'m'" [tuiTextfieldLabelOutside]="false">
+    <form
+      class="b-form"
+      [formGroup]="searchForm"
+      class="tui-space_top-3 tui-space_bottom-3"
+    >
+      <tui-input
+        formControlName="searchValue"
+        [tuiTextfieldIcon]="'tuiIconSearchLarge'"
+        [tuiTextfieldCleaner]="true"
+        [tuiTextfieldSize]="'m'"
+        [tuiTextfieldLabelOutside]="false"
+      >
         Search your course
         <input tuiTextfield type="text" [placeholder]="'Enter'" />
       </tui-input>
     </form>
     <div class="btn-grp">
-      <button [size]="'m'" tuiButton type="button" appearance="primary" class="tui-space_top-3 tui-space_bottom-3"
-        (click)="openCreateSidebar(true)" (tuiActiveZoneChange)="openCreateSidebar($event)">
+      <button
+        [size]="'m'"
+        tuiButton
+        type="button"
+        appearance="primary"
+        class="tui-space_top-3 tui-space_bottom-3"
+        (click)="openCreateSidebar(true)"
+        (tuiActiveZoneChange)="openCreateSidebar($event)"
+      >
         Add
-        <tui-scrollbar *tuiSidebar="this.openCreate; direction: 'right'; autoWidth: true" id="right-sidebar">
-          <app-course-form [course]="this.selectCourse" [isEdit]="false" (toggle)="openCreateSidebar($event)">
+        <tui-scrollbar
+          *tuiSidebar="this.openCreate; direction: 'right'; autoWidth: true"
+          id="right-sidebar"
+        >
+          <app-course-form
+            [course]="this.selectCourse"
+            [isEdit]="false"
+            (toggle)="openCreateSidebar($event)"
+          >
           </app-course-form>
         </tui-scrollbar>
       </button>
-      <button [size]="'m'" tuiButton type="button" appearance="secondary" class="tui-space_top-3 tui-space_bottom-3"
-        [disabled]="selectCourse == null" (click)="openEditSidebar(true)"
-        (tuiActiveZoneChange)="openEditSidebar($event)">
+      <button
+        [size]="'m'"
+        tuiButton
+        type="button"
+        appearance="secondary"
+        class="tui-space_top-3 tui-space_bottom-3"
+        [disabled]="selectCourse == null"
+        (click)="openEditSidebar(true)"
+        (tuiActiveZoneChange)="openEditSidebar($event)"
+      >
         Edit
-        <tui-scrollbar *tuiSidebar="this.openEdit; direction: 'right'; autoWidth: true" id="right-sidebar">
-          <app-course-form [course]="this.selectCourse" [isEdit]="true" (toggle)="openEditSidebar($event)"
-            (editLessons)="editLessons($event)">
+        <tui-scrollbar
+          *tuiSidebar="this.openEdit; direction: 'right'; autoWidth: true"
+          id="right-sidebar"
+        >
+          <app-course-form
+            [course]="this.selectCourse"
+            [isEdit]="true"
+            (toggle)="openEditSidebar($event)"
+            (editLessons)="editLessons($event)"
+          >
           </app-course-form>
         </tui-scrollbar>
       </button>
@@ -31,7 +68,9 @@
   </div>
   <table class="tui-table">
     <tbody>
-      <tr class="tui-table__tr tui-table__tr_border_none tui-table__tr_hover_disabled">
+      <tr
+        class="tui-table__tr tui-table__tr_border_none tui-table__tr_hover_disabled"
+      >
         <th class="tui-table__th tui-table__th_first tui-text_h6">Name</th>
         <th class="tui-table__th tui-text_h6">Description</th>
         <th class="tui-table__th tui-text_h6">Author</th>
@@ -39,8 +78,10 @@
         <th class="tui-table__th tui-text_h6">Category</th>
         <th class="tui-table__th tui-table__th_last tui-text_h6">Select</th>
       </tr>
-      <tr class="tui-table__tr tui-table__tr_border_none tui-table__tr_cursor_pointer"
-        *ngFor="let course of courseList; let i = index">
+      <tr
+        class="tui-table__tr tui-table__tr_border_none tui-table__tr_cursor_pointer"
+        *ngFor="let course of courseList; let i = index"
+      >
         <td class="tui-table__td tui-table__td_first">
           <tui-tag [value]="course.name" [autoColor]="true"></tui-tag>
         </td>
@@ -55,7 +96,12 @@
           <tui-tag [value]="course.category" [autoColor]="true"></tui-tag>
         </td>
         <td class="tui-table__td tui-table__td_last">
-          <tui-checkbox [formControl]="this.checkboxList[i]" (click)="check(course, i)"></tui-checkbox>
+          <tui-radio
+            [size]="'l'"
+            [formControl]="checkboxList"
+            item="{{ i }}"
+            (click)="selectEditCourse(course)"
+          ></tui-radio>
         </td>
       </tr>
     </tbody>

@@ -7,15 +7,28 @@ import { Lesson } from 'src/app/models/Lesson.model';
   styleUrls: ['./lesson.component.less'],
 })
 export class LessonComponent implements OnInit {
+  isPreview: boolean = true;
+  isSave: boolean = false;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  dummyContent = {
+    ops: [
+      { insert: 'Lesson 1693245621273 content' },
+      { attributes: { header: 3 }, insert: '\n' },
+      { insert: '\n' },
+    ],
+  };
+
+  ngOnInit(): void {
+    console.log(this.lessonList[0].content);
+  }
 
   lessonList: Lesson[] = [
     {
       _id: '1',
       title: 'Lesson ' + Date.now().toString(),
-      content: 'Lesson ' + Date.now().toString() + ' content',
+      content: this.dummyContent.toString(),
       imageUrl: '../../../../../../../assets/images/lisa.jpg',
       courseId: '1',
       description:
@@ -39,5 +52,43 @@ export class LessonComponent implements OnInit {
 
   selectLesson(lesson: Lesson) {
     this.selectedLesson = lesson;
+  }
+
+  openEdit = false;
+  openEditSidebar(open: boolean): void {
+    if (open != this.openEdit) {
+      this.openEdit = open;
+    }
+  }
+
+  updateLessonInfo($event: Lesson) {
+    this.lessonList = this.lessonList.map((lesson) => {
+      if (lesson._id === $event._id) {
+        return $event;
+      } else {
+        return lesson;
+      }
+    });
+    console.log('lesonList: ', this.lessonList);
+  }
+
+  saveLessonContent() {
+    this.isSave = true;
+  }
+
+  updateLessonContent(content: string) {
+    if (this.selectedLesson != null) {
+      this.lessonList = this.lessonList.map((lesson) => {
+        if (lesson._id === this.selectedLesson?._id) {
+          return {
+            ...lesson,
+            content: content,
+          };
+        } else {
+          return lesson;
+        }
+      });
+      console.log('lesonList: ', this.lessonList);
+    }
   }
 }

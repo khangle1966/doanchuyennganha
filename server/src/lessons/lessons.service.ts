@@ -61,6 +61,4 @@ export class LessonsService {
       throw new HttpException(error.message, error.status);
     }
   }
-
-
 }

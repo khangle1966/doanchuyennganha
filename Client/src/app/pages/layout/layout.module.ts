@@ -20,6 +20,7 @@ import { CourseFormComponent } from './components/admin/components/course-form/c
 import { LessonComponent } from './components/admin/components/lesson/lesson.component';
 import { EditorComponent } from './components/admin/components/lesson/components/editor/editor.component';
 import { QuillModule } from 'ngx-quill';
+import { LessonInfoFormComponent } from './components/admin/components/lesson/components/lesson-info-form/lesson-info-form.component';
 
 @NgModule({
   declarations: [
@@ -39,12 +40,13 @@ import { QuillModule } from 'ngx-quill';
     CourseFormComponent,
     LessonComponent,
     EditorComponent,
+    LessonInfoFormComponent,
   ],
   imports: [
     CommonModule,
     LayoutRoutingModule,
     SharedModule,
-    QuillModule.forRoot({}),
+    QuillModule.forRoot(),
   ],
 })
 export class LayoutModule {}

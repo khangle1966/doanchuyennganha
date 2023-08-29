@@ -13,7 +13,7 @@ export class AdminComponent implements OnInit {
     searchValue: new FormControl(''),
   });
 
-  checkboxList: FormControl<boolean | null>[] = [];
+  checkboxList = new FormControl('Check');
   courseList: Course[] = [
     {
       _id: '1',
@@ -78,24 +78,14 @@ export class AdminComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    for (let i = 0; i < this.courseList.length; i++) {
-      this.checkboxList.push(new FormControl(false));
-    }
-  }
+  ngOnInit(): void {}
 
   selectCourse: Course | null = null;
-  check(course: Course, index: number) {
-    if (this.selectCourse?._id === course._id) {
-      this.selectCourse = <Course>{};
-      return;
+  selectEditCourse(course: Course) {
+    if (this.selectCourse?._id !== course._id) {
+      this.selectCourse = <Course>{ ...course };
+      console.log('select courrse', this.selectCourse);
     }
-    for (let i = 0; i < this.checkboxList.length; i++) {
-      if (i !== index) {
-        this.checkboxList[i].setValue(false);
-      }
-    }
-    this.selectCourse = <Course>{ ...course };
   }
 
   openEdit = false;

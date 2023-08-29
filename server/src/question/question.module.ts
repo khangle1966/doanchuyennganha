@@ -6,12 +6,9 @@ import { ProfileModule } from 'src/profile/profile.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Question, QuestionSchema } from './entities/question.entity';
 
-
 @Module({
-  imports: [MongooseModule.forFeature([
-   {name: 'Question', schema: QuestionSchema}
-  ]),
-
+  imports: [
+    MongooseModule.forFeature([{ name: 'Question', schema: QuestionSchema }]),
   ],
   controllers: [QuestionController],
   providers: [QuestionService],

@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
 
 import Quill from 'quill';
@@ -12,12 +19,29 @@ Quill.register('modules/imageDrop', ImageDrop);
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.less'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EditorComponent implements OnInit {
-  @Input('content') content: any;
+  contentParsed: any;
+  content: any;
+  @Output('save') saveEvent: EventEmitter<string> = new EventEmitter();
+  @Input('content')
+  set contentInput(contentVal: string | undefined) {
+    if (contentVal == undefined) return;
+    console.log(contentVal);
+    this.content = JSON.parse(contentVal);
+  }
+  @Input('isPreview') isPreview!: boolean;
+  @Input('isSave')
+  set isSaveInput(isSave: boolean) {
+    if (isSave) {
+    }
+  }
   ngOnInit(): void {}
+
   editor_modules = {};
   constructor() {
+    this.contentParsed = this.content;
     this.editor_modules = {
       'emoji-shortname': true,
       'emoji-textarea': true,
@@ -43,75 +67,34 @@ export class EditorComponent implements OnInit {
       imageDrop: true,
     };
   }
-  notify(event: any) {
-    console.log(event);
-    this.content = event;
-  }
-
-  // addBindingCreated(quill: Quill) {
-  //   quill.keyboard.addBinding(
-  //     {
-  //       key: 'b',
-  //     },
-  //     (range, context) => {
-  //       // tslint:disable-next-line:no-console
-  //       console.log('KEYBINDING B', range, context);
-  //     }
-  //   );
-
-  //   quill.keyboard.addBinding(
-  //     {
-  //       key: 'B',
-  //       shiftKey: true,
-  //     } as any,
-  //     (range, context) => {
-  //       // tslint:disable-next-line:no-console
-  //       console.log('KEYBINDING SHIFT + B', range, context);
-  //     }
-  //   );
-  // }
 
   blured = false;
   focused = false;
 
-  addBindingCreated(quill: Quill) {
-    quill.keyboard.addBinding(
-      {
-        key: 'b',
-      },
-      (range, context) => {
-        // tslint:disable-next-line:no-console
-        console.log('KEYBINDING B', range, context);
-      }
-    );
-
-    quill.keyboard.addBinding(
-      {
-        key: 'B',
-        shiftKey: true,
-      } as any,
-      (range, context) => {
-        // tslint:disable-next-line:no-console
-        console.log('KEYBINDING SHIFT + B', range, context);
-      }
-    );
+  created(event: any) {
+    // tslint:disable-next-line:no-console
+    console.log('editor-created', event);
   }
 
-  changedEditor(event: EditorChangeContent | EditorChangeSelection) {
+  changedEditor(event: any) {
     // tslint:disable-next-line:no-console
     console.log('editor-change', event);
+    if (event.content != undefined) {
+      this.contentParsed = event.content;
+      console.log(JSON.stringify(this.contentParsed));
+    }
   }
 
   focus($event: any) {
     // tslint:disable-next-line:no-console
-    console.log('focus', $event);
+    // console.log('focus', $event);
     this.focused = true;
     this.blured = false;
   }
 
   blur($event: any) {
     // tslint:disable-next-line:no-console
-    console.log('blur', $event);
+    // console.log('blur', $event);
     this.focused = false;
     this.blured = true;
   }
