@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Course } from 'src/app/models/Course.model';
+import { Store } from '@ngrx/store';
+import { CourseState } from 'src/app/ngrx/states/course.state';
+import * as CourseAction from 'src/app/ngrx/actions/course.actions'
 
 @Component({
   selector: 'app-browse',
@@ -8,7 +13,16 @@ import { Router } from '@angular/router';
 })
 export class BrowseComponent {
   
-  constructor(private router:Router){}
+  courseList$: Observable<Course[]> = this.store.select('course','courseList')
+  constructor(private router:Router, private store: Store<{course: CourseState}>){
+    this.store.dispatch(CourseAction.get());
+    this.courseList$.subscribe((course)=>{
+      console.log(course);
+    })
+  }
+
+
+
   description(id:string){
     this.router.navigate([`/base/browse/detail/${id}`]);
    }
@@ -17,69 +31,35 @@ export class BrowseComponent {
 
   }
   
-  course = [
-  {
-    _id:'123',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-  {
-    _id:'456',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-  {
-    _id:'678',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-  {
-    _id:'346',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-  {
-    _id:'120',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-  {
-    _id:'121',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-    {
-      _id:'133',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-  {
-    _id:'153',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-  {
-    _id:'173',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
-  {
-    _id:'1223',
-    nameCourse: 'Front-End',
-    categoryCourse: 'Web Developer',
-    imgUrl: '../../../../../assets/images/webdev.jpg'
-  },
+
+
+//   course = [
+//   {
+//     _id:'123',
+//     nameCourse: 'Front-End',
+//     categoryCourse: 'Web Developer',
+//     imgUrl: '../../../../../assets/images/webdev.jpg'
+//   },
+//   {
+//     _id:'456',
+//     nameCourse: 'Front-End',
+//     categoryCourse: 'Web Developer',
+//     imgUrl: '../../../../../assets/images/webdev.jpg'
+//   },
+//   {
+//     _id:'678',
+//     nameCourse: 'Front-End',
+//     categoryCourse: 'Web Developer',
+//     imgUrl: '../../../../../assets/images/webdev.jpg'
+//   },
+//   {
+//     _id:'346',
+//     nameCourse: 'Front-End',
+//     categoryCourse: 'Web Developer',
+//     imgUrl: '../../../../../assets/images/webdev.jpg'
+//   },
   
-]
+// ]
    
   search = '';
 }

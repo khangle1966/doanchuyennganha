@@ -105,15 +105,15 @@
         <div id="browse-course">
             <tui-scrollbar class ="main-rol">
             <div class="main" >
-                <tui-push class="course"  *ngFor="let item of course; let i=index;" heading={{item.nameCourse}}>
-                    <img [src]=item.imgUrl alt="" />
+                <tui-push class="course"  *ngFor="let course of courseList$ | async; let i=index;" heading={{course.name}}>
+                    <img [src]=course.imageUrl alt="" />
                     <!-- <tui-svg src="tuiIconSettingsLarge"></tui-svg> -->
                     <p>
-                        {{item.categoryCourse}}
+                        {{course.category}}
                     </p>
                     <div class="btn-course">
                         <button tuiButton type="button" appearance="secondary"
-                            class="tui-space_right-3 tui-space_bottom-3" (click)="description(item._id)">
+                            class="tui-space_right-3 tui-space_bottom-3" (click)="description(course._id)">
                             Detail
                         </button>
                         <button tuiButton type="button" appearance="flat" class="tui-space_right-3 tui-space_bottom-3"

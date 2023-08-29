@@ -19,14 +19,19 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { SharedModule } from './shared/shared/shared.module';
-
+import { CourseReducer } from './ngrx/reducers/course.reducer';
+import { CourseEffect } from './ngrx/effects/course.effects';
+import { HttpClientModule } from '@angular/common/http';
+// import { HttpModule } from '@angular/http';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    // HttpModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({course: CourseReducer}, {}),
+    EffectsModule.forRoot([CourseEffect]),
     BrowserAnimationsModule,
     TuiRootModule,
     TuiDialogModule,
