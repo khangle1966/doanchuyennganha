@@ -28,7 +28,7 @@ export class ProfileService {
 
   async findOne(id: string): Promise<Profile> {
     try {
-      const profile = await this.profileModel.findOne({ id: id });
+      const profile = await this.profileModel.findOne({ _id: id });
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
