@@ -17,11 +17,16 @@ import { Lesson } from './entities/lesson.entity';
 
 @Controller('lessons')
 export class LessonsController {
-  constructor(private readonly lessonsService: LessonsService) {}
+  constructor(private readonly lessonsService: LessonsService) { }
 
   @Get(':id')
   async getById(@Param('id') id: string): Promise<Lesson> {
-    return this.lessonsService.getById(id);
+    try {
+      const lesson = await this.lessonsService.getById(id);
+      return lesson;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
   }
 
   @Post()
@@ -72,4 +77,6 @@ export class LessonsController {
       throw new HttpException(error.message, error.status);
     }
   }
+
+
 }

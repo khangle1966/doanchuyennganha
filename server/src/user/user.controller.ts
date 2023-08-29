@@ -41,7 +41,6 @@ export class UserController {
         email: decodedToken.email,
         name: decodedToken.name,
         picture: decodedToken.picture,
-        role: 'user',
         profile: null,
       };
       const createdUser = await this.userService.create(user);
