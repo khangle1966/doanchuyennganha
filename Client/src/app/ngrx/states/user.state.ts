@@ -8,5 +8,5 @@ export interface UserState {
     isGetLoading: boolean;
     isGetSuccess: boolean;
     getErrorMessage: any;
-    email: string;
+
   }

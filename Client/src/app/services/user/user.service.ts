@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class UserService {
   constructor(private httpClient: HttpClient) { }
   createUser(idToken: string) {
+    console.log(idToken);
     const headers = new HttpHeaders({
       Authorization: `Bearer ${idToken}`,
     });
@@ -19,8 +20,12 @@ export class UserService {
     });
   }
 
-  getUser(uid: string) {
-    return this.httpClient.get<UserInfo>(`http://localhost:3000/v1/user/${uid}`);
+  getUser(uid: string, idToken: string) {
+    return this.httpClient.get<UserInfo>(`http://localhost:3000/v1/user/${uid}`,{
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${idToken}`
+      })
+      });
   }
 }
 

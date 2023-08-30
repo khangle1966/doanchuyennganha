@@ -9,7 +9,11 @@
         <div class="register">
             <p class="text-register">Create profile</p>
         </div>
-        <form class="input" [formGroup]="testForm" >
+        <form class="input" [formGroup]="regisForm" >
+
+            <div class="avatar-container">
+                <img [src]="regisForm.value.avatar" class="avatar-image" style="height: 50px; width: 50px;">
+            </div>  
 
                 <tui-input formControlName="name" style="width: 296px;">
                     Name
@@ -35,7 +39,7 @@
                 </form>
 
                 <tui-input formControlName="email" style="width: 296px;margin-top: 1rem;">
-                    Email: {{ email }}
+                    Email:
                     <input tuiTextfield type="email" />
                 </tui-input>
 

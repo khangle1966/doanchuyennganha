@@ -11,6 +11,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { LessonComponent } from './components/admin/components/lesson/lesson.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { DetailComponent } from './components/detail/detail.component';
+import { CourseComponent } from './components/course/course.component';
 
 const routes: Routes = [
   {
@@ -51,13 +52,17 @@ const routes: Routes = [
         component: LessonComponent,
       },
       {
-        path: 'quiz',
+        path: 'home/course/quiz',
         component: QuizComponent,
       },
       {
         path: 'browse/detail/:id',
         component: DetailComponent,
       },
+      {
+        path: 'home/course',
+        component: CourseComponent
+      }
     ],
   },
 ];
