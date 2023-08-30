@@ -6,12 +6,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { LessonsModule } from './lessons/lessons.module';
+
 import { CourseModule } from './course/course.module';
 import { QuizBankModule } from './quiz-bank/quiz-bank.module';
 import { QuizModule } from './quiz/quiz.module';
 import { QuestionModule } from './question/question.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
+import { LessonModule } from './lesson/lesson.module';
 @Module({
   imports:
     [
@@ -19,11 +20,11 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
       AuthModule,
       UserModule,
       ProfileModule,
-      LessonsModule,
       CourseModule,
       QuizBankModule,
       QuizModule,
       QuestionModule,
+      LessonModule
     ],
 
 

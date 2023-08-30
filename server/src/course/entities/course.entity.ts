@@ -21,8 +21,6 @@ export class Course {
   @Prop()
   description: string;
 
-
-
   @Prop()
   img: string;
 
@@ -38,8 +36,7 @@ export class Course {
   @Prop()
   language: string;
 
-  @Prop()
-  role: string;
+
 
 
   // @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }])

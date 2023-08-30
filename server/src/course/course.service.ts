@@ -15,7 +15,6 @@ export class CourseService {
 
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
     try {
-      console.log(createCourseDto);
       const createdCat = new this.courseModel(createCourseDto);
       return createdCat.save();
     } catch (error) {
@@ -84,29 +83,5 @@ export class CourseService {
 
     return profile;
   }
-
-  //Get all courses of a profile
-  async getProfileCourses(profileId: string): Promise<Course[]> {
-    try {
-      //check if profile exists
-      const profile = await this.profileModel.findOne({ _id: profileId }
-      );
-      console.log(profile);
-      if (!profile) {
-        throw new HttpException('Profile not found', 404);
-      }
-
-      //get courses
-      const courses = await this.courseModel.find({ _id: { $in: profile.courses } });
-      return courses;
-
-
-    }
-    catch (error) {
-      throw new HttpException(error.message, error.status);
-    }
-  }
-
-
 
 }

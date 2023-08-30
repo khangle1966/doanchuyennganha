@@ -6,10 +6,11 @@ export class CreateProfileDto {
     public email: string,
     public country: string,
     public avatar: string,
-    public sex: string,
+    public gender: string,
     public courses: string[],
     public bio: string,
     public notifications: string[],
     public messages: string[],
-  ) {}
+    public role: string
+  ) { }
 }

@@ -7,10 +7,7 @@ export class CreateCourseDto {
     public category: string,
     public rating: number,
     public language: string,
-    public role: string,
     public price: string,
     public author: string,
-
-
   ) { }
 }

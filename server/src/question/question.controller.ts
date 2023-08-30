@@ -17,7 +17,7 @@ import { Question } from './entities/question.entity';
 
 @Controller('question')
 export class QuestionController {
-  constructor(private questionService: QuestionService) {}
+  constructor(private questionService: QuestionService) { }
 
   @Post()
   async create(@Body() createQuestionDto: CreateQuestionDto) {
@@ -28,10 +28,7 @@ export class QuestionController {
       console.log(createQuestion);
       return createQuestion;
     } catch (error) {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error.message, error.status);
     }
   }
 
