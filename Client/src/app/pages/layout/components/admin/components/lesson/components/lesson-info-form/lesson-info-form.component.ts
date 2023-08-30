@@ -20,7 +20,7 @@ export class LessonInfoFormComponent {
     category: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     price: new FormControl(null, Validators.required),
-    imageUrl: new FormControl('', Validators.required),
+    img: new FormControl('', Validators.required),
   });
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class LessonInfoFormComponent {
           this.lesson.description,
           Validators.required
         ),
-        imageUrl: new FormControl(this.lesson.imageUrl, Validators.required),
+        img: new FormControl(this.lesson.img, Validators.required),
       });
     }
   }
@@ -55,6 +55,7 @@ export class LessonInfoFormComponent {
       ...this.lessonForm.value,
       _id: this.lesson?._id,
       courseId: this.lesson?.courseId,
+      content: this.lesson?.content,
     };
     this.submitEvent.emit(newLessonForm);
   }

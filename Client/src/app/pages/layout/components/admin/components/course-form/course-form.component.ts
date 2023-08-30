@@ -9,7 +9,10 @@ import { Course } from 'src/app/models/Course.model';
 })
 export class CourseFormComponent {
   @Output('toggle') toggleEvent: EventEmitter<boolean> = new EventEmitter();
-  @Output('editLessons') editLessonsEvent: EventEmitter<boolean> = new EventEmitter();
+  @Output('editLessons') editLessonsEvent: EventEmitter<boolean> =
+    new EventEmitter();
+  @Output('editQuiz') editQuizEvent: EventEmitter<boolean> = new EventEmitter();
+
   @Input('isEdit') isEdit: boolean = false;
   @Input('course') course: Course | null = null;
 
@@ -21,7 +24,7 @@ export class CourseFormComponent {
     category: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     price: new FormControl(null, Validators.required),
-    imageUrl: new FormControl('', Validators.required),
+    img: new FormControl('', Validators.required),
   });
 
   ngOnInit(): void {
@@ -40,7 +43,7 @@ export class CourseFormComponent {
             Validators.required
           ),
           price: new FormControl(this.course.price, Validators.required),
-          imageUrl: new FormControl(this.course.imageUrl, Validators.required),
+          img: new FormControl(this.course.img, Validators.required),
         });
       }
     }
@@ -51,6 +54,10 @@ export class CourseFormComponent {
   }
 
   editLessons() {
-    this.editLessonsEvent.emit(true);
+    this.editLessonsEvent.emit(false);
+  }
+
+  editQuiz() {
+    this.editQuizEvent.emit(false);
   }
 }

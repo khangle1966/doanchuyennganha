@@ -7,5 +7,7 @@ export interface Course {
   author: string;
   date_Created: string;
   date_Updated: string;
-  imageUrl: string;
+  img: string;
+  rating: number;
+  language: string;
 }
