@@ -105,7 +105,6 @@ export class CourseController {
       }else{
         throw new HttpException('Course not found', 404);
       }
-      return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
@@ -126,7 +125,6 @@ export class CourseController {
       }else{
         throw new HttpException('Course not found', 404);
       }
-      return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

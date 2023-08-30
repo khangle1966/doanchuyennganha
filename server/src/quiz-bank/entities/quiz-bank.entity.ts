@@ -17,7 +17,7 @@ export class QuizBank {
     question: string;
 
     @Prop()
-    image: string;
+    img: string;
 
     @Prop()
 

@@ -10,12 +10,14 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 import { Profile } from './entities/profile.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Course } from 'src/course/entities/course.entity';
 
 
 @Injectable()
 export class ProfileService {
   constructor(
     @InjectModel(Profile.name) private profileModel: Model<Profile>,
+    @InjectModel(Course.name) private courseModel: Model<Course>,
   ) {}
 
   async create(createProfileDto: CreateProfileDto): Promise<Profile> {
@@ -29,7 +31,7 @@ export class ProfileService {
 
   async findOne(id: string): Promise<Profile> {
     try {
-      const profile = await this.profileModel.findOne({ id: id });
+      const profile = await this.profileModel.findOne({ _id: id });
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
@@ -79,14 +81,16 @@ export class ProfileService {
 
 
   //how to getAllCourseOfProfile
-  // async getAllCourseOfProfile(id: string): Promise<Profile> {
-  //   try {
-  //     const profile = (await this.profileModel.findOne({ _id: id })).populate('completeCourse');
-  //     return profile;
-  //   } catch (error) {
-  //     throw new HttpException(error.message, error.status);
-  //   }
-  // }
+   getAllCourseOfProfile(id: string):Promise<Profile> {
+    try {
+      const profile =  this.profileModel.findOne({ _id: id }).select('-createdAt -updatedAt -__v').populate('completeCourse','-createdAt -updatedAt -__v ').then((profile)=>{
+        return profile;
+      });
+      return profile;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
 
  
   

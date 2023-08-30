@@ -4,6 +4,12 @@ import { HydratedDocument } from 'mongoose';
 
 export type CourseDocument = HydratedDocument<Course>;
 
+export enum Category {
+  WEB = 'Web Development',
+  MOBILE = 'Mobule Development',
+
+}
+
 @Schema({ timestamps: true })
 export class Course {
   @Prop({ required: true })
@@ -19,12 +25,22 @@ export class Course {
   img: string;
 
   @Prop()
-  price: string;
+  category: Category;
+
+  @Prop()
+  price: number;
+
+  @Prop()
+  rating: number;
+
+  @Prop()
+  language: string;
 
   // @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }])
   // students: string[];
   @Prop()
   author: string;
+
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);

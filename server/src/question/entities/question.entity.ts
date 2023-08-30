@@ -9,10 +9,10 @@ export class Question {
 
 
   @Prop({ required: true })
-  quizid: string;
+  quizId: string;
 
   @Prop({ required: true })
-  quizbankid: string;
+  quizbankId: string;
 
 
 }

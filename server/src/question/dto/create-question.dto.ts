@@ -1,3 +1,3 @@
 export class CreateQuestionDto {
-  constructor(public quizid: string, public quizbankid: string) {}
+  constructor(public quizId: string, public quizbankId: string) {}
 }

@@ -11,7 +11,7 @@ export class CourseService {
   constructor(
     @InjectModel(Course.name) private courseModel: Model<Course>,
     @InjectModel(Profile.name) private profileModel: Model<Profile>,
-  ) {}
+  ) { }
 
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
     try {
@@ -95,8 +95,6 @@ export class CourseService {
       update,
       options,
     );
-
-    
     return profile;
   }
 
@@ -139,5 +137,8 @@ export class CourseService {
     );
     return profile;
   }
+  
+
+
 
 }

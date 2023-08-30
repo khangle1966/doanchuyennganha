@@ -26,7 +26,7 @@ export class ProfileController {
   @Post()
   async create(@Body() createProfileDto: CreateProfileDto): Promise<Profile> {
     try {
-      const isExist = await this.profileService.findOne(createProfileDto.id);
+      const isExist = await this.profileService.findOne(createProfileDto.uId);
       if (isExist) {
         throw new HttpException(
           'Profile already exists',
@@ -36,13 +36,13 @@ export class ProfileController {
       const newProfile = await this.profileService.create(createProfileDto);
       if (!newProfile) {
         try {
-          await this.userService.remove(createProfileDto.id);
+          await this.userService.remove(createProfileDto.uId);
         } catch (error) {
           throw new Error(error);
         }
       } else {
-        this.userService.update(createProfileDto.id, {
-          profile: newProfile.id,
+        this.userService.update(createProfileDto.uId, {
+          profile: newProfile.uId,
         });
       }
       return newProfile;
@@ -104,18 +104,18 @@ export class ProfileController {
     }
   }
 
-  // @Get(':id/courses')
-  // async getAllCourseOfProfile(@Query('id') id: string) {
-  //   try {
-  //     const profile = await this.profileService.getAllCourse(id);
-  //     if (!profile) {
-  //       throw new HttpException('Profile not found', HttpStatus.BAD_REQUEST);
-  //     }
-  //     return profile;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
+  @Get(':id/courses')
+  async getAllCourseOfProfile(@Param('id') id: string) {
+    try {
+      const profile = await this.profileService.getAllCourseOfProfile(id);
+      if (!profile) {
+        throw new HttpException('Profile not found', HttpStatus.BAD_REQUEST);
+      }
+      return profile;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 
 
