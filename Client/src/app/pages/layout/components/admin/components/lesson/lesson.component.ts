@@ -1,8 +1,12 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Lesson } from 'src/app/models/Lesson.model';
-import Quill from 'quill';
-import { TuiAlertService } from '@taiga-ui/core';
+import {
+  TuiAlertService,
+  TuiDialogContext,
+  TuiDialogService,
+} from '@taiga-ui/core';
 import { Router } from '@angular/router';
+import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 
 @Component({
   selector: 'app-lesson',
@@ -22,7 +26,9 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
-    private router: Router
+    private router: Router,
+    @Inject(TuiDialogService)
+    private readonly dialogs: TuiDialogService
   ) {
     this.items.push({
       caption: 'Current',
@@ -33,6 +39,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     console.log('destroy');
   }
 
+  //noti funcs
   successNotification(message: string): void {
     this.alerts
       .open('', {
@@ -53,39 +60,10 @@ export class LessonComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  generateDummyContent(lessonTitle: string) {
-    let dummyContent = `<p>${lessonTitle} content </p>`;
-    return JSON.stringify(dummyContent);
-  }
-
   ngOnInit(): void {}
 
-  lessonList: Lesson[] = [
-    {
-      _id: '1',
-      title: 'Lesson ' + Date.now().toString(),
-      content: this.generateDummyContent('Lesson ' + Date.now().toString()),
-      img: '../../../../../../../assets/images/lisa.jpg',
-      courseId: '1',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    },
-  ];
-
+  // get func
   selectedLesson: Lesson | null = null;
-
-  addLesson() {
-    this.lessonList.push({
-      _id: Date.now().toString(),
-      title: 'Lesson ' + Date.now().toString(),
-      content: this.generateDummyContent('Lesson ' + Date.now().toString()),
-      img: '../../../../../../../assets/images/lisa.jpg',
-      courseId: '1',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    });
-  }
-
   selectLesson(lesson: Lesson) {
     if (this.selectedLesson?._id === lesson._id) {
       this.warningNotification('Lesson already selected !!!');
@@ -95,7 +73,38 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.isPreview = true;
     // console.log('selectedLesson: ', this.selectedLesson);
   }
+  generateDummyContent(lessonTitle: string) {
+    let dummyContent = `<p>${lessonTitle} content </p>`;
+    return JSON.stringify(dummyContent);
+  }
 
+  //add func
+  lessonList: Lesson[] = [
+    {
+      _id: '1',
+      title: 'Lesson ' + Date.now().toString(),
+      content: this.generateDummyContent('Lesson ' + Date.now().toString()),
+      img: '../../../../../../../assets/images/lisa.jpg',
+      courseId: '1',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      ordinalNum: 0,
+    },
+  ];
+  addLesson() {
+    this.lessonList.push({
+      _id: Date.now().toString(),
+      title: 'Lesson ' + Date.now().toString(),
+      content: this.generateDummyContent('Lesson ' + Date.now().toString()),
+      img: '../../../../../../../assets/images/lisa.jpg',
+      courseId: '1',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      ordinalNum: this.lessonList.length + 1,
+    });
+  }
+
+  //update func
   openEdit = false;
   openEditSidebar(open: boolean): void {
     if (open != this.openEdit) {
@@ -138,5 +147,37 @@ export class LessonComponent implements OnInit, OnDestroy {
       this.successNotification('Lesson content updated success !!!');
       console.log('lesonList: ', this.lessonList);
     }
+  }
+
+  //delete func
+  showWarningDialog(content: PolymorpheusContent<TuiDialogContext>): void {
+    this.dialogs.open(content).subscribe();
+  }
+
+  deleteLesson(index: number) {
+    this.lessonList = this.lessonList.filter((val, i) => {
+      if (index != i) {
+        return val;
+      } else {
+        if (this.selectedLesson != null) {
+          if (val._id == this.selectedLesson._id) {
+            this.selectedLesson = null;
+          }
+        }
+        return;
+      }
+    });
+    this.successNotification('Delete question success !!!');
+    console.log(this.lessonList);
+  }
+
+  //update lesson ordinal num
+  order = new Map();
+  updateOrdinalList() {
+    // console.log('order change: ', this.order);
+    this.order.forEach((val, i) => {
+      this.lessonList[i].ordinalNum = val;
+    });
+    console.log(this.lessonList);
   }
 }

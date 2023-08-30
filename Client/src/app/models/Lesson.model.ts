@@ -5,4 +5,5 @@ export interface Lesson {
   content: any;
   img: string;
   description: string;
+  ordinalNum: number;
 }

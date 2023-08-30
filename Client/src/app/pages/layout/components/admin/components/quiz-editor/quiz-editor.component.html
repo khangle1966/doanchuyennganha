@@ -19,31 +19,69 @@
     </div>
     <div id="lesson-list">
       <tui-scrollbar class="scrollbar">
-        <tui-tiles class="tiles" [(order)]="order">
+        <tui-tiles
+          class="tiles"
+          [(order)]="order"
+          (orderChange)="updateOrdinalList()"
+        >
           <tui-tile
             *ngFor="let question of questionList; let index = index"
             class="tile"
             [style.order]="order.get(index)"
           >
-            <!-- <div class="content"> -->
             <tui-island
-              (click)="selectQuestion(question)"
+              [hoverable]="true"
               [ngClass]="[
                 selectedQuestion?._id === question?._id ? 'selected' : ''
               ]"
             >
-              <div class="tui-island__content">
+              <div
+                class="tui-island__content"
+                (click)="selectQuestion(question)"
+              >
                 <figure class="tui-island__figure">
                   <div class="some-figure">
                     <tui-svg src="tuiIconDragLarge" tuiTileHandle></tui-svg>
                   </div>
                 </figure>
                 <h3 class="tui-island__title">
-                  {{ "Question " + (index + 1) }}
+                  {{ "Question No." + (index + 1) }}
                 </h3>
               </div>
+              <button
+                appearance="flat"
+                size="m"
+                tuiButton
+                type="button"
+                class="tui-island__footer-button"
+                (click)="showWarningDialog(template)"
+              >
+                Delete
+              </button>
             </tui-island>
-            <!-- </div> -->
+            <ng-template #template let-observer>
+              <p>Are you sure to this delete this question ?</p>
+
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                class="tui-space_right-3"
+                appearance="secondary-destructive"
+                (click)="observer.complete()"
+              >
+                Cancel
+              </button>
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                appearance="secondary"
+                (click)="deleteQuestion(index); observer.complete()"
+              >
+                Confirm
+              </button>
+            </ng-template>
           </tui-tile>
         </tui-tiles>
       </tui-scrollbar>
@@ -82,7 +120,7 @@
             size="m"
             tuiButton
             type="button"
-            appearance="secondary-destructive"
+            appearance="secondary"
             (click)="isPreview = !isPreview"
             *ngIf="isPreview; else previewBtn"
           >
@@ -110,7 +148,14 @@
           </button>
         </div>
       </div>
-      <div id="editor"></div>
+      <div id="quest-editor">
+        <app-question-editor
+          [question]="this.selectedQuestion"
+          [isPreview]="isPreview"
+          [isSave]="isSave"
+          (save)="updateQuestionContent($event)"
+        ></app-question-editor>
+      </div>
     </ng-template>
   </div>
 </div>

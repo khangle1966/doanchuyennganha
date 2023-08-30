@@ -20,6 +20,7 @@
     <div id="lesson-list">
       <tui-scrollbar class="scrollbar">
         <tui-island
+          [hoverable]="true"
           *ngFor="let lesson of lessonList; let i = index"
           (click)="selectLesson(lesson)"
           [ngClass]="[selectedLesson?._id === lesson?._id ? 'selected' : '']"
@@ -39,6 +40,39 @@
               </p>
             </div>
           </div>
+          <button
+            appearance="flat"
+            size="m"
+            tuiButton
+            type="button"
+            class="tui-island__footer-button"
+            (click)="showWarningDialog(template)"
+          >
+            Delete
+          </button>
+          <ng-template #template let-observer>
+            <p>Are you sure to this delete this question ?</p>
+
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              class="tui-space_right-3"
+              appearance="secondary-destructive"
+              (click)="observer.complete()"
+            >
+              Cancel
+            </button>
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              appearance="secondary"
+              (click)="deleteLesson(i); observer.complete()"
+            >
+              Confirm
+            </button>
+          </ng-template>
         </tui-island>
       </tui-scrollbar>
     </div>
@@ -97,7 +131,7 @@
             size="m"
             tuiButton
             type="button"
-            appearance="secondary-destructive"
+            appearance="secondary"
             (click)="isPreview = !isPreview"
             *ngIf="isPreview; else previewBtn"
           >

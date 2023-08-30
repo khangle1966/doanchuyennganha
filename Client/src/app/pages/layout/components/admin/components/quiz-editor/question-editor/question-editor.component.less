@@ -1,0 +1,47 @@
+@import "@taiga-ui/core/styles/taiga-ui-local.less";
+
+#quest-editor-container,
+#quest-preview-container {
+  width: 100%;
+  height: 100%;
+}
+
+#quest-preview-container {
+  tui-island {
+    margin: 0.625rem;
+    cursor: pointer;
+    .tui-island__content {
+      display: flex;
+      flex-direction: column;
+
+      .tui-island__title {
+        margin: auto 0;
+      }
+    }
+  }
+}
+
+#quest-editor-container {
+  .col-form {
+    height: 100%;
+    .header {
+      width: 100%;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tui-form__row.opt-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.625rem;
+      .input-box {
+        width: 100%;
+      }
+    }
+    tui-error.opt-item-err {
+      margin-left: 2.125rem;
+    }
+  }
+}
