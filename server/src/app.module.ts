@@ -12,20 +12,25 @@ import { QuizBankModule } from './quiz-bank/quiz-bank.module';
 import { QuizModule } from './quiz/quiz.module';
 import { QuestionModule } from './question/question.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
-@Module({
-  imports:
-    [
-      MongooseModule.forRoot('mongodb+srv://tranvanhao016:hao123456@cluster0.mwofhtq.mongodb.net/'),
-      AuthModule,
-      UserModule,
-      ProfileModule,
-      LessonsModule,
-      CourseModule,
-      QuizBankModule,
-      QuizModule,
-      QuestionModule,
-    ],
+import { ConfigModule } from '@nestjs/config';
+import databaseConfig from './config/database.config';
 
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      load: [databaseConfig],
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(databaseConfig().database.host),
+    AuthModule,
+    UserModule,
+    ProfileModule,
+    LessonsModule,
+    CourseModule,
+    QuizBankModule,
+    QuizModule,
+    QuestionModule,
+  ],
 
   controllers: [AppController],
   providers: [AppService],

@@ -52,9 +52,7 @@ import { TuiTooltipModule, TuiHintModule } from '@taiga-ui/core';
 import { TuiPrimitiveCheckboxModule } from '@taiga-ui/core';
 import { TuiLoaderModule } from '@taiga-ui/core';
 import { TuiNotificationModule } from '@taiga-ui/core';
-import { TuiTextAreaModule } from '@taiga-ui/kit';
 import { TuiInputFilesModule } from '@taiga-ui/kit';
-import { TuiInputCountModule } from '@taiga-ui/kit';
 import { TuiLabelModule } from '@taiga-ui/core';
 import { TuiPrimitiveTextfieldModule } from '@taiga-ui/core';
 import { TuiHostedDropdownModule } from '@taiga-ui/core';
@@ -72,7 +70,8 @@ import { TuiOverscrollModule } from '@taiga-ui/cdk';
 import { TuiRadioListModule } from '@taiga-ui/kit';
 import { TuiRadioModule } from '@taiga-ui/kit';
 import { TuiCalendarModule } from '@taiga-ui/core';
-
+import { TuiBreadcrumbsModule } from '@taiga-ui/kit';
+import { TuiLinkModule } from '@taiga-ui/core';
 
 @NgModule({
   declarations: [],
@@ -122,9 +121,7 @@ import { TuiCalendarModule } from '@taiga-ui/core';
     TuiPrimitiveCheckboxModule,
     TuiLoaderModule,
     TuiNotificationModule,
-    TuiTextAreaModule,
     TuiInputFilesModule,
-    TuiInputCountModule,
     TuiLabelModule,
     TuiPrimitiveTextfieldModule,
     TuiHostedDropdownModule,
@@ -146,7 +143,9 @@ import { TuiCalendarModule } from '@taiga-ui/core';
     TuiRadioListModule,
     TuiRadioModule,
     TuiCalendarModule,
-    TuiTabsModule
+    TuiTabsModule,
+    TuiBreadcrumbsModule,
+    TuiLinkModule,
   ],
   exports: [
     FormsModule,
@@ -193,9 +192,7 @@ import { TuiCalendarModule } from '@taiga-ui/core';
     TuiPrimitiveCheckboxModule,
     TuiLoaderModule,
     TuiNotificationModule,
-    TuiTextAreaModule,
     TuiInputFilesModule,
-    TuiInputCountModule,
     TuiLabelModule,
     TuiPrimitiveTextfieldModule,
     TuiHostedDropdownModule,
@@ -217,6 +214,8 @@ import { TuiCalendarModule } from '@taiga-ui/core';
     TuiRadioModule,
     TuiCalendarModule,
     TuiTabsModule,
+    TuiBreadcrumbsModule,
+    TuiLinkModule,
   ],
 })
 export class SharedModule {}

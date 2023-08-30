@@ -1,6 +1,6 @@
 @import "@taiga-ui/core/styles/taiga-ui-local.less";
 
-#lesson-container {
+#quiz-editor-container {
   width: 100%;
   height: 100%;
   display: flex;
@@ -18,22 +18,35 @@
       overflow: auto;
       width: 100%;
       height: calc(100% - 44px - 0.625rem - 40px);
+      .tiles {
+        gap: 1rem;
+        grid-auto-rows: minmax(70px, auto);
+      }
       tui-island {
+        .transition(box-shadow);
         margin: 0.625rem;
         cursor: pointer;
+        tui-tile._dragged & {
+          .shadow(5);
+        }
         .tui-island__content {
           .tui-island__figure {
             .some-figure {
               border-radius: 50%;
               width: 3rem;
               height: 3rem;
-              background-color: var(--tui-secondary-active);
-              img {
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-              }
+              //   background-color: var(--tui-secondary-active);
+              align-items: center;
+              justify-content: center;
+              display: flex;
+              cursor: ns-resize;
             }
+            .some-figure:hover {
+              background-color: var(--tui-secondary-active);
+            }
+          }
+          .tui-island__title {
+            margin: auto 0;
           }
         }
       }
@@ -52,7 +65,7 @@
     min-width: 750px;
     padding: 0.625rem;
 
-    #course-content {
+    #quiz-content {
       overflow: auto;
       height: 100%;
       width: 100%;
