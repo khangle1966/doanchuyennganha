@@ -17,9 +17,18 @@ export class QuizService {
     }
   }
 
-  async getAllQuizzes(page: number, limit: number): Promise<Quiz[]> {
+  // async getAllQuizzes(page: number, limit: number): Promise<Quiz[]> {
+  //   try {
+  //     const quizzes = await this.quizModel.find().skip((page - 1) * limit).limit(limit).exec();
+  //     return quizzes;
+  //   }
+  //   catch (error) {
+  //     throw new HttpException(error.message, error.status);
+  //   }
+  // }
+  async getAllQuizzes(): Promise<Quiz[]> {
     try {
-      const quizzes = await this.quizModel.find().skip((page - 1) * limit).limit(limit).exec();
+      const quizzes = await this.quizModel.find().exec();
       return quizzes;
     }
     catch (error) {

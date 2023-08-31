@@ -1,4 +1,4 @@
-import { Component,ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Course } from 'src/app/models/Course.model';
 import { Profile } from 'src/app/models/Profile.model';
@@ -20,10 +20,8 @@ export class ProfileComponent {
     category: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     price: new FormControl(null, Validators.required),
-    imageUrl: new FormControl('', Validators.required),
+    image: new FormControl('', Validators.required),
   });
-
-  
 
   ngOnInit(): void {
     console.log(this.course);
@@ -41,7 +39,7 @@ export class ProfileComponent {
             Validators.required
           ),
           price: new FormControl(this.course.price, Validators.required),
-          imageUrl: new FormControl(this.course.imageUrl, Validators.required),
+          image: new FormControl(this.course.img, Validators.required),
         });
       }
     }

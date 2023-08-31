@@ -24,7 +24,6 @@ export class CourseController {
   async create(@Body() createCourseDto: CreateCourseDto): Promise<Course> {
     try {
       const createCourse = await this.courseService.create(createCourseDto);
-      console.log(createCourse);
       return createCourse;
     } catch (error) {
       throw new HttpException(error.message, error.status);

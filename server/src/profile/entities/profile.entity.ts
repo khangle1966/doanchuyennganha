@@ -8,7 +8,7 @@ export type ProfileDocument = HydratedDocument<Profile>;
 @Schema({ timestamps: true })
 export class Profile {
   @Prop({ required: true, unique: true })
-  id: string;
+  uId: string;
 
   @Prop({ required: true, unique: true })
   userName: string;
@@ -32,7 +32,7 @@ export class Profile {
   @Prop({ default: null })
   bio: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Course', default: [] })
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }] })
   courses: Course[];
 
   @Prop()

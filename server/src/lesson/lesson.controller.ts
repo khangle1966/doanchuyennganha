@@ -34,7 +34,6 @@ export class LessonController {
   async create(@Body() createLessonDto: CreateLessonDto) {
     try {
       const createdLesson = await this.lessonsService.create(createLessonDto);
-      console.log(createdLesson);
       return createdLesson;
     } catch (error) {
       throw new HttpException(error.message, error.status);

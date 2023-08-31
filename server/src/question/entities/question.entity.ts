@@ -11,11 +11,13 @@ export class Question {
 
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz', required: true })
-  quiz: Quiz[];
+  quizId: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank', required: true })
-  quizbankId: QuizBank[];
+  quizBank: string;
 
+  @Prop()
+  ordinalNum: number;
 
 }
 

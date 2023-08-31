@@ -22,7 +22,9 @@ export class QuizBank {
 
     @Prop()
 
-    answer: string;
+    answerList: string[];
+
+
 
 }
 

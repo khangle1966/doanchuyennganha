@@ -1,5 +1,7 @@
 export class CreateQuestionDto {
   constructor(
-    public quiz: string,
-    public quizbankId: object) { }
+    public quizId: string,
+    public quizBank: object,
+    public ordinalNum: number,
+  ) { }
 }

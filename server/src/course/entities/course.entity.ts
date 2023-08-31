@@ -12,8 +12,6 @@ export enum Category {
 
 @Schema({ timestamps: true })
 export class Course {
-  @Prop({ required: true })
-  id: string;
 
   @Prop({ required: true })
   name: string;
@@ -28,7 +26,7 @@ export class Course {
   category: Category;
 
   @Prop()
-  price: string;
+  price: number;
 
   @Prop()
   rating: number;
@@ -36,11 +34,6 @@ export class Course {
   @Prop()
   language: string;
 
-
-
-
-  // @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }])
-  // students: string[];
   @Prop()
   author: string;
 

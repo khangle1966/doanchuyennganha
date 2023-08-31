@@ -28,6 +28,16 @@
     >
       Edit Lesson
     </button>
+    <button
+      *ngIf="isEdit"
+      tuiButton
+      size="m"
+      type="button"
+      appearance="secondary"
+      (click)="editQuiz()"
+    >
+      Edit Quiz
+    </button>
   </div>
 
   <div class="tui-form__row">
@@ -39,7 +49,6 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </div>
-
   <div class="tui-form__row">
     <tui-input tuiTextfieldExampleText="Enter Role Name" formControlName="name">
       <span class="tui-required"> Name</span>
@@ -54,7 +63,7 @@
       tuiTextfieldExampleText="Enter Description"
       formControlName="description"
     >
-      <span class="tui-required"> Description</span>
+      <span class="tui-required">Description</span>
     </tui-input>
     <tui-error
       formControlName="description"
@@ -83,14 +92,11 @@
     ></tui-error>
   </div>
   <div class="tui-form__row">
-    <tui-input
-      tuiTextfieldExampleText="Enter Image Url"
-      formControlName="imageUrl"
-    >
+    <tui-input tuiTextfieldExampleText="Enter Image Url" formControlName="img">
       <span class="tui-required">Image Url</span>
     </tui-input>
     <tui-error
-      formControlName="imageUrl"
+      formControlName="img"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </div>

@@ -7,10 +7,13 @@ export type CourseDocument = HydratedDocument<Lesson>;
 export class Lesson {
 
     @Prop()
+    ordinalnumber: number;
+
+    @Prop()
     title: string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Course' })
-    courseId: Course;
+    courseId: string;
 
     @Prop()
     img: string;

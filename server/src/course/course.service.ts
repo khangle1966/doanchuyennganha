@@ -15,9 +15,10 @@ export class CourseService {
 
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
     try {
-      const createdCat = new this.courseModel(createCourseDto);
-      return createdCat.save();
-    } catch (error) {
+      const newCourse = new this.courseModel(createCourseDto);
+      return await newCourse.save();
+    }
+    catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }

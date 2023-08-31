@@ -72,4 +72,23 @@ export class LessonService {
     }
   }
 
+  //how to get all lessons by given ordinal number
+  async getLessonsByOrdinalNumber(ordinalnumber: number): Promise<Lesson[]> {
+    try {
+      return await this.lessonModel.find({ ordinalnumber: ordinalnumber })
+        .populate('courseId').exec();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+  //else
+  async getLessonsByCourseIdAndOrdinalNumber(courseId: string, ordinalnumber: number): Promise<Lesson[]> {
+    try {
+      return await this.lessonModel.find({ courseId: courseId, ordinalnumber: ordinalnumber })
+        .populate('courseId').exec();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
 }
