@@ -4,6 +4,7 @@ import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { select } from '@ngrx/store';
 
 @Injectable()
 export class QuestionService {
@@ -20,9 +21,11 @@ export class QuestionService {
     }
   }
 
+
+
   async findAll(): Promise<Question[]> {
     try {
-      return await this.questionModel.find().exec();
+      return await this.questionModel.find().select('-createdAt -updatedAt -__v').populate('quizBank', '-createdAt -updatedAt -__v').populate('quizId', '-createdAt -updatedAt -__v').exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
@@ -30,8 +33,9 @@ export class QuestionService {
 
   async findOne(id: string): Promise<Question> {
     try {
-      return await this.questionModel.findById(id).exec();
+      return await this.questionModel.findById(id).select('-createdAt -updatedAt -__v').populate('quizBank', '-createdAt -updatedAt -__v').populate('quizId').exec();
     } catch (error) {
+
       throw new HttpException(error.message, error.status);
     }
   }

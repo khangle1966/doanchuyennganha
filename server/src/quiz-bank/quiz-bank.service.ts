@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 export class QuizBankService {
   constructor(
     @InjectModel(QuizBank.name) private quizBankModel: Model<QuizBank>,
-  ) {}
+  ) { }
 
   async create(createQuizBankDto: CreateQuizBankDto): Promise<QuizBank> {
     try {
@@ -30,7 +30,6 @@ export class QuizBankService {
   async findOne(id: string) {
     try {
       const quizBank = await this.quizBankModel.findById({ _id: id });
-      console.log(id);
       return quizBank;
     } catch (error) {
       throw new HttpException(error.message, error.status);

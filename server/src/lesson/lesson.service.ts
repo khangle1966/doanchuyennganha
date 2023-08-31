@@ -4,10 +4,10 @@ import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { Lesson } from './entities/lesson.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import e from 'express';
+
 
 @Injectable()
-export class LessonsService {
+export class LessonService {
   createLesson(createLessonDto: CreateLessonDto) {
     throw new Error('Method not implemented.');
   }
@@ -61,4 +61,34 @@ export class LessonsService {
       throw new HttpException(error.message, error.status);
     }
   }
+
+  async getLessonsByCourseId(courseId: string): Promise<Lesson[]> {
+    try {
+      //populate nestjs object mongoose
+      return await this.lessonModel.find({ courseId: courseId })
+        .populate('courseId').exec();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  //how to get all lessons by given ordinal number
+  async getLessonsByOrdinalNumber(ordinalnumber: number): Promise<Lesson[]> {
+    try {
+      return await this.lessonModel.find({ ordinalnumber: ordinalnumber })
+        .populate('courseId').exec();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+  //else
+  async getLessonsByCourseIdAndOrdinalNumber(courseId: string, ordinalnumber: number): Promise<Lesson[]> {
+    try {
+      return await this.lessonModel.find({ courseId: courseId, ordinalnumber: ordinalnumber })
+        .populate('courseId').exec();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
 }
