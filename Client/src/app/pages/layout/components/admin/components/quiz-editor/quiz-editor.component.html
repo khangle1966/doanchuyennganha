@@ -9,15 +9,26 @@
     </tui-breadcrumbs>
     <div class="top">
       <div class="tui-text_h6 title">Question List</div>
-      <button
-        size="m"
-        tuiIconButton
-        type="button"
-        icon="tuiIconPlusLarge"
-        (click)="addQuestion()"
-      ></button>
+      <div class="btn-grp">
+        <button size="m" tuiButton type="button" (click)="editQuiz()">
+          Edit Quiz Info
+        </button>
+        <button
+          size="m"
+          tuiIconButton
+          type="button"
+          icon="tuiIconPlusLarge"
+          (click)="addQuestion()"
+          [tuiHint]="tooltip"
+          tuiHintAppearance="onDark"
+          tuiHintDirection="right"
+        ></button>
+        <ng-template #tooltip>
+          <div>Add new question</div>
+        </ng-template>
+      </div>
     </div>
-    <div id="lesson-list">
+    <div id="question-list">
       <tui-scrollbar class="scrollbar">
         <tui-tiles
           class="tiles"
@@ -49,7 +60,7 @@
                 </h3>
               </div>
               <button
-                appearance="flat"
+                appearance="none"
                 size="m"
                 tuiButton
                 type="button"
@@ -87,32 +98,56 @@
       </tui-scrollbar>
     </div>
   </div>
-  <div id="right-side">
-    <div
-      id="quiz-content"
-      *ngIf="this.selectedQuestion == null; else questionContent"
-    >
-      <div class="tui-text_h3 tui-space_top-3 tui-space_bottom-3">
-        This is a quiz content !!!!
+  <div
+    id="right-side"
+    *ngIf="this.selectedQuestion == null; else questionContent"
+  >
+    <div class="top">
+      <div class="tui-text_h6 title">Quiz Content</div>
+      <div class="btn-grp">
+        <button
+          size="m"
+          tuiButton
+          type="button"
+          appearance="secondary"
+          (click)="isPreview = !isPreview"
+          *ngIf="isPreview; else previewBtn"
+        >
+          Editor
+        </button>
+        <ng-template #previewBtn>
+          <button
+            size="m"
+            tuiButton
+            type="button"
+            (click)="isPreview = !isPreview"
+            appearance="secondary"
+          >
+            Preview
+          </button>
+        </ng-template>
+        <button
+          size="m"
+          tuiButton
+          type="button"
+          (click)="save()"
+          [disabled]="isSave"
+        >
+          Save
+        </button>
       </div>
-      <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
-      </div>
-      <img
-        src="../../../../../../../assets/images/course.png"
-        class="tui-space_top-3 tui-space_bottom-3"
-      />
-      <a href="https://storyset.com/online">Online illustrations by Storyset</a>
     </div>
-    <ng-template #questionContent>
+    <div id="quiz-form">
+      <app-quiz-form
+        [quiz]="this.quiz"
+        [isPreview]="this.isPreview"
+        [isSave]="this.isSave"
+        (save)="updateQuizContent($event)"
+      ></app-quiz-form>
+    </div>
+  </div>
+  <ng-template #questionContent>
+    <div id="right-side">
       <div class="top">
         <div class="tui-text_h6 title">Question Content</div>
         <div class="btn-grp">
@@ -141,7 +176,7 @@
             size="m"
             tuiButton
             type="button"
-            (click)="saveQuestionContent()"
+            (click)="save()"
             [disabled]="isSave"
           >
             Save
@@ -156,6 +191,6 @@
           (save)="updateQuestionContent($event)"
         ></app-question-editor>
       </div>
-    </ng-template>
-  </div>
+    </div>
+  </ng-template>
 </div>

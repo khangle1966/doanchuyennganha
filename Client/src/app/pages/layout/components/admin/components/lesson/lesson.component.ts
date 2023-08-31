@@ -7,6 +7,7 @@ import {
 } from '@taiga-ui/core';
 import { Router } from '@angular/router';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
+import { Course } from 'src/app/models/Course.model';
 
 @Component({
   selector: 'app-lesson',
@@ -23,6 +24,21 @@ export class LessonComponent implements OnInit, OnDestroy {
       routerLink: '/base/admin',
     },
   ];
+
+  course: Course = {
+    _id: '1',
+    name: 'Angular',
+    category: 'Frontend Developer',
+    description:
+      'Angular is a platform for building mobile and desktop web applications.',
+    price: 100,
+    author: 'Google',
+    date_Created: '2021-07-01',
+    date_Updated: '2021-07-01',
+    img: 'https://angular.io/assets/images/logos/angular/angular.svg',
+    rating: 4.5,
+    language: 'English',
+  };
 
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
@@ -84,7 +100,6 @@ export class LessonComponent implements OnInit, OnDestroy {
       _id: '1',
       title: 'Lesson ' + Date.now().toString(),
       content: this.generateDummyContent('Lesson ' + Date.now().toString()),
-      img: '../../../../../../../assets/images/lisa.jpg',
       courseId: '1',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -96,7 +111,6 @@ export class LessonComponent implements OnInit, OnDestroy {
       _id: Date.now().toString(),
       title: 'Lesson ' + Date.now().toString(),
       content: this.generateDummyContent('Lesson ' + Date.now().toString()),
-      img: '../../../../../../../assets/images/lisa.jpg',
       courseId: '1',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -174,7 +188,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   //update lesson ordinal num
   order = new Map();
   updateOrdinalList() {
-    // console.log('order change: ', this.order);
+    console.log('order change: ', this.order);
     this.order.forEach((val, i) => {
       this.lessonList[i].ordinalNum = val;
     });

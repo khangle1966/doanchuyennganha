@@ -2,12 +2,15 @@
   <tui-island>
     <div class="tui-island__content">
       <h3 class="tui-island__title">
-        {{ "Question: " + quest?.quizBank?.question }}
+        {{ "Question: " + quest.quizBank.question }}
       </h3>
       <p class="tui-island__category">
         (You can choose one or more option on this preview as setting answers on
         editor)
       </p>
+      <div class="quest-img" *ngIf="this.questionForm.controls['img'].value">
+        <img src="{{ this.questionForm.controls['img'].value }}" alt="" />
+      </div>
       <div class="tui-island__paragraph">
         <ul class="tui-list">
           <li *ngFor="let option of optionList; let i = index">
@@ -57,7 +60,7 @@
           tuiTextfieldExampleText="Enter Image Url"
           formControlName="img"
         >
-          <span class="tui-required">Image Url</span>
+          <span>Image Url</span>
         </tui-input>
       </div>
       <div class="header tui-space_top-4">

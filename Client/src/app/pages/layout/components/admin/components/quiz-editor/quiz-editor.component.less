@@ -14,7 +14,7 @@
     .breadcrumbs {
       max-height: 40px;
     }
-    #lesson-list {
+    #question-list {
       overflow: auto;
       width: 100%;
       height: calc(100% - 44px - 0.625rem - 40px);
@@ -47,10 +47,10 @@
             margin: auto 0;
           }
         }
+        .tui-island__footer-button:hover {
+          background-color: var(--tui-error-bg);
+        }
       }
-      // tui-island:hover {
-      //   .shadow(1);
-      // }
       tui-island.selected {
         .shadow(1);
         border: 1px solid var(--tui-primary);
@@ -63,18 +63,9 @@
     min-width: 750px;
     padding: 0.625rem;
 
-    #quiz-content {
-      overflow: auto;
-      height: 100%;
-      width: 100%;
-      img {
-        height: 300px;
-        width: 300px;
-        display: flex;
-        margin: 0 auto;
-      }
-    }
+    #quiz-form,
     #quest-editor {
+      overflow: auto;
       height: calc(100% - 2.75rem - 1.25rem);
       width: 100%;
     }

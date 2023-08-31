@@ -1,0 +1,143 @@
+<div id="quiz-preview-container" *ngIf="isPreview; else editor">
+  <div class="tui-text_h5 tui-space_top-3 tui-space_bottom-3">
+    {{ quizForm.controls["title"].value }}
+  </div>
+  <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">
+    Time: {{ quizForm.controls["duration"].value }} --- --- Total:
+    {{ quizForm.controls["total"].value }}
+  </div>
+  <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">
+    {{ quizForm.controls["content"].value }}
+  </div>
+
+  <button
+    size="m"
+    tuiButton
+    type="button"
+    appearance="primary"
+    id="start-btn"
+    class="tui-space_top-3 tui-space_bottom-3"
+  >
+    Start Quiz
+  </button>
+
+  <div id="info-box">
+    <div id="pass-condition">
+      <div class="tui-text_h5 tui-space_top-3 tui-space_bottom-3">
+        Receive Grade
+      </div>
+      <div
+        class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3"
+        id="cond"
+      >
+        <b>To pass: </b> {{ quizForm.controls["passCond"].value }}% or higher
+      </div>
+    </div>
+    <div id="quiz-score">
+      <div class="tui-text_h5 tui-space_top-3 tui-space_bottom-3">
+        Your Grade
+      </div>
+      <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">100</div>
+    </div>
+  </div>
+  <div id="icon-grp" class="tui-space_top-3 tui-space_bottom-3">
+    <div class="icon-item tui-text_body-xl">
+      <tui-svg src="tuiIconThumbsUpLarge"></tui-svg>
+      Like
+    </div>
+    <div class="icon-item tui-text_body-xl">
+      <tui-svg src="tuiIconThumbsDownLarge"></tui-svg>
+      Dislike
+    </div>
+    <div class="icon-item tui-text_body-xl">
+      <tui-svg src="tuiIconFlagLarge"></tui-svg>
+      Report an issue
+    </div>
+  </div>
+</div>
+<ng-template #editor>
+  <div id="quiz-editor-container">
+    <ng-template #icon>
+      <tui-svg src="tuiIconPlusLarge"></tui-svg>
+    </ng-template>
+    <form [formGroup]="quizForm" class="col-form">
+      <div class="tui-form__row">
+        <tui-input formControlName="_id">
+          <span class="tui-required">ID</span>
+        </tui-input>
+        <tui-error
+          formControlName="_id"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+      <div class="tui-form__row">
+        <tui-input formControlName="courseId">
+          <span class="tui-required">Course ID</span>
+        </tui-input>
+        <tui-error
+          formControlName="courseId"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+      <div class="tui-form__row">
+        <tui-input
+          tuiTextfieldExampleText="Enter Title"
+          formControlName="title"
+        >
+          <span class="tui-required">Title</span>
+        </tui-input>
+        <tui-error
+          formControlName="title"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+      <div class="tui-form__row">
+        <tui-input
+          tuiTextfieldExampleText="Enter Content"
+          formControlName="content"
+        >
+          <span>Content</span>
+        </tui-input>
+        <tui-error
+          formControlName="content"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+      <div class="tui-form__row">
+        <tui-input-number formControlName="total">
+          Total
+          <input placeholder="Total score" tuiTextfield />
+        </tui-input-number>
+        <tui-error
+          formControlName="total"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+      <div class="tui-form__row">
+        <tui-input-number
+          formControlName="passCond"
+          tuiTextfieldPostfix="%"
+          [min]="0"
+          [max]="100"
+        >
+          Pass Condition
+          <input placeholder="Pass condition" tuiTextfield />
+        </tui-input-number>
+        <tui-error
+          formControlName="passCond"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+      <div class="tui-form__row">
+        <tui-input-number formControlName="duration" tuiTextfieldPostfix="min">
+          Duration
+          <input placeholder="Quiz duration" tuiTextfield />
+        </tui-input-number>
+        <tui-error
+          formControlName="duration"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+    </form>
+  </div>
+</ng-template>

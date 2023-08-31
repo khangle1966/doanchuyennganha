@@ -42,7 +42,6 @@ export class LessonInfoFormComponent {
           this.lesson.description,
           Validators.required
         ),
-        img: new FormControl(this.lesson.img, Validators.required),
       });
     }
   }
