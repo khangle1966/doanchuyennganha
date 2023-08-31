@@ -4,7 +4,7 @@ import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { select } from '@ngrx/store';
+// import { select } from '@ngrx/store';
 
 @Injectable()
 export class QuestionService {

@@ -21,6 +21,7 @@ import { LessonComponent } from './components/admin/components/lesson/lesson.com
 import { EditorComponent } from './components/admin/components/lesson/components/editor/editor.component';
 import { QuillModule } from 'ngx-quill';
 import { LessonInfoFormComponent } from './components/admin/components/lesson/components/lesson-info-form/lesson-info-form.component';
+import { CourseComponent } from './components/course/course.component';
 import { QuizEditorComponent } from './components/admin/components/quiz-editor/quiz-editor.component';
 
 @NgModule({
@@ -42,6 +43,7 @@ import { QuizEditorComponent } from './components/admin/components/quiz-editor/q
     LessonComponent,
     EditorComponent,
     LessonInfoFormComponent,
+    CourseComponent,
     QuizEditorComponent,
   ],
   imports: [

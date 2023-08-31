@@ -8,7 +8,7 @@ export type ProfileDocument = HydratedDocument<Profile>;
 @Schema({ timestamps: true })
 export class Profile {
   @Prop({ required: true, unique: true })
-  uId: string;
+  id: string;
 
   @Prop({ required: true, unique: true })
   userName: string;

@@ -1,6 +1,6 @@
 export class CreateProfileDto {
   constructor(
-    public uId: string,
+    public id: string,
     public userName: string,
     public displayName: string,
     public email: string,

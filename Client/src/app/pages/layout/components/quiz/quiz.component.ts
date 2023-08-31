@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription, interval, takeWhile } from 'rxjs';
 
 @Component({
@@ -16,7 +17,8 @@ export class QuizComponent implements OnInit {
   formattedTime: string = '';
   answered: boolean = false;
 
-  constructor() {
+  constructor(private router : Router) {
+    
     this.questionList = [
       {
         "questionLabel": "Ưu điểm cơ sở dữ liệu",
@@ -228,6 +230,15 @@ export class QuizComponent implements OnInit {
       },
       
     ];
+  }
+
+  backhome(){
+    this.router.navigate(['/base/home']);
+
+  }
+
+  backcourse(){
+    this.router.navigate(['/base/home/course'])
   }
 
   ngOnInit(): void {
