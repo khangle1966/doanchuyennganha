@@ -3,7 +3,7 @@ import { Auth, idToken, onAuthStateChanged, user } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import * as UserAction from'src/app/ngrx/actions/user.action';
+import * as UserAction from 'src/app/ngrx/actions/user.action';
 import { UserInfo } from 'src/app/models/User.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserState } from 'src/app/ngrx/states/user.state';
@@ -20,11 +20,13 @@ import * as ProfileAction from 'src/app/ngrx/actions/profile.action';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   readonly testForm = new FormGroup({
-    name: new FormControl(null, [Validators.required, Validators.pattern(/^[A-Za-zÀ-ÿ\s]+$/)]),
+    name: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/^[A-Za-zÀ-ÿ\s]+$/),
+    ]),
     avatar: new FormControl(null, Validators.required),
     email: new FormControl(null, Validators.required),
     country: new FormControl(null, Validators.required),
-
   });
   readonly items = ['Male', 'Female'];
 
@@ -33,9 +35,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   });
 
   user$ = this.store.select('user', 'user');
-  userImg : UserInfo = <UserInfo>{};
+  userImg: UserInfo = <UserInfo>{};
   isGetSuccess$ = this.store.select('user', 'isGetSuccess');
-  isCreateLoading$ = this.store.select('user','isLoading');
+  isCreateLoading$ = this.store.select('user', 'isLoading');
   isCreateSuccess$ = this.store.select('profile', 'isSuccess');
   errorMessage$ = this.store.select('profile', 'errorMessage');
 
@@ -48,16 +50,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
   displayName: string = '';
   userName: string = '';
 
-
   regisForm = new FormGroup({
     id: new FormControl(''),
     email: new FormControl(''),
     userName: new FormControl('', Validators.required),
-    displayName: new FormControl('', Validators.required, ),
+    displayName: new FormControl('', Validators.required),
     country: new FormControl('', Validators.required),
     // sex: new FormControl('', Validators.required),
   });
-  
+
   regisData = {
     id: '',
     email: '',
@@ -70,27 +71,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private auth: Auth,
-    private store: Store <{ user: UserState, profile: ProfileState }>
-  )
-  {
-    this.user$.subscribe((value) =>{
-      if(value){
+    private store: Store<{ user: UserState; profile: ProfileState }>
+  ) {
+    this.user$.subscribe((value) => {
+      if (value) {
         this.userImg = value;
-        console.log('userne',this.userImg)
+        console.log('userne', this.userImg);
       }
-    })
+    });
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         console.log('user', user.uid);
-        console.log('user',user)
-        let idToken = await user!.getIdToken(true)
-        this.idToken = idToken
-        
+        console.log('user', user);
+        let idToken = await user!.getIdToken(true);
+        this.idToken = idToken;
+
         this.regisForm.patchValue({
           id: user!.uid,
           email: user!.email,
           displayName: user!.displayName!,
-
         });
       } else {
         this.router.navigate(['/loading']);
@@ -116,7 +115,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }),
 
       this.isCreateSuccess$.subscribe((isCreateSuccess) => {
-        console.log('check succes',isCreateSuccess)
+        console.log('check succes', isCreateSuccess);
         if (isCreateSuccess) {
           this.router.navigate(['/base/home']);
         }
@@ -127,13 +126,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
             userName: '',
           });
         }
-      }),
-      this.isCreateLoading$.subscribe((val) => {
-        if(val == false){
-                  this.store.dispatch(UserAction.getUser({ uid: user.uid, idToken: idToken }));
-
-        }
       })
+      // this.isCreateLoading$.subscribe((val) => {
+      //   if(val == false){
+      //             this.store.dispatch(UserAction.getUser({ uid: user.uid, idToken: idToken }));
+
+      //   }
+      // })
     );
   }
   ngOnDestroy(): void {
@@ -141,8 +140,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       subscription.unsubscribe();
     });
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   register() {
     this.regisData = {
@@ -155,14 +153,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     };
 
     // console.log(this.regisForm.value);
-    
 
     this.store.dispatch(
       ProfileAction.create({
         profile: <Profile>this.regisData,
-        idToken: this.idToken
+        idToken: this.idToken,
       })
     );
   }
 }
-

@@ -36,10 +36,10 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
       },
-      {
-        path: 'settings',
-        component: SettingsComponent,
-      },
+      // {
+      //   path: 'settings',
+      //   component: SettingsComponent,
+      // },
       {
         path: 'cart',
         component: CartComponent,
@@ -67,7 +67,7 @@ const routes: Routes = [
       {
         path: 'home/course',
         component: CourseComponent,
-      }
+      },
     ],
   },
 ];
