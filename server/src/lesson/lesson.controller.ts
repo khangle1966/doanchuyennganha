@@ -10,14 +10,15 @@ import {
   HttpStatus,
   Put,
 } from '@nestjs/common';
-import { LessonsService } from './lessons.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { Lesson } from './entities/lesson.entity';
+import { CourseService } from 'src/course/course.service';
+import { LessonService } from './lesson.service';
 
-@Controller('lessons')
-export class LessonsController {
-  constructor(private readonly lessonsService: LessonsService) { }
+@Controller('v1/lesson')
+export class LessonController {
+  constructor(private lessonsService: LessonService) { }
 
   @Get(':id')
   async getById(@Param('id') id: string): Promise<Lesson> {
@@ -33,12 +34,9 @@ export class LessonsController {
   async create(@Body() createLessonDto: CreateLessonDto) {
     try {
       const createdLesson = await this.lessonsService.create(createLessonDto);
-      return { message: 'Lesson created successfully', lesson: createdLesson };
+      return createdLesson;
     } catch (error) {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -78,5 +76,16 @@ export class LessonsController {
     }
   }
 
+  @Get('course/:courseId')
+  async getLessonsByCourseId(@Param('courseId') courseId: string): Promise<Lesson[]> {
+    try {
+
+      const lessons = await this.lessonsService.getLessonsByCourseId(courseId);
+      return lessons;
+    }
+    catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
 
 }

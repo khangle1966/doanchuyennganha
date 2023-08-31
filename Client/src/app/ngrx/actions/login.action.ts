@@ -5,7 +5,7 @@ export const login = createAction('[Login] Login');
 export const loginSuccess = createAction('[Login] Login Success');
 
 export const loginFailure = createAction(
-  '[Login] Login Failure',
+  '[Auth] Login Failure',
   props<{ errorMessage: string }>()
 );
 

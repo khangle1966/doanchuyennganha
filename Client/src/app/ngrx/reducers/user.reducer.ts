@@ -12,7 +12,7 @@ export const initualState: UserState = {
     isGetLoading: false,
     isGetSuccess: false,
     getErrorMessage: '',
-    email: ''
+
 };
 export const userReducer = createReducer(
   initualState,

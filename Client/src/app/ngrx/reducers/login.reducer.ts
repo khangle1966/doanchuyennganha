@@ -37,7 +37,7 @@ on(LoginAction.loginFailure, (state, { errorMessage, type }) => {
       ...state,
       isLoading: false,
       isSuccessful: false,
-      errorMessage:'',
+      errorMessage,
     };
 }),
 

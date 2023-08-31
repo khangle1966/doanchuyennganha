@@ -56,6 +56,7 @@ export class SidebarComponent {
       link: 'base/settings',
       icon: 'tuiIconSettingsLarge',
     },
+
   ];
 
   value = '';
@@ -75,6 +76,7 @@ export class SidebarComponent {
       this.router.url === '/base/cart' ? (this.pageSelected = 3) : null;
       this.router.url.includes('/base/admin') ? (this.pageSelected = 4) : null;
       this.router.url === '/base/settings' ? (this.pageSelected = 5) : null;
+
     });
   }
 
