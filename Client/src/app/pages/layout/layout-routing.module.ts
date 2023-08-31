@@ -11,6 +11,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { LessonComponent } from './components/admin/components/lesson/lesson.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { DetailComponent } from './components/detail/detail.component';
+import { QuizEditorComponent } from './components/admin/components/quiz-editor/quiz-editor.component';
 import { CourseComponent } from './components/course/course.component';
 
 const routes: Routes = [
@@ -52,7 +53,11 @@ const routes: Routes = [
         component: LessonComponent,
       },
       {
-        path: 'home/course/quiz',
+        path: 'admin/course/:id/quiz',
+        component: QuizEditorComponent,
+      },
+      {
+        path: 'quiz',
         component: QuizComponent,
       },
       {
@@ -61,7 +66,7 @@ const routes: Routes = [
       },
       {
         path: 'home/course',
-        component: CourseComponent
+        component: CourseComponent,
       }
     ],
   },

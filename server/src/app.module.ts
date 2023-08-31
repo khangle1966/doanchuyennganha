@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -11,22 +11,35 @@ import { CourseModule } from './course/course.module';
 import { QuizBankModule } from './quiz-bank/quiz-bank.module';
 import { QuizModule } from './quiz/quiz.module';
 import { QuestionModule } from './question/question.module';
-@Module({
-  imports:
-    [
-      MongooseModule.forRoot('mongodb+srv://tranvanhao016:hao123456@cluster0.mwofhtq.mongodb.net/'),
-      AuthModule,
-      UserModule,
-      ProfileModule,
-      LessonsModule,
-      CourseModule,
-      QuizBankModule,
-      QuizModule,
-      QuestionModule,
-    ],
+import { AuthMiddleware } from './middlewares/auth.middleware';
+import { ConfigModule } from '@nestjs/config';
+import databaseConfig from './config/database.config';
 
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      load: [databaseConfig],
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(databaseConfig().database.host),
+    AuthModule,
+    UserModule,
+    ProfileModule,
+    LessonsModule,
+    CourseModule,
+    QuizBankModule,
+    QuizModule,
+    QuestionModule,
+  ],
 
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}

@@ -1,7 +1,7 @@
 <quill-view
-  [content]="contentParsed"
+  [content]="content"
   [preserveWhitespace]="true"
-  format="object"
+  format="html"
   theme="snow"
   *ngIf="isPreview; else editor"
 ></quill-view>
@@ -12,7 +12,7 @@
     [(ngModel)]="content"
     trackChanges="all"
     (onFocus)="focus($event)"
-    (onEditorChanged)="changedEditor($event)"
+    (onEditorChanged)="changedContent($event)"
     (onBlur)="blur($event)"
     (onEditorCreated)="created($event)"
   ></quill-editor>

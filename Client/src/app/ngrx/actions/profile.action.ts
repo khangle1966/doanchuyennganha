@@ -3,7 +3,7 @@ import { Profile } from "src/app/models/Profile.model";
 
 export const create = createAction(
     '[Profile] Create ',
-    props<{ profile: Profile }>()
+    props<{ idToken: string ,profile: Profile }>()
   );
   
   export const createSuccess = createAction('[Profile] Create Success');
@@ -13,7 +13,9 @@ export const create = createAction(
     props<{ errorMessage: any }>()
   );
   
-  export const get = createAction('[Profile] Get', props<{ id: string }>());
+  export const get = createAction(
+    '[Profile] Get', props<{ id: string, idToken: string }>()
+  );
   
   export const getSuccess = createAction(
     '[Profile] Get Success',

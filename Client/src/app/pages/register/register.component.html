@@ -9,13 +9,20 @@
         <div class="register">
             <p class="text-register">Create profile</p>
         </div>
-        <form class="input" [formGroup]="regisForm" >
+        <form class="input" [formGroup]="regisForm">
 
             <div class="avatar-container">
-                <img [src]="regisForm.value.avatar" class="avatar-image" style="height: 50px; width: 50px;">
-            </div>  
+                <img [src]="userImg.picture" class="avatar-image"
+                    style="height: 80px; width: 80px; border-radius: 50%;">
+                    <p style="font-size: x-large; margin: 0;">{{regisForm.value.displayName}} </p>
+                <!-- <p style="font-size: larger; margin: 0 0 1rem;">{{ regisForm.value.email }}</p> -->
+            </div>
+        </form>
 
-                <tui-input formControlName="name" style="width: 296px;">
+
+
+            <form class="input" [formGroup]="regisForm">
+                <tui-input formControlName="userName" style="width: 296px;">
                     Name
                     <input tuiTextfield type="name" />
                 </tui-input>
@@ -23,38 +30,32 @@
                     Please enter a valid name (letters only).
                 </div>
 
-                <tui-input formControlName="age" style="width: 296px; margin-top: 1rem;">
-                    Age
-                    <input tuiTextfield type="age" />
-                </tui-input>
-                <div *ngIf="testForm.controls.age.invalid && testForm.controls.age.value" class="error-message">
-                    Please enter a valid age (numbers only).
-                </div>
-
-                <form tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true" [formGroup]="form" [tuiTextfieldSize]="'l'" >
-                    <tui-select formControlName="color" style="margin-top: 1rem;">
+                <!-- <form tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true" [formGroup]="form"
+                    [tuiTextfieldSize]="'l'">
+                    <tui-select formControlName="sex" style="margin-top: 1rem;">
                         Gender
                         <tui-data-list-wrapper *tuiDataList [items]="items"></tui-data-list-wrapper>
                     </tui-select>
-                </form>
+                </form> -->
 
-                <tui-input formControlName="email" style="width: 296px;margin-top: 1rem;">
-                    Email:
-                    <input tuiTextfield type="email" />
+                <div class="email" [formGroup]="regisForm" style="margin-top: 1rem">
+                    <tui-input formControlName="email" style="width: 296px;margin-bottom: 1rem;">
+                        Email
+                        <input tuiTextfield type="email" />
+                    </tui-input>
+                </div>
+
+                <tui-input formControlName="country" style="width: 296px;margin-top: 1rem;">
+                    Country
+                    <input tuiTextfield type="country" />
                 </tui-input>
+            </form>
 
-                <tui-input formControlName="cover" style="width: 296px;margin-top: 1rem;">
-                    Cover
-                    <input tuiTextfield type="cover" />
-                </tui-input>
-
-
-        </form>
+        
 
         <div class="account">
-            <button tuiButton type="button" appearance="primary" class="tui-space_right-3 tui-space_bottom-3"
-                style="width: 296px; margin: 0; font-size: 23px;"
-                >
+            <button (click)="register()" tuiButton type="button" appearance="primary" class="tui-space_right-3 tui-space_bottom-3"
+                style="width: 296px; margin: 0; font-size: 23px;">
                 Sign in
             </button>
         </div>

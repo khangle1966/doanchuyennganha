@@ -17,7 +17,7 @@ export class ProfileEffect {
     this.action$.pipe(
       ofType(ProfileAction.create),
       switchMap((action) => {
-        return this.profileService.create(action.profile);
+        return this.profileService.create(action.profile, action.idToken);
       }),
       map(() => {
         return ProfileAction.createSuccess();
@@ -32,7 +32,7 @@ export class ProfileEffect {
     this.action$.pipe(
       ofType(ProfileAction.get),
       switchMap((action) => {
-        return this.profileService.get(action.id);
+        return this.profileService.get(action.id, action.idToken );
       }),
       map((profile) => {
         return ProfileAction.getSuccess({ profile });
