@@ -18,13 +18,12 @@ import { Course } from './entities/course.entity';
 
 @Controller('v1/course')
 export class CourseController {
-  constructor(private courseService: CourseService) {}
+  constructor(private courseService: CourseService) { }
 
   @Post()
   async create(@Body() createCourseDto: CreateCourseDto): Promise<Course> {
     try {
       const createCourse = await this.courseService.create(createCourseDto);
-      console.log(createCourse);
       return createCourse;
     } catch (error) {
       throw new HttpException(error.message, error.status);
@@ -84,18 +83,6 @@ export class CourseController {
     try {
       const profile = await this.courseService.buyCourse(courseId, userId);
       return profile;
-    } catch (error) {
-      throw new HttpException(error.message, error.status);
-    }
-  }
-
-  @Get(':id/courses/profile')
-  async getProfileCourses(
-    @Param('id') profileId: string,
-  ): Promise<Course[]> {
-    try {
-      const courses = await this.courseService.getProfileCourses(profileId);
-      return courses;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

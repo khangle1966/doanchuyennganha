@@ -92,14 +92,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.store.dispatch(UserAction.createUser({ idToken: idToken }));
         }
       }),
-      this.idToken$.subscribe((idToken) => {
-        if (idToken) {
-          this.isToken = idToken;
-          this.store.dispatch(
-            UserAction.createUser({ idToken: this.isToken })
-          );
-        }
-      }),
+ 
 
       this.isCreateSuccess$.subscribe((isCreateSuccess) => {
         if (isCreateSuccess && this.userFirebase) {

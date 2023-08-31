@@ -6,12 +6,26 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { LessonsModule } from './lessons/lessons.module';
+
 import { CourseModule } from './course/course.module';
 import { QuizBankModule } from './quiz-bank/quiz-bank.module';
 import { QuizModule } from './quiz/quiz.module';
 import { QuestionModule } from './question/question.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
+import { LessonModule } from './lesson/lesson.module';
+// @Module({
+//   imports:
+//     [
+//       MongooseModule.forRoot('mongodb+srv://tranvanhao016:hao123456@cluster0.mwofhtq.mongodb.net/'),
+//       AuthModule,
+//       UserModule,
+//       ProfileModule,
+//       CourseModule,
+//       QuizBankModule,
+//       QuizModule,
+//       QuestionModule,
+//       LessonModule
+//     ],
 import { ConfigModule } from '@nestjs/config';
 import databaseConfig from './config/database.config';
 
@@ -25,7 +39,7 @@ import databaseConfig from './config/database.config';
     AuthModule,
     UserModule,
     ProfileModule,
-    LessonsModule,
+    LessonModule,
     CourseModule,
     QuizBankModule,
     QuizModule,

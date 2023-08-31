@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class UserService {
   constructor(private httpClient: HttpClient) { }
   createUser(idToken: string) {
-    console.log(idToken);
+    // console.log(idToken);
     const headers = new HttpHeaders({
       Authorization: `Bearer ${idToken}`,
     });

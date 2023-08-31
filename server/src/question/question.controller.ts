@@ -15,9 +15,9 @@ import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
 
-@Controller('question')
+@Controller('v1/question')
 export class QuestionController {
-  constructor(private questionService: QuestionService) {}
+  constructor(private questionService: QuestionService) { }
 
   @Post()
   async create(@Body() createQuestionDto: CreateQuestionDto) {
@@ -25,13 +25,9 @@ export class QuestionController {
       const createQuestion = await this.questionService.create(
         createQuestionDto,
       );
-      console.log(createQuestion);
       return createQuestion;
     } catch (error) {
-      throw new HttpException(
-        'Internal server error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error.message, error.status);
     }
   }
 

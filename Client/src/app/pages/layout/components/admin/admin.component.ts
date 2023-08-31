@@ -83,9 +83,9 @@ export class AdminComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   selectCourse: Course | null = null;
   selectEditCourse(course: Course) {

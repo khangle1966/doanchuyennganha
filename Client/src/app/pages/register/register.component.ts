@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   user$ = this.store.select('user', 'user');
   userImg : UserInfo = <UserInfo>{};
   isGetSuccess$ = this.store.select('user', 'isGetSuccess');
-
+  isCreateLoading$ = this.store.select('user','isLoading');
   isCreateSuccess$ = this.store.select('profile', 'isSuccess');
   errorMessage$ = this.store.select('profile', 'errorMessage');
 
@@ -52,7 +52,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   regisForm = new FormGroup({
     id: new FormControl(''),
     email: new FormControl(''),
-    userName: new FormControl('abc', Validators.required),
+    userName: new FormControl('', Validators.required),
     displayName: new FormControl('', Validators.required, ),
     country: new FormControl('', Validators.required),
     // sex: new FormControl('', Validators.required),
@@ -92,7 +92,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
           displayName: user!.displayName!,
 
         });
-        this.store.dispatch(UserAction.getUser({ uid: user.uid, idToken: idToken }));
       } else {
         this.router.navigate(['/loading']);
       }
@@ -117,8 +116,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }),
 
       this.isCreateSuccess$.subscribe((isCreateSuccess) => {
+        console.log('check succes',isCreateSuccess)
         if (isCreateSuccess) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/base/home']);
         }
       }),
       this.errorMessage$.subscribe((errorMessage) => {
@@ -126,6 +126,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.regisForm.patchValue({
             userName: '',
           });
+        }
+      }),
+      this.isCreateLoading$.subscribe((val) => {
+        if(val == false){
+                  this.store.dispatch(UserAction.getUser({ uid: user.uid, idToken: idToken }));
+
         }
       })
     );

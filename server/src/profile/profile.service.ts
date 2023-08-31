@@ -15,7 +15,7 @@ import { Model } from 'mongoose';
 export class ProfileService {
   constructor(
     @InjectModel(Profile.name) private profileModel: Model<Profile>,
-  ) {}
+  ) { }
 
   async create(createProfileDto: CreateProfileDto): Promise<Profile> {
     try {
@@ -65,4 +65,16 @@ export class ProfileService {
       throw new HttpException(error.message, error.status);
     }
   }
+  //Get courses by obejct id course
+  async getCoursesByObjectIdCourse(id: string): Promise<Profile[]> {
+    try {
+      return await this.profileModel.find({ courses: id })
+        .populate('courses')
+        .exec();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+
+  }
+
 }
