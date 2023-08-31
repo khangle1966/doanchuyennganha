@@ -50,7 +50,7 @@ export class Profile {
     type: [{type: mongoose.Schema.Types.ObjectId}],
     ref: 'Course', 
   })
-  completeCourse: Course[];
+  completedCourse: Course[];
 
   @Prop({
     type: [{type: mongoose.Schema.Types.ObjectId}],
