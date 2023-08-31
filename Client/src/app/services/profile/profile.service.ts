@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,13 @@ import { Injectable } from '@angular/core';
 })
 export class ProfileService {
 
-  constructor() { }
+  constructor(private httpClient:HttpClient) { }
+  updateProfile(idToken: string, course: any) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${idToken}`,
+    });
+    return this.httpClient.put<any>(`http://localhost:3000/v1/profile/${idToken}`, course, {
+      headers,
+    });
+  }
 }

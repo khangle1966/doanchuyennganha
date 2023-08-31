@@ -5,10 +5,12 @@ export interface Profile {
     email: string;
     country: string;
     avatar: string;
-    sex: string;
-    courses: string[];
+    gender: string;
     bio: string;
     notifications: string[];
     messages: string[];
+    courses: string[];
+    ongoingCourses: string[];
+    completedCourses: string[];
   }
   

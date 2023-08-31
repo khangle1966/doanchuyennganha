@@ -109,6 +109,10 @@ export class HomeComponent {
     this.router.navigate(['/base/profile']);
   }
 
+  //how to get course form profile to here
+  
+
+
 } 
 
 
