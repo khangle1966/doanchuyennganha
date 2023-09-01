@@ -51,11 +51,13 @@ export class CartComponent implements OnInit {
 
   buyButton() {
     if (this.cartList.length === 0) {
-      this.warningNotification('Không có course nào trong cart.');
+      this.warningNotification(
+        'There are no courses in the cart for you to purchase.'
+      );
     } else {
-      this.cartList = [];
+      this.clearAllCart();
       this.total = 0;
-      this.successNotification('Mua thành công');
+      this.successNotification('Purchase Success');
     }
   }
 
