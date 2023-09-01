@@ -39,13 +39,6 @@ export class Profile {
   notifications: string[];
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Message',
-    default: null,
-  })
-  messages: string[];
-
-  @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId }],
     ref: 'Course',
   })

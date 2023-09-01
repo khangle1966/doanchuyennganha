@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 export class QuizBankService {
   constructor(
     @InjectModel(QuizBank.name) private quizBankModel: Model<QuizBank>,
-  ) { }
+  ) {}
 
   async create(createQuizBankDto: CreateQuizBankDto): Promise<QuizBank> {
     try {

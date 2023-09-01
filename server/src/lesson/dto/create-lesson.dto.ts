@@ -6,5 +6,5 @@ export class CreateLessonDto {
     public content: string,
     public img: string,
     public decription: string,
-  ) { }
+  ) {}
 }

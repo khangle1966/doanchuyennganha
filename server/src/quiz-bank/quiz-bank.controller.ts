@@ -16,7 +16,7 @@ import { QuizBank } from './entities/quiz-bank.entity';
 
 @Controller('v1/quiz-bank')
 export class QuizBankController {
-  constructor(private quizBankService: QuizBankService) { }
+  constructor(private quizBankService: QuizBankService) {}
 
   @Post()
   create(@Body() createQuizBankDto: CreateQuizBankDto) {

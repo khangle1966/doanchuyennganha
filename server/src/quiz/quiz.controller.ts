@@ -16,7 +16,7 @@ import { Quiz } from './entities/quiz.entity';
 
 @Controller('v1/quiz')
 export class QuizController {
-  constructor(private readonly quizService: QuizService) { }
+  constructor(private readonly quizService: QuizService) {}
 
   @Get(':id')
   async getById(@Param('id') id: string) {
@@ -24,7 +24,7 @@ export class QuizController {
       const quiz = await this.quizService.getQuizById(id);
       return quiz;
     } catch (error) {
-      throw new HttpException(error.message, error.status)
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -46,7 +46,7 @@ export class QuizController {
       const quizzes = await this.quizService.getAllQuizzes();
       return quizzes;
     } catch (error) {
-      throw new HttpException(error.message, error.status)
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -56,7 +56,7 @@ export class QuizController {
       const newQuiz = await this.quizService.createQuiz(quizData);
       return newQuiz;
     } catch (error) {
-      throw new HttpException(error.message, error.status)
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -65,9 +65,8 @@ export class QuizController {
     try {
       const updatedQuiz = await this.quizService.updateQuiz(id, quizData);
       return updatedQuiz;
-    }
-    catch (error) {
-      throw new HttpException(error.message, error.status)
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -76,9 +75,8 @@ export class QuizController {
     try {
       const deletedQuiz = await this.quizService.deleteQuiz(id);
       return deletedQuiz;
-
     } catch (error) {
-      throw new HttpException(error.message, error.status)
+      throw new HttpException(error.message, error.status);
     }
   }
 }
