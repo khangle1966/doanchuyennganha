@@ -4,10 +4,12 @@ import { ProfileController } from './profile.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProfileSchema } from './entities/profile.entity';
 import { UserModule } from 'src/user/user.module';
+import { CourseSchema } from 'src/course/entities/course.entity';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Profile', schema: ProfileSchema }]),
+    MongooseModule.forFeature([{ name: 'Course', schema: CourseSchema }]),
     forwardRef(() => UserModule),
   ],
   controllers: [ProfileController],

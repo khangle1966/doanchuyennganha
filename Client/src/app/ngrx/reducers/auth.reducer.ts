@@ -54,6 +54,7 @@ export const authReducer = createReducer(
     return {
       ...state,
       isLogoutSuccess: true,
+      isSuccessful: false,
       idToken: '',
       uid: '',
     };

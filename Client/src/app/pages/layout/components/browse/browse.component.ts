@@ -14,7 +14,6 @@ export class BrowseComponent {
    }
   backhome(){
     this.router.navigate(['/base/home']);
-
   }
   
   course = [
