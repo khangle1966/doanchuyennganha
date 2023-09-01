@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ProfileState } from './ngrx/states/profile.state';
 import { UserState } from './ngrx/states/user.state';
-import { Auth, idToken, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import * as AuthActions from './ngrx/actions/auth.actions';
 import * as UserActions from './ngrx/actions/user.actions';
 import { AuthState } from './ngrx/states/auth.state';
-import { combineLatest, first, forkJoin, merge, take } from 'rxjs';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -51,15 +51,5 @@ export class AppComponent implements OnInit {
       }
     });
   }
-  ngOnInit(): void {
-    // forkJoin({
-    //   idToken: this.idToken$.pipe(take(2)),
-    //   uid: this.uid$.pipe(take(2)),
-    // }).subscribe((res) => {
-    //   console.log(res);
-    //   this.store.dispatch(
-    //     UserActions.getUser({ uid: res.uid, idToken: res.idToken })
-    //   );
-    // });
-  }
+  ngOnInit(): void {}
 }
