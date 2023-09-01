@@ -16,7 +16,7 @@ import { QuizBank } from './entities/quiz-bank.entity';
 
 @Controller('v1/quiz-bank')
 export class QuizBankController {
-  constructor(private quizBankService: QuizBankService) {}
+  constructor(private quizBankService: QuizBankService) { }
 
   @Post()
   create(@Body() createQuizBankDto: CreateQuizBankDto) {
@@ -42,7 +42,6 @@ export class QuizBankController {
   async findOne(@Param('id') id: string) {
     try {
       const quizBank = await this.quizBankService.findOne(id);
-      console.log(quizBank);
       return quizBank;
     } catch (error) {
       throw error;
@@ -56,7 +55,6 @@ export class QuizBankController {
   ) {
     try {
       const quizBank = await this.quizBankService.update(id, updateQuizBankDto);
-      console.log(quizBank);
       return quizBank;
     } catch (error) {
       throw error;

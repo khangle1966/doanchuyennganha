@@ -3,5 +3,5 @@ export interface QuizBank {
   img: string;
   question: string;
   options: string[];
-  answer: string;
+  answerList: string[];
 }

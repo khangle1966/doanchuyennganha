@@ -3,6 +3,6 @@ export interface Lesson {
   courseId: string;
   title: string;
   content: any;
-  img: string;
   description: string;
+  ordinalNum: number;
 }

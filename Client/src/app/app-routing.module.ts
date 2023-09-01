@@ -28,8 +28,18 @@ const routes: Routes = [
       import('./pages/register/register.module').then((m) => m.RegisterModule),
   },
   {
+    path: 'loading',
+    loadChildren: () =>
+      import('./pages/loading/loading.module').then((m) => m.LoadingModule),
+  },
+  {
+    path: 'error',
+    loadChildren: () =>
+      import('./pages/error/error.module').then((m) => m.ErrorModule),
+  },
+  {
     path: '**',
-    redirectTo: 'welcome',
+    redirectTo: 'error',
     pathMatch: 'full',
   },
 ];

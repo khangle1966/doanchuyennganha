@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy,Component } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
+import { Store } from '@ngrx/store';
 import {TuiBooleanHandler} from '@taiga-ui/cdk';
+import { Observable } from 'rxjs';
+import { LoginState } from 'src/app/ngrx/states/login.state';
 
 
 @Component({
@@ -10,6 +13,18 @@ import {TuiBooleanHandler} from '@taiga-ui/cdk';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
+
+  idToken$: Observable<string> = this.store.select('idToken', 'idToken');
+  constructor(private store: Store<{ idToken: LoginState }>) {
+    this.idToken$.subscribe((value) => {
+      console.log('idToken');
+      console.log(value);
+      if (value) {
+        console.log(value);
+      }
+    });
+  }
+  
   search = '';
   open = false;
  

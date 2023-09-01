@@ -1,0 +1,134 @@
+<div id="quest-preview-container" *ngIf="isPreview; else editor">
+  <tui-island>
+    <div class="tui-island__content">
+      <h3 class="tui-island__title">
+        {{ "Question: " + quest.quizBank.question }}
+      </h3>
+      <p class="tui-island__category">
+        (You can choose one or more option on this preview as setting answers on
+        editor)
+      </p>
+      <div class="quest-img" *ngIf="this.questionForm.controls['img'].value">
+        <img src="{{ this.questionForm.controls['img'].value }}" alt="" />
+      </div>
+      <div class="tui-island__paragraph">
+        <ul class="tui-list">
+          <li *ngFor="let option of optionList; let i = index">
+            <div class="tui-list__description">
+              <tui-checkbox-labeled
+                [formControl]="this.checkBoxList[i]"
+                size="l"
+              >
+                {{ option.value }}
+              </tui-checkbox-labeled>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </tui-island>
+</div>
+<ng-template #editor>
+  <div id="quest-editor-container">
+    <ng-template #icon>
+      <tui-svg src="tuiIconPlusLarge"></tui-svg>
+    </ng-template>
+    <form [formGroup]="questionForm" class="col-form">
+      <div class="tui-form__row">
+        <tui-input tuiTextfieldExampleText="Enter ID" formControlName="_id">
+          <span class="tui-required">ID</span>
+        </tui-input>
+        <tui-error
+          formControlName="_id"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+      <div class="tui-form__row">
+        <tui-input
+          tuiTextfieldExampleText="Enter Question"
+          formControlName="question"
+        >
+          <span class="tui-required">Question</span>
+        </tui-input>
+        <tui-error
+          formControlName="question"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+      </div>
+      <div class="tui-form__row">
+        <tui-input
+          tuiTextfieldExampleText="Enter Image Url"
+          formControlName="img"
+        >
+          <span>Image Url</span>
+        </tui-input>
+      </div>
+      <div class="header tui-space_top-4">
+        <div class="tui-text_h5">Options</div>
+        <button
+          [icon]="icon"
+          tuiIconButton
+          type="button"
+          size="m"
+          (click)="addNewOption()"
+        ></button>
+      </div>
+      <ng-container *ngFor="let opt of optionList; let i = index">
+        <div class="tui-form__row opt-item">
+          <tui-checkbox
+            contentAlign="left"
+            [formControl]="this.checkBoxList[i]"
+            nativeId="tickAnswer"
+            size="l"
+            class="checkbox-block"
+          >
+          </tui-checkbox>
+          <div class="input-box">
+            <tui-input
+              tuiTextfieldExampleText="Enter Option"
+              [formControl]="opt"
+            >
+              <span class="tui-required">Option</span>
+            </tui-input>
+          </div>
+          <button
+            icon="tuiIconTrash2Large"
+            tuiIconButton
+            type="button"
+            appearance="secondary-destructive"
+            size="m"
+            (click)="showWarningDialog(template)"
+          ></button>
+        </div>
+        <tui-error
+          class="opt-item-err"
+          [formControl]="opt"
+          [error]="[] | tuiFieldError | async"
+        ></tui-error>
+        <ng-template #template let-observer>
+          <p>Are you sure to this delete this option ?</p>
+
+          <button
+            size="m"
+            tuiButton
+            type="button"
+            class="tui-space_right-3"
+            appearance="secondary-destructive"
+            (click)="observer.complete()"
+          >
+            Cancel
+          </button>
+          <button
+            size="m"
+            tuiButton
+            type="button"
+            appearance="secondary"
+            (click)="deleteOption(i); observer.complete()"
+          >
+            Confirm
+          </button>
+        </ng-template>
+      </ng-container>
+    </form>
+  </div>
+</ng-template>
