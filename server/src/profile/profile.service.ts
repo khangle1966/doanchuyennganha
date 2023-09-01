@@ -21,7 +21,7 @@ export class ProfileService {
   async create(createProfileDto: CreateProfileDto): Promise<Profile> {
     try {
       const profile = new this.profileModel(createProfileDto);
-      // console.log(profile);
+      console.log(profile);
       return await profile.save();
     } catch (error) {
       console.log(error);
