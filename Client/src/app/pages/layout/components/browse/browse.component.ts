@@ -31,8 +31,10 @@ export class BrowseComponent implements OnInit {
   }
   ngOnInit(): void {
     this.cartList$.subscribe((cartList) => {
-      this.cartList = cartList;
-      console.log(this.cartList);
+      if (cartList != undefined) {
+        this.cartList = cartList;
+        console.log(this.cartList);
+      }
     });
   }
 

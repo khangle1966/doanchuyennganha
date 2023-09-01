@@ -21,6 +21,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { SharedModule } from './shared/shared/shared.module';
 import { CourseReducer } from './ngrx/reducers/course.reducer';
 import { CourseEffect } from './ngrx/effects/course.effects';
+import { HttpClientModule } from '@angular/common/http';
 import { CartReducer } from './ngrx/reducers/cart.reducer';
 // import { HttpModule } from '@angular/http';
 import { loginReducer } from './ngrx/reducers/login.reducer';
@@ -30,7 +31,6 @@ import { LoginEffect } from './ngrx/effects/login.effect';
 import { profileReducer } from './ngrx/reducers/profile.reducer';
 import { UserEffects } from './ngrx/effects/user.effect';
 import { ProfileEffect } from './ngrx/effects/profile.effect';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
@@ -50,10 +50,10 @@ import { HttpClientModule } from '@angular/common/http';
       {}
     ),
     EffectsModule.forRoot([
+      CourseEffect,
       LoginEffect,
       UserEffects,
       ProfileEffect,
-      CourseEffect,
     ]),
     BrowserAnimationsModule,
     HttpClientModule,
@@ -65,7 +65,6 @@ import { HttpClientModule } from '@angular/common/http';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     SharedModule,
-    StoreModule.forRoot({ login: loginReducer, user: userReducer }, {}),
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
   bootstrap: [AppComponent],
