@@ -13,23 +13,23 @@ export class Profile {
   @Prop({ required: true, unique: true })
   userName: string;
 
-  @Prop({ default: null })
+  @Prop()
   displayName: string;
 
   @IsEmail()
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ default: null })
+  @Prop()
   gender: string;
 
-  @Prop({ default: null })
+  @Prop()
   country: string;
 
-  @Prop({ default: null })
+  @Prop()
   avatar: string;
 
-  @Prop({ default: null })
+  @Prop()
   bio: string;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }] })
@@ -38,15 +38,8 @@ export class Profile {
   @Prop()
   role: string;
 
-  @Prop({ default: null })
+  @Prop()
   notifications: string[];
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Message',
-    default: null,
-  })
-  messages: string[];
 }
 
 export const ProfileSchema = SchemaFactory.createForClass(Profile);
