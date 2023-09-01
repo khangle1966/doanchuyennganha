@@ -4,7 +4,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Put,
@@ -20,7 +19,7 @@ import { error } from 'console';
 
 @Controller('v1/course')
 export class CourseController {
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService) {}
 
   @Post()
   async create(@Body() createCourseDto: CreateCourseDto): Promise<Course> {
@@ -99,10 +98,13 @@ export class CourseController {
   ): Promise<Profile> {
     try {
       const profile = await this.courseService.ongoingCourse(courseId, userId);
-      if(profile) {
-        const profiles = await this.courseService.removeCourse(courseId, userId);
+      if (profile) {
+        const profiles = await this.courseService.removeCourse(
+          courseId,
+          userId,
+        );
         return profiles;
-      }else{
+      } else {
         throw new HttpException('Course not found', 404);
       }
     } catch (error) {
@@ -119,10 +121,13 @@ export class CourseController {
   ): Promise<Profile> {
     try {
       const profile = await this.courseService.completeCourse(courseId, userId);
-      if(profile) {
-        const profiles = await this.courseService.removeOngoingCourse(courseId, userId);
+      if (profile) {
+        const profiles = await this.courseService.removeOngoingCourse(
+          courseId,
+          userId,
+        );
         return profiles;
-      }else{
+      } else {
         throw new HttpException('Course not found', 404);
       }
     } catch (error) {

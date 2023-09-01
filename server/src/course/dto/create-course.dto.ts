@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export class CreateCourseDto {
   constructor(
     public name: string,
@@ -8,5 +9,5 @@ export class CreateCourseDto {
     public language: string,
     public price: number,
     public author: string,
-  ) { }
+  ) {}
 }

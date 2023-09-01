@@ -67,6 +67,10 @@
                     70% off all course Thursday
                     <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
                 </div>
+                <div class="slide">
+                    70% off all course Thursday
+                    <img src="../../../../../assets/images/hanh.png" height="40" width="40" alt="" />
+                </div>
             </div>
         </div>
         <tui-scrollbar class="box">
@@ -106,8 +110,9 @@
         <div id="browse-course">
             <tui-scrollbar class="main-rol">
                 <div class="main">
-                    <!-- <tui-push class="course"  *ngFor="let course of courseList$ | async; let i=index;" heading={{course.name}}> -->
-                    <tui-push class="course" *ngFor="let course of courseList ; let i=index;" heading={{course.name}}>
+                    <tui-push class="course" *ngFor="let course of courseList$ | async; let i=index;"
+                        heading={{course.name}}>
+                        <!-- <tui-push class="course" *ngFor="let course of courseList ; let i=index;" heading={{course.name}}> -->
                         <img [src]=course.img alt="" />
                         <!-- <tui-svg src="tuiIconSettingsLarge"></tui-svg> -->
                         <p>

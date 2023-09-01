@@ -19,15 +19,16 @@ export class BrowseComponent implements OnInit {
   courseList$: Observable<Course[]> = this.store.select('course', 'courseList');
   cartList$ = this.store.select('cart', 'cartList');
   cartList: Course[] = [];
+
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private router: Router,
     private store: Store<{ course: CourseState; cart: CartState }>
   ) {
-    // this.store.dispatch(CourseAction.get());
-    // this.courseList$.subscribe((course)=>{
-    //   console.log(course);
-    // })
+    this.store.dispatch(CourseAction.get());
+    this.courseList$.subscribe((course) => {
+      console.log(course);
+    });
   }
   ngOnInit(): void {
     this.cartList$.subscribe((cartList) => {
@@ -72,34 +73,34 @@ export class BrowseComponent implements OnInit {
       .subscribe();
   }
 
-  courseList = [
-    {
-      _id: '123',
-      name: 'Front-End',
-      category: 'Web Developer',
-      img: '../../../../../assets/images/webdev.jpg',
-      author: '',
-      rating: 345,
-      language: '',
-      date_Created: '',
-      date_Updated: '',
-      description: '',
-      price: 321,
-    },
-    {
-      _id: '678',
-      name: 'Ielts',
-      category: 'English',
-      img: '../../../../../assets/images/webdev.jpg',
-      author: '',
-      rating: 345,
-      language: '',
-      date_Created: '',
-      date_Updated: '',
-      description: '',
-      price: 456,
-    },
-  ];
+  // courseList = [
+  //   {
+  //     _id: '123',
+  //     name: 'Front-End',
+  //     category: 'Web Developer',
+  //     img: '../../../../../assets/images/webdev.jpg',
+  //     author: '',
+  //     rating: 345,
+  //     language: '',
+  //     date_Created: '',
+  //     date_Updated: '',
+  //     description: '',
+  //     price: 321,
+  //   },
+  //   {
+  //     _id: '678',
+  //     name: 'Ielts',
+  //     category: 'English',
+  //     img: '../../../../../assets/images/webdev.jpg',
+  //     author: '',
+  //     rating: 345,
+  //     language: '',
+  //     date_Created: '',
+  //     date_Updated: '',
+  //     description: '',
+  //     price: 456,
+  //   },
+  // ];
 
   search = '';
 }
