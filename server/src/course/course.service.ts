@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, Injectable } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
@@ -72,17 +73,73 @@ export class CourseService {
       options,
     );
 
-    const courseFilter = { _id: courseId };
-    const courseUpdate = { $addToSet: { students: userId } };
-    const courseOptions = { new: true, upsert: false };
+    // const courseFilter = { _id: courseId };
+    // const courseUpdate = { $addToSet: { students: userId } };
+    // const courseOptions = { new: true, upsert: false };
 
-    const course = await this.courseModel.findOneAndUpdate(
-      courseFilter,
-      courseUpdate,
-      courseOptions,
-    );
+    // const course = await this.courseModel.findOneAndUpdate(
+    //   courseFilter,
+    //   courseUpdate,
+    //   courseOptions,
+    // );
 
     return profile;
   }
+
+  async ongoingCourse(courseId: string, userId: string): Promise<Profile> {
+    const filter = { id: userId };
+    const update = { $addToSet: { ongoingCourse: courseId } };
+    const options = { new: true, upsert: false };
+
+    const profile = await this.profileModel.findOneAndUpdate(
+      filter,
+      update,
+      options,
+    );
+    return profile;
+  }
+
+  //remove objectId in coures array in profile
+  async removeCourse(courseId: string, userId: string): Promise<Profile> {
+    const filter = { id: userId };
+    const update = { $pull: { courses: courseId } };
+    const options = { new: true, upsert: false };
+
+    const profile = await this.profileModel.findOneAndUpdate(
+      filter,
+      update,
+      options,
+    );
+    return profile;
+  }
+  
+  async completeCourse(courseId: string, userId: string): Promise<Profile> {
+    const filter = { id: userId };
+    const update = { $addToSet: { completeCourse: courseId } };
+    const options = { new: true, upsert: false };
+
+    const profile = await this.profileModel.findOneAndUpdate(
+      filter,
+      update,
+      options,
+    );
+    return profile;
+  }
+
+  async removeOngoingCourse(courseId: string, userId: string): Promise<Profile> {
+    const filter = { id: userId };
+    const update = { $pull: { ongoingCourse: courseId } };
+    const options = { new: true, upsert: false };
+
+    const profile = await this.profileModel.findOneAndUpdate(
+      filter,
+      update,
+      options,
+    );
+    return profile;
+  }
+  
+
+
 
 }

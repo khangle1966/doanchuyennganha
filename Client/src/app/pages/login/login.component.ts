@@ -30,13 +30,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.store.select('auth', 'isSuccessful').subscribe((val) => {
         if (val) {
           this.alerts.open('Login Success !!!', { status: 'info' }).subscribe();
-          // this.router.navigate(['/loading']);
         }
       }),
       this.store.select('auth', 'isLoading').subscribe((val) => {
         if (val) {
           this.alerts.open('Login.... !!!', { status: 'success' }).subscribe();
-          // this.router.navigate(['/loading']);
         }
       }),
       this.store.select('auth', 'errorMessage').subscribe((val) => {

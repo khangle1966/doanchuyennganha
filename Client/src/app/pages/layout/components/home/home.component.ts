@@ -4,6 +4,10 @@ import { Store } from '@ngrx/store';
 import { TuiBooleanHandler } from '@taiga-ui/cdk';
 import { Observable } from 'rxjs';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
+import { ProfileState } from 'src/app/ngrx/states/profile.state';
+import { ProfileService } from 'src/app/services/profile/profile.service';
+import { Router } from '@angular/router';
+import * as ProfileActions from 'src/app/ngrx/actions/profile.actions';
 
 @Component({
   selector: 'app-home',
@@ -12,17 +16,6 @@ import { AuthState } from 'src/app/ngrx/states/auth.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  idToken$: Observable<string> = this.store.select('idToken', 'idToken');
-  constructor(private store: Store<{ idToken: AuthState }>) {
-    this.idToken$.subscribe((value) => {
-      console.log('idToken');
-      console.log(value);
-      if (value) {
-        console.log(value);
-      }
-    });
-  }
-
   search = '';
   open = false;
 
@@ -103,15 +96,51 @@ export class HomeComponent {
     },
   ];
 
-  // items = [
-  //     'Chưa học',
-  //     'Đã học',
-  //     'Đã học xong',
-  // ];
-
   readonly testForm = new FormGroup({
     testValue: new FormControl('orange'),
   });
 
-  readonly courses = ['Chưa học', 'Đã học', 'Đã học xong'];
+  readonly courses = ['Chưa học', 'Đang học', 'Đã học xong'];
+
+  idToken: string = '';
+  idToken$: Observable<string> = this.store.select('idToken', 'idToken');
+
+  profile$ = this.store.select('profile', 'profile');
+
+  constructor(
+    private router: Router,
+    private profileService: ProfileService,
+    private store: Store<{ profile: ProfileState; idToken: AuthState }>
+  ) {
+    this.idToken$.subscribe((idToken) => {
+      this.idToken = idToken;
+      console.log(this.idToken);
+
+      this.store.dispatch(
+        ProfileActions.get({
+          idToken: this.idToken,
+          id: '64f0107814b619bebaaf8e03',
+        })
+      );
+    });
+
+    this.profile$.subscribe((profile) => {
+      console.log(profile);
+    });
+  }
+
+  toEdit() {
+    this.router.navigate(['/base/profile']);
+  }
+
+  updateProfile() {
+    // this.store.dispatch(
+    //   ProfileAction.updateProfile({
+    //     idToken: this.idToken,
+    //     profile: {},
+    //     id: '1',
+    //   })
+    // );
+    // console.log(id, profile);
+  }
 }

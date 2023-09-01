@@ -2,9 +2,11 @@ import { createReducer, on } from '@ngrx/store';
 import { ProfileState } from '../states/profile.state';
 import * as ProfileAction from 'src/app/ngrx/actions/profile.actions';
 import { Profile } from 'src/app/models/Profile.model';
+import { initualState } from './user.reducer';
 
-export const initualState: ProfileState = {
+export const initialState: ProfileState = {
   profile: <Profile>{},
+  idToken: '',
   isLoading: false,
   isSuccess: false,
   errorMessage: '',

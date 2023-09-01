@@ -17,6 +17,10 @@
                 .nav-home {
                     cursor: pointer;
                 }
+
+                .nav-browse {
+                    cursor: pointer;
+                }
             }
 
             .nav-right {
@@ -41,7 +45,7 @@
                 margin-top: 1rem;
                 width: 50%;
                 // border: 1px solid black;
-                border-right: 1px solid var( --tui-base-05);
+                border-right: 1px solid var(--tui-base-05);
 
                 .left-top {
                     // border: 1px solid black;
@@ -106,9 +110,15 @@
                     justify-content: space-between;
 
                     .sub-content {
-                        p{
+                        p {
                             font: var(--tui-font-text-l);
                         }
+
+                        .rating {
+                            // color: var(--tui-accent);
+                            color: #faaf00;
+                        }
+
                         .ic-star {
                             display: flex;
                             flex-direction: row;
@@ -126,17 +136,17 @@
                 }
 
                 .top-bot {
-                    border-top: 1px solid var( --tui-base-05);
+                    border-top: 1px solid var(--tui-base-05);
                 }
 
                 .right-bot {
                     height: 20%;
 
                     .des {
-                        margin: .25rem 2rem;  
+                        margin: .25rem 2rem;
 
-                        ::ng-deep t-highlight{
-                            font:var(--tui-font-heading-4);
+                        ::ng-deep t-highlight {
+                            font: var(--tui-font-heading-4);
                         }
                     }
 
