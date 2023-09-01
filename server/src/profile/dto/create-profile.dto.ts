@@ -11,6 +11,8 @@ export class CreateProfileDto {
     public bio: string,
     public notifications: string[],
     public messages: string[],
+    public completedCourse: string[],
+    public ongoingCourse: string[],
     public role: string,
   ) {}
 }

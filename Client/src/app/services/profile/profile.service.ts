@@ -9,6 +9,7 @@ import { Profile } from 'src/app/models/Profile.model';
 export class ProfileService {
   constructor(private httpClient: HttpClient) {}
 
+<<<<<<< HEAD
   //course
   getCourse() {
     return this.httpClient.get<Course[]>('http://localhost:3000/v1/course', {});
@@ -31,6 +32,18 @@ export class ProfileService {
       `http://localhost:3000/v1/course/${course._id}`,
       course,
       {}
+=======
+  updateProfile(idToken: string, profile: any, id: string) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${idToken}`,
+    });
+    return this.httpClient.put<any>(
+      `http://localhost:3000/v1/profile/${id}`,
+      profile,
+      {
+        headers,
+      }
+>>>>>>> c4b672380ff38fa638076bfc5013026d52e8b83f
     );
   }
 
@@ -48,7 +61,7 @@ export class ProfileService {
 
   get(id: string, idToken: string) {
     return this.httpClient.get<Profile>(
-      `http://localhost:3000/v1/profile?id=${id}`,
+      `http://localhost:3000/v1/profile/${id}`,
       {
         headers: new HttpHeaders({
           Authorization: `Bearer ${idToken}`,

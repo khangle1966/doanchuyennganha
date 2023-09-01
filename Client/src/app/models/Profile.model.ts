@@ -6,7 +6,9 @@ export interface Profile {
   country: string;
   avatar: string;
   gender: string;
-  courses: string[];
   bio: string;
   notifications: string[];
+  courses: string[];
+  ongoingCourses: string[];
+  completedCourses: string[];
 }

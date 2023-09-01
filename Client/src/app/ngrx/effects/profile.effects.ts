@@ -46,4 +46,23 @@ export class ProfileEffects {
       })
     )
   );
+
+  updateProfile$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(ProfileActions.updateProfile),
+      switchMap((action) => {
+        return this.profileService.updateProfile(
+          action.idToken,
+          action.profile,
+          action.id
+        );
+      }),
+      map(() => {
+        return ProfileActions.updateProfileSuccess();
+      }),
+      catchError((error) => {
+        return of(ProfileActions.updateProfileFailure({ errorMessage: error }));
+      })
+    )
+  );
 }
