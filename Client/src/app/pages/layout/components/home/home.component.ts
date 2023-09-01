@@ -103,14 +103,14 @@ export class HomeComponent {
   readonly courses = ['Chưa học', 'Đang học', 'Đã học xong'];
 
   idToken: string = '';
-  idToken$: Observable<string> = this.store.select('idToken', 'idToken');
+  idToken$: Observable<string> = this.store.select('auth', 'idToken');
 
   profile$ = this.store.select('profile', 'profile');
 
   constructor(
     private router: Router,
     private profileService: ProfileService,
-    private store: Store<{ profile: ProfileState; idToken: AuthState }>
+    private store: Store<{ profile: ProfileState; auth: AuthState }>
   ) {
     this.idToken$.subscribe((idToken) => {
       this.idToken = idToken;
