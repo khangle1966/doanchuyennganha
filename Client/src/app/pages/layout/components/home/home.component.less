@@ -20,18 +20,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    #myCourse_box{
-        width: 75%;
-        padding: 1.5rem 1.5rem 0 1.5rem;
-        height: 100vh;
-    //fix
-    //height: 10%;
+    height: 10%;
     min-height: 4.313rem;
     .title {
       display: flex;
       flex-direction: column;
     }
-    //
     .search {
       width: 35%;
     }
@@ -60,6 +54,10 @@
 
       ::ng-deep .tui-group_collapsed > *:not(:last-child) {
         margin-right: 15px;
+      }
+
+      ::ng-deep .t-wrapper {
+        border-radius: 0.5rem;
       }
 
       .tui-group {
@@ -204,20 +202,11 @@
           align-items: center;
         }
 
-            .tui-group{
-                display: inline;
-            }
-
-            ::ng-deep .t-wrapper{
-                border-radius: 0.5rem;
-            }
-        //fix    
         .line {
           width: 1px;
           height: 50%;
           background-color: var(--tui-base-04);
         }
-        //
       }
 
       .calender {
@@ -230,36 +219,8 @@
           height: none;
           width: none;
         }
-    
-        .list_course{
-            padding: 0 0.5rem;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-            ::ng-deep .t-top, ::ng-deep .t-actions{
-                height: 0 ;
-            }
-            ::ng-deep .t-heading{
-                margin: 0;
-            }
-    
-            ::ng-deep .t-content{
-                margin-top: 5px;
-            }
-    
-            .cart_course{
-                margin-bottom: 20px;
-            }
-    
-            .btn_course{
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin: 5px 0;
-            }
       }
-      //fix
+
       .text_under {
         width: 50%;
         text-align: center;
@@ -272,145 +233,12 @@
           margin: 0;
         }
       }
-    }//
-  }
-}
-
-#myProfile{
-    border-left: 1px solid var(--tui-base-07);
-    width: 25%;
-    min-width: 350px;
-    height: 100vh;
-    #myProfile_cart{
-        padding: 1.5rem 0.5rem 1.5rem 0.5rem;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        .myProfile_header{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            height: 10%;
-            h2{
-                margin: 0;
-            }
-            .tui-space_bottom-3{
-                margin: 0;
-            }
-        }
-
-        .myProfile_body{
-            width: 100%;
-            display: flex;
-            flex-direction: column;           
-            align-items: center;
-            height: 90%;
-            .tui-space_top-1{
-                margin: 0;
-            }
-
-            .name{
-                font:var(--tui-font-text-xl);
-                margin: 0;
-                height: 10%;
-                display: flex;
-                align-items: center;
-                font-weight: bold;
-
-            }
-
-            .email{
-                font:var( --tui-font-text-m);
-                font-weight: bold;
-                margin: 0;
-                //height: 7%;
-                display: flex;
-                align-items: center;
-            }
-
-
-            .member{
-                display: flex;
-                flex-direction: row;
-                height: 7%;
-                align-items: center;
-                p{
-                    margin: 0;
-                    font: var(--tui-font-text-l);
-                }
-                .material-symbols-outlined{
-                    margin-right: 5px
-                }
-            }
-
-            .progress{
-                background-color: var(--tui-base-02);
-                border-radius: 0.5rem;
-                width: 100%;
-                height: 10%;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.5rem 20px;
-                //margin-top: 15px;
-                p{
-                    margin: 0;
-                }
-                .number{
-                    font:var( --tui-font-text-xl);
-                    font-weight: bold;
-                }
-                .text{
-                    font: var(--tui-font-text-m);
-                }
-
-                .rating,.time,.course{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                }
-
-                .line{
-                    width: 0.05rem;
-                    height: 50%;
-                    background-color: var(--tui-base-04);
-                }
-            }
-
-            .calender{
-                background-color: white;
-                border-radius: 0.5rem;
-                //box-shadow: 0 5px 15px rgba(0,0,0,.2);
-                //height: 34%;
-                margin-top: 5%;
-                ::ng-deep .ng-star-inserted{
-                    height: none;
-                    width: none;
-                }
-            }
-
-            .text_under{
-                width: 50%;
-                text-align: center;
-                //margin-top: 5%;
-                margin-top: auto;
-
-                p{
-                    font: var(--tui-font-text-s);
-                    font-weight: bold;
-                    margin: 0;
-                }
-            }
-        }
     }
   }
 }
-}
-  //fix
+
 @media screen and (max-width: 1224px) {
   .search {
     display: none;
   }
-}//
-
+}
