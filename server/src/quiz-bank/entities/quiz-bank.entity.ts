@@ -5,27 +5,18 @@ import mongoose, { HydratedDocument } from 'mongoose';
 export type QuizBankDocument = HydratedDocument<QuizBank>;
 
 @Schema({ timestamps: true })
-
 export class QuizBank {
+  @Prop({ required: true })
+  question: string;
 
+  @Prop()
+  img: string;
 
-    @Prop({ required: true })
+  @Prop()
+  options: string[];
 
-    question: string;
-
-    @Prop()
-    img: string;
-
-    @Prop()
-
-    options: string[];
-
-    @Prop()
-
-    answerList: string[];
-
-
-
+  @Prop()
+  answerList: string[];
 }
 
 export const QuizBankSchema = SchemaFactory.createForClass(QuizBank);

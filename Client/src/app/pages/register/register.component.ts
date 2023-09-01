@@ -118,6 +118,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       notifications: [],
       ongoingCourses: [],
       completedCourses: [],
+      role: 'user',
     };
 
     // console.log(regisData);

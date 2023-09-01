@@ -13,4 +13,4 @@ import { Course, CourseSchema } from 'src/course/entities/course.entity';
   controllers: [LessonController],
   providers: [LessonService],
 })
-export class LessonModule { }
+export class LessonModule {}

@@ -17,7 +17,7 @@ import { Question } from './entities/question.entity';
 
 @Controller('v1/question')
 export class QuestionController {
-  constructor(private questionService: QuestionService) { }
+  constructor(private questionService: QuestionService) {}
 
   @Post()
   async create(@Body() createQuestionDto: CreateQuestionDto) {
