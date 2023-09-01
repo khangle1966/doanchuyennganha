@@ -17,13 +17,32 @@ export class ProfileEffects {
     this.action$.pipe(
       ofType(ProfileAction.updateProfile),
       switchMap((action) => {
-        return this.profileService.updateProfile(action.idToken, action.course);
+        return this.profileService.updateProfile(
+          action.idToken,
+          action.profile,
+          action.id
+        );
       }),
       map(() => {
         return ProfileAction.updateProfileSuccess();
       }),
       catchError((error) => {
         return of(ProfileAction.updateProfileFailure({ errorMessage: error }));
+      })
+    )
+  );
+
+  get$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(ProfileAction.get),
+      switchMap((action) => {
+        return this.profileService.get(action.idToken, action.id);
+      }),
+      map((profile) => {
+        return ProfileAction.getSuccess({ profile });
+      }),
+      catchError((error) => {
+        return of(ProfileAction.getFailure({ errorMessage: error }));
       })
     )
   );

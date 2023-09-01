@@ -99,7 +99,7 @@ export class UserController {
       if (!userProfile) {
         await this.userService.remove(id);
       } else {
-        await this.profileService.remove(userProfile.uId);
+        await this.profileService.remove(userProfile.id);
         await this.userService.remove(id);
       }
     } catch (error) {

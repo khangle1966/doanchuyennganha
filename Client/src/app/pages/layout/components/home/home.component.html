@@ -15,31 +15,18 @@
             <div id="body">
                 <div class="onGoing">
                     <div class="filter">
-                            <form
-                            class="group"
-                            [formGroup]="testForm"
-                            >
-                            <div
-                                tuiGroup
-                                class="group"
-                                [collapsed]="true"
-                            >
-                                <tui-radio-block
-                                    *ngFor="let course of courses"
-                                    contentAlign="right"
-                                    formControlName="testValue"
-                                    size="l"
-                                    [hideRadio]="true"
-                                    [item]="course"
-                                >
+                        <form class="group" [formGroup]="testForm">
+                            <div tuiGroup class="group" [collapsed]="true">
+                                <tui-radio-block *ngFor="let course of courses" contentAlign="right"
+                                    formControlName="testValue" size="l" [hideRadio]="true" [item]="course">
                                     {{ course }}
                                 </tui-radio-block>
                             </div>
                         </form>
                     </div>
-                    
-                    <button tuiIconButton type="button" class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconPlusLarge"
-                        [size]="'m'" ></button>
+
+                    <button tuiIconButton type="button" class="tui-space_right-3 tui-space_bottom-3"
+                        icon="tuiIconPlusLarge" [size]="'m'"></button>
                 </div>
                 <tui-scrollbar class="box">
                     <div class="list_course">
@@ -48,7 +35,8 @@
                             {{item.category}}
 
                             <div class="btn_course">
-                                <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3">
+                                <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3"
+                                    (click)="updateProfile()">
                                     Start
                                 </button>
 
@@ -68,37 +56,27 @@
         <div id="myProfile_cart">
             <div class="myProfile_header">
                 <h2>PROFILE USER</h2>
-                <button
-                        tuiButton
-                        type="button"
-                        class="tui-space_right-3 tui-space_bottom-3"
-                        icon="tuiIconEdit3"
-                        [size]="'s'"
-                        (click)="toEdit()"
-                    >
-                        Edit
+                <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconEdit3"
+                    [size]="'s'" (click)="toEdit()">
+                    Edit
                 </button>
             </div>
             <div class="myProfile_body">
-                <div class="avatar" >
-                    <tui-avatar
-                    text="alex inkin"
-                    class="tui-space_top-1"
-                    [size]="'xl'"
-                    ></tui-avatar>
+                <div class="avatar">
+                    <tui-avatar text="alex inkin" class="tui-space_top-1" [size]="'xl'"></tui-avatar>
                 </div>
-                
+
 
                 <p class="name">Phùng Minh Khoa</p>
                 <p class="email">Khoachoco@gmail.com</p>
-                
+
                 <div class="member">
                     <span class="material-symbols-outlined">
                         diamond
                     </span>
                     <p>Member Gnosis</p>
                 </div>
-                
+
                 <div class="progress">
                     <div class="rating">
                         <p class="number">10</p>
@@ -119,7 +97,7 @@
                 <div class="calender">
                     <tui-calendar [showAdjacent]="false"></tui-calendar>
                 </div>
-                
+
                 <div class="text_under">
                     <p>Learn with passion, excel with dedication, and keep studying to infinity</p>
                 </div>

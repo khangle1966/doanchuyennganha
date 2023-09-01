@@ -19,13 +19,12 @@ import { error } from 'console';
 
 @Controller('v1/course')
 export class CourseController {
-  constructor(private courseService: CourseService) {}
+  constructor(private courseService: CourseService) { }
 
   @Post()
   async create(@Body() createCourseDto: CreateCourseDto): Promise<Course> {
     try {
       const createCourse = await this.courseService.create(createCourseDto);
-      console.log(createCourse);
       return createCourse;
     } catch (error) {
       throw new HttpException(error.message, error.status);

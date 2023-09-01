@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export type QuizDocument = Quiz & Document;
 
@@ -8,8 +8,8 @@ export class Quiz {
   @Prop()
   title: string;
 
-  @Prop()
-  courseId: string[];
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Course' })
+  courseId: string;
 
   @Prop()
   img: string;
@@ -21,7 +21,7 @@ export class Quiz {
   total: number;
 
   @Prop()
-  time: Date;
+  time: number;
 }
 
 export const QuizSchema = SchemaFactory.createForClass(Quiz);

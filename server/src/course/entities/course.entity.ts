@@ -12,8 +12,6 @@ export enum Category {
 
 @Schema({ timestamps: true })
 export class Course {
-  @Prop({ required: true })
-  id: string;
 
   @Prop({ required: true })
   name: string;

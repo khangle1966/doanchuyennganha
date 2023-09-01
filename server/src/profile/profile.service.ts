@@ -12,7 +12,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Course } from 'src/course/entities/course.entity';
 
-
 @Injectable()
 export class ProfileService {
   constructor(
@@ -31,7 +30,7 @@ export class ProfileService {
 
   async findOne(id: string): Promise<Profile> {
     try {
-      const profile = await this.profileModel.findOne({ uId: id });
+      const profile = await this.profileModel.findById({ _id: id });
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
@@ -41,7 +40,7 @@ export class ProfileService {
   async update(id: string, updateProfileDto: UpdateProfileDto) {
     try {
       const updatedProfile = await this.profileModel.findOneAndUpdate(
-        { id: id },
+        { _id: id },
         { ...updateProfileDto },
         { new: true },
       );
@@ -54,7 +53,7 @@ export class ProfileService {
   async remove(id: string) {
     try {
       const deletedProfile = await this.profileModel.findOneAndDelete({
-        id: id,
+        _id: id,
       });
       return deletedProfile;
     } catch (error) {
@@ -68,7 +67,7 @@ export class ProfileService {
       throw new HttpException(error.message, error.status);
     }
   }
- //how to getAllCourse
+  //how to getAllCourse
   // async getAllCourse(id: string): Promise<Profile> {
   //   try {
   //     const profile = await this.profileModel.findOne({ _id: id }).populate('completeCourse').exec();
@@ -78,21 +77,31 @@ export class ProfileService {
   //   }
   // }
 
-
-
   //how to getAllCourseOfProfile
-   getAllCourseOfProfile(id: string):Promise<Profile> {
+  getAllCourseOfProfile(id: string): Promise<Profile> {
     try {
-      const profile =  this.profileModel.findOne({ _id: id }).select('-createdAt -updatedAt -__v').populate('completeCourse','-createdAt -updatedAt -__v ').then((profile)=>{
-        return profile;
-      });
+      const profile = this.profileModel
+        .findOne({ _id: id })
+        .select('-createdAt -updatedAt -__v')
+        .populate('completeCourse', '-createdAt -updatedAt -__v ')
+        .then((profile) => {
+          return profile;
+        });
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
 
- 
-  
-
+  //Get courses by obejct id course
+  async getCoursesByObjectIdCourse(id: string): Promise<Profile[]> {
+    try {
+      return await this.profileModel
+        .find({ courses: id })
+        .populate('courses')
+        .exec();
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
 }

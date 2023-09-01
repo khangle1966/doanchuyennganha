@@ -1,6 +1,9 @@
+import { Profile } from 'src/app/models/Profile.model';
+
 export interface ProfileState {
-    idToken:string;
-    isLoading:boolean;
-    isSuccessful:boolean;
-    errorMessage:string;
+  profile: Profile;
+  idToken: string;
+  isLoading: boolean;
+  isSuccessful: boolean;
+  errorMessage: string;
 }

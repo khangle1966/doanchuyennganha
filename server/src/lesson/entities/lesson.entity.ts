@@ -1,23 +1,27 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from 'mongoose';
+import { Course } from "src/course/entities/course.entity";
 
 export type CourseDocument = HydratedDocument<Lesson>;
 @Schema({ timestamps: true })
 export class Lesson {
 
-    @Prop({ required: true })
+    @Prop()
+    ordinalnumber: number;
+
+    @Prop()
     title: string;
 
-    @Prop({ required: true })
-    courseId: string[];
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Course' })
+    courseId: string;
 
-    @Prop({ required: true })
+    @Prop()
     img: string;
 
-    @Prop({ required: true })
+    @Prop()
     content: string;
 
-    @Prop({ required: true })
+    @Prop()
     description: string;
 
 }

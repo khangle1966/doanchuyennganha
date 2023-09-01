@@ -26,7 +26,8 @@ export class ProfileController {
   @Post()
   async create(@Body() createProfileDto: CreateProfileDto): Promise<Profile> {
     try {
-      const isExist = await this.profileService.findOne(createProfileDto.uId);
+      const isExist = await this.profileService.findOne(createProfileDto.id);
+
       if (isExist) {
         throw new HttpException(
           'Profile already exists',
@@ -36,13 +37,13 @@ export class ProfileController {
       const newProfile = await this.profileService.create(createProfileDto);
       if (!newProfile) {
         try {
-          await this.userService.remove(createProfileDto.uId);
+          await this.userService.remove(createProfileDto.id);
         } catch (error) {
           throw new Error(error);
         }
       } else {
-        this.userService.update(createProfileDto.uId, {
-          profile: newProfile.uId,
+        this.userService.update(createProfileDto.id, {
+          profile: newProfile.id,
         });
       }
       return newProfile;
@@ -116,8 +117,4 @@ export class ProfileController {
       throw error;
     }
   }
-
-
-
-  
 }

@@ -2,15 +2,12 @@ import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
 
 import mongoose, { HydratedDocument } from 'mongoose';
 
-export type CourseDocument = HydratedDocument<QuizBank>;
+export type QuizBankDocument = HydratedDocument<QuizBank>;
 
 @Schema({ timestamps: true })
 
 export class QuizBank {
 
-    // @Prop({ required: true, unique: true })
-
-    // id: string;
 
     @Prop({ required: true })
 
@@ -25,7 +22,9 @@ export class QuizBank {
 
     @Prop()
 
-    answer: string;
+    answerList: string[];
+
+
 
 }
 

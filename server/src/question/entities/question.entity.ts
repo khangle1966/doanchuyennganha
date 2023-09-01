@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsEmail } from 'class-validator';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { QuizBank } from 'src/quiz-bank/entities/quiz-bank.entity';
+import { Quiz } from 'src/quiz/entities/quiz.entity';
 
 export type QuestionDocument = HydratedDocument<Question>;
 
@@ -8,12 +10,15 @@ export type QuestionDocument = HydratedDocument<Question>;
 export class Question {
 
 
-  @Prop({ required: true })
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz', required: true })
   quizId: string;
 
-  @Prop({ required: true })
-  quizbankId: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank', required: true })
+  quizBank: string;
 
+  @Prop()
+  ordinalNum: number;
 
 }
 

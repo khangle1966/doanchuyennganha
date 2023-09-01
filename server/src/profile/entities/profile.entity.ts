@@ -8,7 +8,7 @@ export type ProfileDocument = HydratedDocument<Profile>;
 @Schema({ timestamps: true })
 export class Profile {
   @Prop({ required: true, unique: true })
-  uId: string;
+  id: string;
 
   @Prop({ required: true, unique: true })
   userName: string;
@@ -21,7 +21,7 @@ export class Profile {
   email: string;
 
   @Prop({ default: null })
-  sex: string;
+  gender: string;
 
   @Prop({ default: null })
   country: string;
@@ -34,7 +34,6 @@ export class Profile {
 
   @Prop({ default: null })
   role: string;
- 
 
   @Prop({ default: null })
   notifications: string[];
@@ -47,19 +46,19 @@ export class Profile {
   messages: string[];
 
   @Prop({
-    type: [{type: mongoose.Schema.Types.ObjectId}],
-    ref: 'Course', 
+    type: [{ type: mongoose.Schema.Types.ObjectId }],
+    ref: 'Course',
   })
   completedCourse: Course[];
 
   @Prop({
-    type: [{type: mongoose.Schema.Types.ObjectId}],
+    type: [{ type: mongoose.Schema.Types.ObjectId }],
     ref: 'Course',
   })
   ongoingCourse: Course[];
 
   @Prop({
-    type: [{type: mongoose.Schema.Types.ObjectId}],
+    type: [{ type: mongoose.Schema.Types.ObjectId }],
     ref: 'Course',
   })
   courses: Course[];
