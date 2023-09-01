@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy,Component } from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import {TuiBooleanHandler} from '@taiga-ui/cdk';
+import { TuiBooleanHandler } from '@taiga-ui/cdk';
 import { Observable } from 'rxjs';
-import { LoginState } from 'src/app/ngrx/states/login.state';
-
+import { AuthState } from 'src/app/ngrx/states/auth.state';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +12,8 @@ import { LoginState } from 'src/app/ngrx/states/login.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-
   idToken$: Observable<string> = this.store.select('idToken', 'idToken');
-  constructor(private store: Store<{ idToken: LoginState }>) {
+  constructor(private store: Store<{ idToken: AuthState }>) {
     this.idToken$.subscribe((value) => {
       console.log('idToken');
       console.log(value);
@@ -24,88 +22,87 @@ export class HomeComponent {
       }
     });
   }
-  
+
   search = '';
   open = false;
- 
+
   onClick(): void {
-      this.open = !this.open;
+    this.open = !this.open;
   }
 
   onObscured(obscured: boolean): void {
-      if (obscured) {
-          this.open = false;
-      }
+    if (obscured) {
+      this.open = false;
+    }
   }
 
   onActiveZone(active: boolean): void {
-      this.open = active && this.open;
+    this.open = active && this.open;
   }
 
-  course=[
+  course = [
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
     },
     {
-      id:'',
-      name:'Phát triển Web',
-      category:'Web Development',
-      imgURL:'../../.././../../assets/images/Picture.png',
-    }
+      id: '',
+      name: 'Phát triển Web',
+      category: 'Web Development',
+      imgURL: '../../.././../../assets/images/Picture.png',
+    },
   ];
 
-  
   // items = [
   //     'Chưa học',
   //     'Đã học',
@@ -117,11 +114,4 @@ export class HomeComponent {
   });
 
   readonly courses = ['Chưa học', 'Đã học', 'Đã học xong'];
-
-
-} 
-
-
-  
-  
-
+}

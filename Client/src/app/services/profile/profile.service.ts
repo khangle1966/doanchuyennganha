@@ -35,7 +35,7 @@ export class ProfileService {
   }
 
   create(profile: Profile, idToken: string) {
-    return this.httpClient.post<Profile>(
+    return this.httpClient.post<any>(
       `http://localhost:3000/v1/profile`,
       profile,
       {

@@ -19,18 +19,14 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { SharedModule } from './shared/shared/shared.module';
-import { CourseReducer } from './ngrx/reducers/course.reducer';
-import { CourseEffect } from './ngrx/effects/course.effects';
-import { HttpClientModule } from '@angular/common/http';
-import { CartReducer } from './ngrx/reducers/cart.reducer';
-// import { HttpModule } from '@angular/http';
-import { loginReducer } from './ngrx/reducers/login.reducer';
+import { authReducer } from './ngrx/reducers/auth.reducer';
 import { userReducer } from './ngrx/reducers/user.reducer';
 import { LoadingComponent } from './pages/loading/loading.component';
-import { LoginEffect } from './ngrx/effects/login.effect';
+import { AuthEffects } from './ngrx/effects/auth.effects';
 import { profileReducer } from './ngrx/reducers/profile.reducer';
-import { UserEffects } from './ngrx/effects/user.effect';
-import { ProfileEffect } from './ngrx/effects/profile.effect';
+import { UserEffects } from './ngrx/effects/user.effects';
+import { ProfileEffects } from './ngrx/effects/profile.effects';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
@@ -40,21 +36,10 @@ import { ProfileEffect } from './ngrx/effects/profile.effect';
     // HttpModule,
     AppRoutingModule,
     StoreModule.forRoot(
-      {
-        course: CourseReducer,
-        cart: CartReducer,
-        login: loginReducer,
-        user: userReducer,
-        profile: profileReducer,
-      },
+      { auth: authReducer, user: userReducer, profile: profileReducer },
       {}
     ),
-    EffectsModule.forRoot([
-      CourseEffect,
-      LoginEffect,
-      UserEffects,
-      ProfileEffect,
-    ]),
+    EffectsModule.forRoot([AuthEffects, UserEffects, ProfileEffects]),
     BrowserAnimationsModule,
     HttpClientModule,
     TuiRootModule,

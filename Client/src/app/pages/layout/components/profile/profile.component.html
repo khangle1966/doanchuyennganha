@@ -1,6 +1,16 @@
 <ng-template #icon>
   <tui-svg src="tuiIconPlusLarge"></tui-svg>
 </ng-template>
+<button
+  [size]="'m'"
+  tuiButton
+  type="button"
+  appearance="accent"
+  class="tui-space_top-3 tui-space_bottom-3"
+  (click)="logout()"
+>
+  Logout
+</button>
 <form [formGroup]="courseForm" class="col-form">
   <!-- <div class="top-header">
     <h5

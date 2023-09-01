@@ -15,20 +15,22 @@ import { Model } from 'mongoose';
 export class ProfileService {
   constructor(
     @InjectModel(Profile.name) private profileModel: Model<Profile>,
-  ) { }
+  ) {}
 
   async create(createProfileDto: CreateProfileDto): Promise<Profile> {
     try {
       const profile = new this.profileModel(createProfileDto);
+      // console.log(profile);
       return await profile.save();
     } catch (error) {
+      console.log(error);
       throw new HttpException(error.message, error.status);
     }
   }
 
   async findOne(id: string): Promise<Profile> {
     try {
-      const profile = await this.profileModel.findOne({ _id: id });
+      const profile = await this.profileModel.findOne({ id: id });
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
@@ -68,13 +70,12 @@ export class ProfileService {
   //Get courses by obejct id course
   async getCoursesByObjectIdCourse(id: string): Promise<Profile[]> {
     try {
-      return await this.profileModel.find({ courses: id })
+      return await this.profileModel
+        .find({ courses: id })
         .populate('courses')
         .exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
-
   }
-
 }
