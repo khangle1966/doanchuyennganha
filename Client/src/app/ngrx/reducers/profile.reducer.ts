@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { ProfileState } from '../states/profile.state';
-import * as ProfileAction from 'src/app/ngrx/actions/profile.action';
+import * as ProfileAction from 'src/app/ngrx/actions/profile.actions';
 import { Profile } from 'src/app/models/Profile.model';
 
 export const initualState: ProfileState = {
@@ -8,6 +8,9 @@ export const initualState: ProfileState = {
   isLoading: false,
   isSuccess: false,
   errorMessage: '',
+  isGetLoading: false,
+  isGetSuccess: false,
+  getErrorMessage: '',
 };
 
 export const profileReducer = createReducer(
@@ -45,32 +48,31 @@ export const profileReducer = createReducer(
   on(ProfileAction.get, (state, action) => {
     console.log(action.type);
     return {
-        ...state,
-        isLoading: true,
-        isSuccess: false,
-        errorMessage: '',
-    }
-  }),
-
-  on(ProfileAction.getSuccess, (state, {type, profile}) => {
-    console.log(type);
-    return{
-        ...state,
-        isLoading :false ,
-        isSuccess  :true   ,
-        errorMessage: '',
-        profile,
+      ...state,
+      isGetLoading: true,
+      isGetSuccess: false,
+      getErrorMessage: '',
     };
   }),
 
-  on(ProfileAction.getFailure, (state, {type, errorMessage}) => {
+  on(ProfileAction.getSuccess, (state, { type, profile }) => {
     console.log(type);
     return {
-        ...state,
-      isLoading: false,
-      isSuccess: false,
-      errorMessage,
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: true,
+      getErrorMessage: '',
+      profile,
+    };
+  }),
+
+  on(ProfileAction.getFailure, (state, { type, errorMessage }) => {
+    console.log(type);
+    return {
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrorMessage: errorMessage,
     };
   })
-  
 );

@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import {
+  Auth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from '@angular/fire/auth';
 import { from } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class LoginService {
-  constructor(private auth:Auth) {}
+export class AuthService {
+  constructor(private auth: Auth) {}
 
   loginWithGoogle() {
     return from(
@@ -18,6 +23,20 @@ export class LoginService {
           );
           let idToken = await creadential.user.getIdToken();
           resolve(idToken);
+        } catch {
+          reject('Cannot login with Google');
+        }
+      })
+    );
+  }
+
+  logout() {
+    return from(
+      new Promise<string>(async (resolve, reject) => {
+        try {
+          signOut(this.auth).then(() => {
+            resolve('Logout success!!!');
+          });
         } catch {
           reject('Cannot login with Google');
         }

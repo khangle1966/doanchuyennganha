@@ -1,9 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Auth, idToken, onAuthStateChanged, user } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import * as UserAction from 'src/app/ngrx/actions/user.action';
+import * as UserAction from 'src/app/ngrx/actions/user.actions';
 import { UserInfo } from 'src/app/models/User.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserState } from 'src/app/ngrx/states/user.state';
@@ -11,7 +11,9 @@ import { ProfileState } from 'src/app/ngrx/states/profile.state';
 import { Profile } from 'src/app/models/Profile.model';
 import { Subscription, mergeMap } from 'rxjs';
 
-import * as ProfileAction from 'src/app/ngrx/actions/profile.action';
+import * as ProfileAction from 'src/app/ngrx/actions/profile.actions';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
+import { TuiAlertService } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-register',
@@ -19,144 +21,113 @@ import * as ProfileAction from 'src/app/ngrx/actions/profile.action';
   styleUrls: ['./register.component.less'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  readonly testForm = new FormGroup({
-    name: new FormControl(null, [
-      Validators.required,
-      Validators.pattern(/^[A-Za-zÀ-ÿ\s]+$/),
-    ]),
-    avatar: new FormControl(null, Validators.required),
-    email: new FormControl(null, Validators.required),
-    country: new FormControl(null, Validators.required),
-  });
-  readonly items = ['Male', 'Female'];
+  readonly genders = ['Male', 'Female'];
+  readonly countries = [
+    'VietNam',
+    'Japan',
+    'Korea',
+    'China',
+    'USA',
+    'UK',
+    'Germany',
+    'Italian',
+    'France',
+    'Spain',
+    'Portugal',
+    'Brazil',
+    'Holland',
+  ];
 
-  readonly form = new FormGroup({
-    sex: new FormControl('', Validators.required),
-  });
-
-  user$ = this.store.select('user', 'user');
-  userImg: UserInfo = <UserInfo>{};
-  isGetSuccess$ = this.store.select('user', 'isGetSuccess');
-  isCreateLoading$ = this.store.select('user', 'isLoading');
-  isCreateSuccess$ = this.store.select('profile', 'isSuccess');
-  errorMessage$ = this.store.select('profile', 'errorMessage');
-
-  idToken: string = '';
-
+  idToken = '';
   subscriptions: Subscription[] = [];
 
-  id: string = '';
-  email: string = '';
-  displayName: string = '';
-  userName: string = '';
-
   regisForm = new FormGroup({
-    id: new FormControl(''),
-    email: new FormControl(''),
-    userName: new FormControl('', Validators.required),
+    uid: new FormControl('', Validators.required),
+    avatar: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    userName: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/[a-zA-Z-0-9]+/g),
+    ]),
     displayName: new FormControl('', Validators.required),
     country: new FormControl('', Validators.required),
-    // sex: new FormControl('', Validators.required),
+    gender: new FormControl('', Validators.required),
   });
-
-  regisData = {
-    id: '',
-    email: '',
-    displayName: '',
-    userName: '',
-    country: '',
-    // sex: '',
-  };
 
   constructor(
     private router: Router,
-    private auth: Auth,
-    private store: Store<{ user: UserState; profile: ProfileState }>
-  ) {
-    this.user$.subscribe((value) => {
-      if (value) {
-        this.userImg = value;
-        console.log('userne', this.userImg);
-      }
+    private store: Store<{
+      profile: ProfileState;
+      user: UserState;
+      auth: AuthState;
+    }>,
+    @Inject(TuiAlertService)
+    private readonly alerts: TuiAlertService
+  ) {}
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
     });
-    onAuthStateChanged(this.auth, async (user) => {
-      if (user) {
-        console.log('user', user.uid);
-        console.log('user', user);
-        let idToken = await user!.getIdToken(true);
-        this.idToken = idToken;
-
-        this.regisForm.patchValue({
-          id: user!.uid,
-          email: user!.email,
-          displayName: user!.displayName!,
-        });
-      } else {
-        this.router.navigate(['/loading']);
-      }
-    });
-
+  }
+  ngOnInit(): void {
     this.subscriptions.push(
-      this.store
-        .select('user', 'isGetSuccess')
-        .pipe(
-          mergeMap((isGetSuccess) => {
-            if (isGetSuccess) {
-              return this.user$;
-            } else {
-              return [];
-            }
-          })
-        )
-        .subscribe((user) => {
-          if (user.profile) {
-            this.router.navigate(['/loading']);
-          }
-        }),
-
-      this.isCreateSuccess$.subscribe((isCreateSuccess) => {
-        console.log('check succes', isCreateSuccess);
-        if (isCreateSuccess) {
-          this.router.navigate(['/base/home']);
+      this.store.select('user', 'user').subscribe((val) => {
+        if (val.uid) {
+          this.regisForm.controls.avatar.setValue(val.picture);
+          this.regisForm.controls.uid.setValue(val.uid);
+          this.regisForm.controls.email.setValue(val.email);
+          this.regisForm.controls.displayName.setValue(val.name);
         }
       }),
-      this.errorMessage$.subscribe((errorMessage) => {
-        if (errorMessage) {
-          this.regisForm.patchValue({
-            userName: '',
-          });
+      this.store.select('auth', 'idToken').subscribe((val) => {
+        if (val != '') {
+          this.idToken = val;
+        }
+      }),
+      this.store.select('profile', 'isSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Create Profile Success !!!', { status: 'success' })
+            .subscribe();
+          this.router.navigateByUrl('/base');
+        }
+      }),
+      this.store.select('profile', 'isLoading').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Creating Profile... !!!', { status: 'info' })
+            .subscribe();
+        }
+      }),
+      this.store.select('profile', 'errorMessage').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Create Profile Fail: ' + val, { status: 'error' })
+            .subscribe();
         }
       })
-      // this.isCreateLoading$.subscribe((val) => {
-      //   if(val == false){
-      //             this.store.dispatch(UserAction.getUser({ uid: user.uid, idToken: idToken }));
-
-      //   }
-      // })
     );
   }
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-  }
-  ngOnInit(): void {}
 
   register() {
-    this.regisData = {
-      id: this.regisForm.value.id ?? '',
+    let regisData: Profile = {
+      id: this.regisForm.value.uid ?? '',
       email: this.regisForm.value.email ?? '',
       userName: this.regisForm.value.userName ?? 'abc',
       displayName: this.regisForm.value.displayName ?? '',
       country: this.regisForm.value.country ?? '',
-      // sex: this.regisForm.value.sex ?? '',
+      avatar: this.regisForm.value.avatar ?? '',
+      gender: this.regisForm.value.gender ?? '',
+      courses: [],
+      bio: '',
+      notifications: [],
     };
 
-    // console.log(this.regisForm.value);
+    // console.log(regisData);
 
     this.store.dispatch(
       ProfileAction.create({
-        profile: <Profile>this.regisData,
+        profile: regisData,
         idToken: this.idToken,
       })
     );
