@@ -1,17 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TuiBooleanHandler } from '@taiga-ui/cdk';
 import { Observable } from 'rxjs';
-import { LoginState } from 'src/app/ngrx/states/login.state';
-
-import { ProfileService } from 'src/app/services/profile/profile.service';
-import * as ProfileAction from 'src/app/ngrx/actions/profile.action';
-import { idToken } from '@angular/fire/auth';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
 import { ProfileState } from 'src/app/ngrx/states/profile.state';
-
-import { Profile } from 'src/app/models/Profile.model';
+import { ProfileService } from 'src/app/services/profile/profile.service';
+import { Router } from '@angular/router';
+import * as ProfileActions from 'src/app/ngrx/actions/profile.actions';
 
 @Component({
   selector: 'app-home',
@@ -114,14 +110,14 @@ export class HomeComponent {
   constructor(
     private router: Router,
     private profileService: ProfileService,
-    private store: Store<{ profile: ProfileState; idToken: LoginState }>
+    private store: Store<{ profile: ProfileState; idToken: AuthState }>
   ) {
     this.idToken$.subscribe((idToken) => {
       this.idToken = idToken;
       console.log(this.idToken);
 
       this.store.dispatch(
-        ProfileAction.get({
+        ProfileActions.get({
           idToken: this.idToken,
           id: '64f0107814b619bebaaf8e03',
         })

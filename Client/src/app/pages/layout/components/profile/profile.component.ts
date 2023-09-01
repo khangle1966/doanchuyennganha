@@ -1,7 +1,10 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Course } from 'src/app/models/Course.model';
 import { Profile } from 'src/app/models/Profile.model';
+import * as AuthActions from '../../../../ngrx/actions/auth.actions';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
 
 @Component({
   selector: 'app-profile',
@@ -43,5 +46,10 @@ export class ProfileComponent {
         });
       }
     }
+  }
+  constructor(private store: Store<{ auth: AuthState }>) {}
+
+  logout() {
+    this.store.dispatch(AuthActions.logout());
   }
 }

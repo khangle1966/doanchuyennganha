@@ -13,29 +13,29 @@ export class Profile {
   @Prop({ required: true, unique: true })
   userName: string;
 
-  @Prop({ default: null })
+  @Prop()
   displayName: string;
 
   @IsEmail()
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ default: null })
+  @Prop()
   gender: string;
 
-  @Prop({ default: null })
+  @Prop()
   country: string;
 
-  @Prop({ default: null })
+  @Prop()
   avatar: string;
 
-  @Prop({ default: null })
+  @Prop()
   bio: string;
 
   @Prop({ default: null })
   role: string;
 
-  @Prop({ default: null })
+  @Prop()
   notifications: string[];
 
   @Prop({

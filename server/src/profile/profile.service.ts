@@ -16,21 +16,22 @@ import { Course } from 'src/course/entities/course.entity';
 export class ProfileService {
   constructor(
     @InjectModel(Profile.name) private profileModel: Model<Profile>,
-    @InjectModel(Course.name) private courseModel: Model<Course>,
   ) {}
 
   async create(createProfileDto: CreateProfileDto): Promise<Profile> {
     try {
       const profile = new this.profileModel(createProfileDto);
+      // console.log(profile);
       return await profile.save();
     } catch (error) {
+      console.log(error);
       throw new HttpException(error.message, error.status);
     }
   }
 
   async findOne(id: string): Promise<Profile> {
     try {
-      const profile = await this.profileModel.findById({ _id: id });
+      const profile = await this.profileModel.findOne({ id: id });
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);

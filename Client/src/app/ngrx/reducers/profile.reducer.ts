@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import * as ProfileAction from '../actions/profile.action';
 import { ProfileState } from '../states/profile.state';
+import * as ProfileAction from 'src/app/ngrx/actions/profile.actions';
 import { Profile } from 'src/app/models/Profile.model';
 import { initualState } from './user.reducer';
 
@@ -8,8 +8,11 @@ export const initialState: ProfileState = {
   profile: <Profile>{},
   idToken: '',
   isLoading: false,
-  isSuccessful: false,
+  isSuccess: false,
   errorMessage: '',
+  isGetLoading: false,
+  isGetSuccess: false,
+  getErrorMessage: '',
 };
 
 export const profileReducer = createReducer(
@@ -48,64 +51,30 @@ export const profileReducer = createReducer(
     console.log(action.type);
     return {
       ...state,
-      profile: <Profile>{},
-      isLoading: true,
-      isSuccessful: false,
-      errorMessage: '',
+      isGetLoading: true,
+      isGetSuccess: false,
+      getErrorMessage: '',
     };
   }),
 
-  on(ProfileAction.getSuccess, (state, { profile, type }) => {
+  on(ProfileAction.getSuccess, (state, { type, profile }) => {
     console.log(type);
     return {
       ...state,
+      isGetLoading: false,
+      isGetSuccess: true,
+      getErrorMessage: '',
       profile,
-      isLoading: false,
-      isSuccessful: true,
-      errorMessage: '',
     };
   }),
 
-  on(ProfileAction.getFailure, (state, { errorMessage, type }) => {
+  on(ProfileAction.getFailure, (state, { type, errorMessage }) => {
     console.log(type);
     return {
       ...state,
-      isLoading: false,
-      isSuccessful: false,
-      errorMessage,
-    };
-  }),
-
-  on(ProfileAction.updateProfile, (state, action) => {
-    console.log(action.type);
-    return {
-      ...state,
-      profile: <Profile>{},
-      isLoading: true,
-      isSuccess: false,
-      errorMessage: '',
-    };
-  }),
-
-  on(ProfileAction.updateProfileSuccess, (state, action) => {
-    console.log(action.type);
-    return {
-      ...state,
-      profile: <Profile>{},
-      isLoading: false,
-      isSuccess: true,
-      errorMessage: '',
-    };
-  }),
-
-  on(ProfileAction.updateProfileFailure, (state, { type, errorMessage }) => {
-    console.log(type);
-    return {
-      ...state,
-      profile: <Profile>{},
-      isLoading: false,
-      isSuccess: false,
-      errorMessage,
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrorMessage: errorMessage,
     };
   })
 );

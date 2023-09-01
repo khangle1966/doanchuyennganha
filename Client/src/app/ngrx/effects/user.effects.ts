@@ -4,14 +4,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { UserService } from 'src/app/services/user/user.service';
 import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 
-import * as UserAction from 'src/app/ngrx/actions/user.action';
+import * as UserAction from 'src/app/ngrx/actions/user.actions';
 
 @Injectable()
 export class UserEffects {
   constructor(private action$: Actions, private userService: UserService) {}
 
   create$ = createEffect(() =>
-    this.action$.pipe( 
+    this.action$.pipe(
       ofType(UserAction.createUser),
       switchMap((action) => {
         // console.log('id token: '+ action.idToken)
@@ -25,21 +25,20 @@ export class UserEffects {
       })
     )
   );
-  
-  getUser$ = createEffect(() => this.action$.pipe(
+
+  getUser$ = createEffect(() =>
+    this.action$.pipe(
       ofType(UserAction.getUser),
       exhaustMap((action) =>
-          this.userService.getUser(action.uid,action.idToken).pipe(
-              map((user) => {
-                  return UserAction.getUserSuccess({ user: user })
-              }),
-              catchError((error) => of(UserAction.getUserFailure({errorMessage: error})))
+        this.userService.getUser(action.uid, action.idToken).pipe(
+          map((user) => {
+            return UserAction.getUserSuccess({ user: user });
+          }),
+          catchError((error) =>
+            of(UserAction.getUserFailure({ errorMessage: error }))
           )
+        )
       )
     )
   );
-
-  
-
-  
 }

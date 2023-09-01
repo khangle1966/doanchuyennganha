@@ -1,5 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -13,19 +18,6 @@ import { QuizModule } from './quiz/quiz.module';
 import { QuestionModule } from './question/question.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { LessonModule } from './lesson/lesson.module';
-// @Module({
-//   imports:
-//     [
-//       MongooseModule.forRoot('mongodb+srv://tranvanhao016:hao123456@cluster0.mwofhtq.mongodb.net/'),
-//       AuthModule,
-//       UserModule,
-//       ProfileModule,
-//       CourseModule,
-//       QuizBankModule,
-//       QuizModule,
-//       QuestionModule,
-//       LessonModule
-//     ],
 import { ConfigModule } from '@nestjs/config';
 import databaseConfig from './config/database.config';
 
@@ -49,7 +41,6 @@ import databaseConfig from './config/database.config';
   controllers: [AppController],
   providers: [AppService],
 })
-
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer

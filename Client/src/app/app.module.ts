@@ -19,13 +19,13 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { SharedModule } from './shared/shared/shared.module';
-import { loginReducer } from './ngrx/reducers/login.reducer';
+import { authReducer } from './ngrx/reducers/auth.reducer';
 import { userReducer } from './ngrx/reducers/user.reducer';
 import { LoadingComponent } from './pages/loading/loading.component';
-import { LoginEffect } from './ngrx/effects/login.effect';
+import { AuthEffects } from './ngrx/effects/auth.effects';
 import { profileReducer } from './ngrx/reducers/profile.reducer';
-import { UserEffects } from './ngrx/effects/user.effect';
-import { ProfileEffect } from './ngrx/effects/profile.effect';
+import { UserEffects } from './ngrx/effects/user.effects';
+import { ProfileEffects } from './ngrx/effects/profile.effects';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -34,10 +34,10 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(
-      { login: loginReducer, user: userReducer, profile: profileReducer },
+      { auth: authReducer, user: userReducer, profile: profileReducer },
       {}
     ),
-    EffectsModule.forRoot([LoginEffect, UserEffects, ProfileEffect]),
+    EffectsModule.forRoot([AuthEffects, UserEffects, ProfileEffects]),
     BrowserAnimationsModule,
     HttpClientModule,
     TuiRootModule,
@@ -48,7 +48,6 @@ import { HttpClientModule } from '@angular/common/http';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     SharedModule,
-    StoreModule.forRoot({ login: loginReducer, user: userReducer }, {}),
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
   bootstrap: [AppComponent],

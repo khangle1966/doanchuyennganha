@@ -9,7 +9,4 @@ import { AuthController } from './auth.controller';
 })
 export class AuthModule {
   //how to import Middleware
-
-
-
 }

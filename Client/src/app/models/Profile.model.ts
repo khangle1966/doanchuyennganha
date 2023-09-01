@@ -1,5 +1,4 @@
 export interface Profile {
-  _id: string;
   id: string;
   userName: string;
   displayName: string;
@@ -9,7 +8,6 @@ export interface Profile {
   gender: string;
   bio: string;
   notifications: string[];
-  messages: string[];
   courses: string[];
   ongoingCourses: string[];
   completedCourses: string[];

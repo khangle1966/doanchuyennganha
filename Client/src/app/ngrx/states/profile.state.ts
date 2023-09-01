@@ -4,6 +4,9 @@ export interface ProfileState {
   profile: Profile;
   idToken: string;
   isLoading: boolean;
-  isSuccessful: boolean;
-  errorMessage: any;
+  isSuccess: boolean;
+  errorMessage: string;
+  isGetLoading: boolean;
+  isGetSuccess: boolean;
+  getErrorMessage: string;
 }

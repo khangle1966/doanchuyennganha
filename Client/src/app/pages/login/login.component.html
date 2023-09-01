@@ -3,12 +3,12 @@
     <div class="triangle_bottomright"></div>
   </div>
 
-  <form id="form" [formGroup]="testForm">
+  <div id="form">
     <div class="logo">
-      <img  src="../../../assets/images/logo1.png" alt="" />
+      <img src="../../../assets/images/logo1.png" alt="" />
     </div>
 
-        <p class="text-login">Login</p>
+    <p class="text-login">Login</p>
 
     <div class="google" (click)="loginWithGoogle()">
       <button
@@ -17,13 +17,14 @@
         appearance="primary"
         class="tui-space_right-3 tui-space_bottom-3"
         style="width: 296px; margin: 0"
-
       >
-        <img style="height: 20px; width: 20px; margin-right: 1rem;" src="../../../assets/images/google1.png" alt="" />
+        <img
+          style="height: 20px; width: 20px; margin-right: 1rem"
+          src="../../../assets/images/google1.png"
+          alt=""
+        />
         Sign in with Google
       </button>
-
-
     </div>
-  </form>
+  </div>
 </div>

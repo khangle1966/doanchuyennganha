@@ -1,18 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 import { UserState } from '../states/user.state';
-import * as UserAction from 'src/app/ngrx/actions/user.action';
+import * as UserAction from 'src/app/ngrx/actions/user.actions';
 import { state } from '@angular/animations';
 import { UserInfo } from 'src/app/models/User.model';
 
 export const initualState: UserState = {
-    user: <UserInfo>{},
-    isLoading: false,
-    isSuccess: false,
-    errorMessage: '',
-    isGetLoading: false,
-    isGetSuccess: false,
-    getErrorMessage: '',
-
+  user: <UserInfo>{},
+  isLoading: false,
+  isSuccess: false,
+  errorMessage: '',
+  isGetLoading: false,
+  isGetSuccess: false,
+  getErrorMessage: '',
 };
 export const userReducer = createReducer(
   initualState,
@@ -43,34 +42,34 @@ export const userReducer = createReducer(
       errorMessage,
     };
   }),
-  on(UserAction.getUser, (state, action)=>{
-    console.log(action.type)
+  on(UserAction.getUser, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
       isGetLoading: true,
       isGetSuccess: false,
       getErrorMessage: '',
-      user: <UserInfo>{}
-    }
+      user: <UserInfo>{},
+    };
   }),
-  on(UserAction.getUserSuccess,(state,action)=>{
-    console.log(action.type)
+  on(UserAction.getUserSuccess, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
       isGetLoading: false,
       isGetSuccess: true,
       getErrorMessage: '',
-      user: action.user
-    }
+      user: action.user,
+    };
   }),
-  on(UserAction.getUserFailure, (state, {type, errorMessage})=>{
-    console.log(type)
+  on(UserAction.getUserFailure, (state, { type, errorMessage }) => {
+    console.log(type);
     return {
       ...state,
       isGetLoading: false,
       isGetSuccess: false,
       getErrorMessage: errorMessage,
-      user: <UserInfo>{}
-    }
+      user: <UserInfo>{},
+    };
   })
 );
