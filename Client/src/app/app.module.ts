@@ -27,17 +27,32 @@ import { profileReducer } from './ngrx/reducers/profile.reducer';
 import { UserEffects } from './ngrx/effects/user.effects';
 import { ProfileEffects } from './ngrx/effects/profile.effects';
 import { HttpClientModule } from '@angular/common/http';
-
+import { CourseReducer } from './ngrx/reducers/course.reducer';
+import { CartReducer } from './ngrx/reducers/cart.reducer';
+import { CourseEffect } from './ngrx/effects/course.effects';
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    // HttpModule,
     AppRoutingModule,
     StoreModule.forRoot(
-      { auth: authReducer, user: userReducer, profile: profileReducer },
+      {
+        auth: authReducer,
+        user: userReducer,
+        profile: profileReducer,
+        course: CourseReducer,
+        cart: CartReducer,
+      },
       {}
     ),
-    EffectsModule.forRoot([AuthEffects, UserEffects, ProfileEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      UserEffects,
+      ProfileEffects,
+      CourseEffect,
+    ]),
     BrowserAnimationsModule,
     HttpClientModule,
     TuiRootModule,

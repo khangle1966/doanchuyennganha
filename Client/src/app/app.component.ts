@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
 
     combineLatest([this.idToken$, this.uid$]).subscribe((res) => {
       if (res[0] != '' && res[1] != '') {
-        console.log(res);
+        // console.log(res);
         this.store.dispatch(
           UserActions.getUser({ uid: res[1], idToken: res[0] })
         );
