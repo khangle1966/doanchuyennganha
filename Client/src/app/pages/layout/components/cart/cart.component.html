@@ -22,29 +22,17 @@
                     <h2>You have 2 course in your cart</h2>
                 </div>
                 <hr>
-                <div id="course-box">
-                    <div id="product-course">
-                        <div class="course-ima">
-                            <img src="../../../../../assets/images/webdev.jpg">
+                <div id="course-box" >
+                    <div id="product-course" *ngFor="let course of cartList$ | async">
+                        <div class="course-ima" >
+                            <img src={{course.img}}>
                         </div>
                         <div class="course-cont">
-                            <h2>Front-End</h2>
-                            <p>$9.878</p>
+                            <h2>{{course.name}}</h2>
+                            <p>{{course.price}}</p>
                         </div>
-                        <div class="course-ic">
-                            <tui-svg src="tuiIconCloseLarge"></tui-svg>
-                        </div>
-                    </div>
-                    <div id="product-course">
-                        <div class="course-ima">
-                            <img src="../../../../../assets/images/webdev.jpg">
-                        </div>
-                        <div class="course-cont">
-                            <h2>Front-End</h2>
-                            <p>$9.878</p>
-                        </div>
-                        <div class="course-ic">
-                            <tui-svg src="tuiIconCloseLarge"></tui-svg>
+                        <div class="course-ic" >
+                            <tui-svg (click)="removeCourseFromCart(course)" src="tuiIconCloseLarge"></tui-svg>
                         </div>
                     </div>
                 </div>
@@ -63,7 +51,7 @@
                         </div>
                         <div class="price-cart">
                             <span>Provisional</span>
-                            <span>$19.756</span>
+                            <span>{{total$ | async}}</span>
                         </div>
                         <div class="count-cart">
                             <span>Discount</span>
@@ -74,7 +62,7 @@
                         </div>
                         <div class="total-cart">
                             <span>Total</span>
-                            <span>$19.756</span>
+                            <span>{{total$ | async}}</span>
                         </div>
                     </div>
                     <div class="bot-cart">

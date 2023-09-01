@@ -22,6 +22,7 @@ import { SharedModule } from './shared/shared/shared.module';
 import { CourseReducer } from './ngrx/reducers/course.reducer';
 import { CourseEffect } from './ngrx/effects/course.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { CartReducer } from './ngrx/reducers/cart.reducer';
 // import { HttpModule } from '@angular/http';
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     // HttpModule,
     AppRoutingModule,
-    StoreModule.forRoot({course: CourseReducer}, {}),
+    StoreModule.forRoot({course: CourseReducer, cart: CartReducer}, {}),
     EffectsModule.forRoot([CourseEffect]),
     BrowserAnimationsModule,
     TuiRootModule,
