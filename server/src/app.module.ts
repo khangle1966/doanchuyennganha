@@ -19,6 +19,7 @@ import { QuestionModule } from './question/question.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { LessonModule } from './lesson/lesson.module';
 import { ConfigModule } from '@nestjs/config';
+import { ReviewModule } from './review/review.module';
 import databaseConfig from './config/database.config';
 
 @Module({
@@ -36,6 +37,7 @@ import databaseConfig from './config/database.config';
     QuizBankModule,
     QuizModule,
     QuestionModule,
+    ReviewModule,
   ],
 
   controllers: [AppController],

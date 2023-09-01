@@ -16,9 +16,6 @@ export class Lesson {
     courseId: string;
 
     @Prop()
-    img: string;
-
-    @Prop()
     content: string;
 
     @Prop()

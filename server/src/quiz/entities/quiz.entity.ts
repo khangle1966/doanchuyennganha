@@ -11,8 +11,6 @@ export class Quiz {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Course' })
   courseId: string;
 
-  @Prop()
-  img: string;
 
   @Prop()
   content: string;
@@ -21,7 +19,10 @@ export class Quiz {
   total: number;
 
   @Prop()
-  time: number;
+  duration: number;
+
+  @Prop()
+  passCond: number;
 }
 
 export const QuizSchema = SchemaFactory.createForClass(Quiz);
