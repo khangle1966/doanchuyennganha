@@ -106,14 +106,14 @@ export class ProfileController {
     }
   }
 
-  @Get('courses/:id')
-  async getCoursesByProfileId(@Param('id') id: string) {
+  @Get(':id/courses')
+  async getAllCourseOfProfile(@Param('id') id: string) {
     try {
-      const courses = await this.profileService.getCoursesByObjectIdCourse(id);
-      if (!courses) {
+      const profile = await this.profileService.getAllCourseOfProfile(id);
+      if (!profile) {
         throw new HttpException('Profile not found', HttpStatus.BAD_REQUEST);
       }
-      return courses;
+      return profile;
     } catch (error) {
       throw error;
     }
