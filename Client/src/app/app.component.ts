@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import * as AuthActions from './ngrx/actions/auth.actions';
 import * as UserActions from './ngrx/actions/user.actions';
 import { AuthState } from './ngrx/states/auth.state';
-import { combineLatest, first, forkJoin, take } from 'rxjs';
+import { combineLatest, first, forkJoin, merge, take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -38,18 +38,28 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/loading');
       } else {
         // console.log('user logout');
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/welcome');
       }
     });
-    forkJoin({
-      idToken: this.idToken$.pipe(take(2)),
-      uid: this.uid$.pipe(take(2)),
-    }).subscribe((res) => {
-      // console.log(res);
-      this.store.dispatch(
-        UserActions.getUser({ uid: res.uid, idToken: res.idToken })
-      );
+
+    combineLatest([this.idToken$, this.uid$]).subscribe((res) => {
+      if (res[0] != '' && res[1] != '') {
+        console.log(res);
+        this.store.dispatch(
+          UserActions.getUser({ uid: res[1], idToken: res[0] })
+        );
+      }
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // forkJoin({
+    //   idToken: this.idToken$.pipe(take(2)),
+    //   uid: this.uid$.pipe(take(2)),
+    // }).subscribe((res) => {
+    //   console.log(res);
+    //   this.store.dispatch(
+    //     UserActions.getUser({ uid: res.uid, idToken: res.idToken })
+    //   );
+    // });
+  }
 }

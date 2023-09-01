@@ -15,7 +15,6 @@ import { AuthState } from 'src/app/ngrx/states/auth.state';
 export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<{ auth: AuthState }>,
-    // private router: Router,
     @Inject(TuiAlertService)
     private readonly alerts: TuiAlertService
   ) {}
