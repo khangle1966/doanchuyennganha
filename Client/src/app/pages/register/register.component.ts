@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   regisForm = new FormGroup({
     uid: new FormControl('', Validators.required),
     avatar: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
+    email: new FormControl({ value: '', disabled: true }, Validators.required),
     userName: new FormControl('', [
       Validators.required,
       Validators.pattern(/[a-zA-Z-0-9]+/g),
@@ -112,7 +112,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   register() {
     let regisData: Profile = {
       id: this.regisForm.value.uid ?? '',
-      email: this.regisForm.value.email ?? '',
+      email: this.regisForm.controls['email'].value ?? '',
       userName: this.regisForm.value.userName ?? 'abc',
       displayName: this.regisForm.value.displayName ?? '',
       country: this.regisForm.value.country ?? '',

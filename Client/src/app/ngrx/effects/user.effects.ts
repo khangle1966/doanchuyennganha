@@ -34,9 +34,10 @@ export class UserEffects {
           map((user) => {
             return UserAction.getUserSuccess({ user: user });
           }),
-          catchError((error) =>
-            of(UserAction.getUserFailure({ errorMessage: error }))
-          )
+          catchError((error) => {
+            console.log(error);
+            return of(UserAction.getUserFailure({ errorMessage: error }));
+          })
         )
       )
     )

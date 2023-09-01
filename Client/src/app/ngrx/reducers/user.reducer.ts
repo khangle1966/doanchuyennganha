@@ -71,5 +71,12 @@ export const userReducer = createReducer(
       getErrorMessage: errorMessage,
       user: <UserInfo>{},
     };
+  }),
+  on(UserAction.clearUserInfo, (state, { type }) => {
+    console.log(type);
+    return {
+      ...state,
+      user: <UserInfo>{},
+    };
   })
 );
