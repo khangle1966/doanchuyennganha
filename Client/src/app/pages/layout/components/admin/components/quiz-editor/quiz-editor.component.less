@@ -14,13 +14,13 @@
     .breadcrumbs {
       max-height: 40px;
     }
-    #lesson-list {
+    #question-list {
       overflow: auto;
       width: 100%;
       height: calc(100% - 44px - 0.625rem - 40px);
       .tiles {
         gap: 1rem;
-        grid-auto-rows: minmax(70px, auto);
+        grid-auto-rows: minmax(120px, auto);
       }
       tui-island {
         .transition(box-shadow);
@@ -35,11 +35,9 @@
               border-radius: 50%;
               width: 3rem;
               height: 3rem;
-              //   background-color: var(--tui-secondary-active);
               align-items: center;
               justify-content: center;
               display: flex;
-              cursor: ns-resize;
             }
             .some-figure:hover {
               background-color: var(--tui-secondary-active);
@@ -49,9 +47,9 @@
             margin: auto 0;
           }
         }
-      }
-      tui-island:hover {
-        .shadow(1);
+        .tui-island__footer-button:hover {
+          background-color: var(--tui-error-bg);
+        }
       }
       tui-island.selected {
         .shadow(1);
@@ -65,18 +63,9 @@
     min-width: 750px;
     padding: 0.625rem;
 
-    #quiz-content {
+    #quiz-form,
+    #quest-editor {
       overflow: auto;
-      height: 100%;
-      width: 100%;
-      img {
-        height: 300px;
-        width: 300px;
-        display: flex;
-        margin: 0 auto;
-      }
-    }
-    #editor {
       height: calc(100% - 2.75rem - 1.25rem);
       width: 100%;
     }
@@ -97,14 +86,6 @@
       gap: 0.625rem;
     }
   }
-}
-
-#right-sidebar {
-  overflow: auto;
-  // width: 100%;
-  width: 40rem;
-  padding: 1.875rem 0px 1.875rem 1.875rem;
-  height: 100%;
 }
 
 /* width */

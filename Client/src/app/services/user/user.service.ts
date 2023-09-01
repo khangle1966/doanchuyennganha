@@ -11,6 +11,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) {}
 
   createUser(idToken: string) {
+    // console.log(idToken);
     const headers = new HttpHeaders({
       Authorization: `Bearer ${idToken}`,
     });
@@ -24,9 +25,14 @@ export class UserService {
     );
   }
 
-  getUser(uid: string) {
+  getUser(uid: string, idToken: string) {
     return this.httpClient.get<UserInfo>(
-      `http://localhost:3000/v1/user/${uid}`
+      `http://localhost:3000/v1/user/${uid}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${idToken}`,
+        }),
+      }
     );
   }
 }

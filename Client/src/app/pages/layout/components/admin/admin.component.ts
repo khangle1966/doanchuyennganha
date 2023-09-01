@@ -1,7 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { TuiPreviewDialogService } from '@taiga-ui/addon-preview';
+import { tuiIsPresent } from '@taiga-ui/cdk';
+import {
+  TuiAlertService,
+  TuiDialogContext,
+  TuiDialogService,
+} from '@taiga-ui/core';
+import {
+  BehaviorSubject,
+  Observable,
+  filter,
+  map,
+  of,
+  startWith,
+  switchMap,
+  timer,
+} from 'rxjs';
 import { Course } from 'src/app/models/Course.model';
+import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 
 @Component({
   selector: 'app-admin',
@@ -9,6 +33,9 @@ import { Course } from 'src/app/models/Course.model';
   styleUrls: ['./admin.component.less'],
 })
 export class AdminComponent implements OnInit {
+  @ViewChild('preview')
+  readonly preview?: TemplateRef<TuiDialogContext>;
+
   readonly searchForm = new FormGroup({
     searchValue: new FormControl(''),
   });
@@ -77,15 +104,23 @@ export class AdminComponent implements OnInit {
       author: 'Yehuda Katz',
       date_Created: '2021-07-01',
       date_Updated: '2021-07-01',
-      img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Ember-logo.svg/1200px-Ember-logo.svg.png',
+      img: 'https://ng-web-apis.github.io/dist/assets/images/web-api.svg',
       rating: 4.5,
       language: 'English',
     },
   ];
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    @Inject(TuiPreviewDialogService)
+    private readonly previewDialogService: TuiPreviewDialogService,
+    @Inject(TuiAlertService)
+    private readonly alerts: TuiAlertService,
+    @Inject(TuiDialogService)
+    private readonly dialogs: TuiDialogService
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   selectCourse: Course | null = null;
   selectEditCourse(course: Course) {
@@ -123,5 +158,77 @@ export class AdminComponent implements OnInit {
         `/base/admin/course/${this.selectCourse._id}/quiz`
       );
     }
+  }
+
+  //image preview
+  images = [
+    {
+      title: 'some table.xlsx',
+      hasPreview: false,
+      src: '',
+    },
+  ];
+
+  readonly index$$ = new BehaviorSubject<number>(0);
+
+  readonly item$ = this.index$$.pipe(
+    map((index) => this.images[index]),
+    filter(tuiIsPresent)
+  );
+
+  readonly title$ = this.item$.pipe(map((item) => item.title));
+
+  readonly contentUnavailable$ = this.item$.pipe(
+    map((item) => !item.hasPreview)
+  );
+
+  readonly imageSrc$ = this.item$.pipe(
+    switchMap((item) =>
+      item.hasPreview
+        ? this.emulateBackendRequest(item.src).pipe(startWith(''))
+        : of(null)
+    )
+  );
+
+  readonly loading$ = this.imageSrc$.pipe(map((src) => src === ''));
+
+  show(index: number): void {
+    this.images = [];
+    this.images.push({
+      hasPreview: true,
+      src: this.courseList[index].img,
+      title: this.courseList[index].name,
+    });
+    this.previewDialogService.open(this.preview || '').subscribe();
+  }
+
+  download(): void {
+    this.alerts.open('Downloading...').subscribe();
+  }
+
+  emulateBackendRequest(src: string): Observable<string> {
+    return timer(1500).pipe(map(() => src));
+  }
+
+  //create func
+  createCourse(course: Course) {
+    this.openCreate = false;
+    this.courseList.push(course);
+    this.alerts
+      .open('Create new course success !!!', { status: 'success' })
+      .subscribe();
+  }
+
+  //delete func
+  showWarningDialog(content: PolymorpheusContent<TuiDialogContext>): void {
+    this.dialogs.open(content).subscribe();
+  }
+
+  deleteCourse() {
+    this.courseList = this.courseList.filter(
+      (val) => val._id != this.selectCourse?._id
+    );
+    this.selectCourse = null;
+    this.checkboxList.setValue('Check');
   }
 }

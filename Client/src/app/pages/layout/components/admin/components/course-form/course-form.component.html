@@ -50,11 +50,20 @@
     ></tui-error>
   </div>
   <div class="tui-form__row">
-    <tui-input tuiTextfieldExampleText="Enter Role Name" formControlName="name">
+    <tui-input tuiTextfieldExampleText="Enter Name" formControlName="name">
       <span class="tui-required"> Name</span>
     </tui-input>
     <tui-error
       formControlName="name"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input tuiTextfieldExampleText="Enter Author" formControlName="author">
+      <span class="tui-required">Author</span>
+    </tui-input>
+    <tui-error
+      formControlName="author"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </div>
@@ -70,30 +79,93 @@
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </div>
+
   <div class="tui-form__row">
-    <tui-input
-      tuiTextfieldExampleText="Enter Category"
-      formControlName="category"
-    >
-      <span class="tui-required"> Category</span>
-    </tui-input>
+    <tui-select formControlName="category">
+      Category
+      <input placeholder="Choose course's category" tuiTextfield />
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="categories"
+      ></tui-data-list-wrapper>
+    </tui-select>
     <tui-error
       formControlName="category"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </div>
   <div class="tui-form__row">
-    <tui-input tuiTextfieldExampleText="Enter Price" formControlName="price">
+    <tui-select formControlName="language">
+      Language
+      <input placeholder="Choose course's language" tuiTextfield />
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="languages"
+      ></tui-data-list-wrapper>
+    </tui-select>
+    <tui-error
+      formControlName="language"
+      [error]="[] | tuiFieldError | async"
+    ></tui-error>
+  </div>
+  <div class="tui-form__row">
+    <tui-input-number
+      [min]="0"
+      tuiTextfieldPostfix="$"
+      tuiTextfieldExampleText="Enter Price"
+      formControlName="price"
+    >
       <span class="tui-required"> Price</span>
-    </tui-input>
+    </tui-input-number>
     <tui-error
       formControlName="price"
       [error]="[] | tuiFieldError | async"
     ></tui-error>
   </div>
+  <div class="tui-form__row multiple-item">
+    <div id="input-files-box">
+      <tui-input-files
+        *ngIf="!control.value"
+        accept="image/*"
+        [formControl]="control"
+        (reject)="onReject($event)"
+      ></tui-input-files>
+      <tui-files>
+        <tui-file
+          *ngIf="loadedFiles$ | async as file"
+          [file]="file"
+          [showDelete]="control.enabled"
+          (removed)="removeFile()"
+        ></tui-file>
+
+        <tui-file
+          *ngIf="rejectedFiles$ | async as file"
+          state="error"
+          [file]="file"
+          [showDelete]="control.enabled"
+          (removed)="clearRejected()"
+        ></tui-file>
+
+        <tui-file
+          *ngIf="loadingFiles$ | async as file"
+          state="loading"
+          [file]="file"
+          [showDelete]="control.enabled"
+        ></tui-file>
+      </tui-files>
+    </div>
+    <button
+      tuiIconButton
+      type="button"
+      size="m"
+      [icon]="'tuiIconUploadCloudLarge'"
+      (click)="uploadImageToCloud()"
+      [disabled]="this.control.invalid"
+    ></button>
+  </div>
   <div class="tui-form__row">
     <tui-input tuiTextfieldExampleText="Enter Image Url" formControlName="img">
-      <span class="tui-required">Image Url</span>
+      <span class="tui-required">Image Url (from local or url)</span>
     </tui-input>
     <tui-error
       formControlName="img"
@@ -119,6 +191,7 @@
       appearance="primary"
       [disabled]="courseForm.invalid"
       *ngIf="!isEdit; else editButton"
+      (click)="createNewCourse()"
     >
       Create
     </button>

@@ -2,12 +2,12 @@
     <div class="container-main">
       <div class="header">
         <div class="course">
-          <p class="text-header">Course</p>
-          <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="navigate_next"
-            style="font-size: 22px;"></mat-icon> -->
-          <p class="text-header">IT</p>
-          <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="navigate_next"
-            style="font-size: 22px;"></mat-icon> -->
+          <p class="text-header" (click)="backhome()">Home</p>
+          <tui-svg src="tuiIconChevronsRight" style="color: var(--tui-primary);"></tui-svg>
+
+          <p class="text-header" (click)="backcourse()">Phát triển Web</p>
+          <tui-svg src="tuiIconChevronsRight" style="color: var(--tui-primary);"></tui-svg>
+
           <p class="text-header">Quizz</p>
         </div>
         <div class="title">

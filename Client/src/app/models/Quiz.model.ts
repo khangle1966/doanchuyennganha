@@ -1,9 +1,9 @@
 export interface Quiz {
   _id: string;
   title: string;
-  courseId: string[];
-  img: string;
+  courseId: string;
   content: string;
   total: number;
-  time: Date;
+  duration: number;
+  passCond: number;
 }

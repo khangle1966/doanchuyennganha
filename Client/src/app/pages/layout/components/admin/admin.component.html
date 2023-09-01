@@ -36,6 +36,7 @@
             [course]="this.selectCourse"
             [isEdit]="false"
             (toggle)="openCreateSidebar($event)"
+            (create)="createCourse($event)"
           >
           </app-course-form>
         </tui-scrollbar>
@@ -65,6 +66,40 @@
           </app-course-form>
         </tui-scrollbar>
       </button>
+      <button
+        [size]="'m'"
+        tuiButton
+        type="button"
+        appearance="accent"
+        class="tui-space_top-3 tui-space_bottom-3"
+        [disabled]="selectCourse == null"
+        (click)="showWarningDialog(template)"
+      >
+        Delete
+      </button>
+      <ng-template #template let-observer>
+        <p>Are you sure to this delete this course ?</p>
+
+        <button
+          size="m"
+          tuiButton
+          type="button"
+          class="tui-space_right-3"
+          appearance="secondary-destructive"
+          (click)="observer.complete()"
+        >
+          Cancel
+        </button>
+        <button
+          size="m"
+          tuiButton
+          type="button"
+          appearance="secondary"
+          (click)="deleteCourse(); observer.complete()"
+        >
+          Confirm
+        </button>
+      </ng-template>
     </div>
   </div>
   <table class="tui-table">
@@ -75,8 +110,8 @@
         <th class="tui-table__th tui-table__th_first tui-text_h6">Name</th>
         <th class="tui-table__th tui-text_h6">Description</th>
         <th class="tui-table__th tui-text_h6">Author</th>
-        <th class="tui-table__th tui-text_h6">Price</th>
         <th class="tui-table__th tui-text_h6">Category</th>
+        <th class="tui-table__th tui-text_h6">Image</th>
         <th class="tui-table__th tui-table__th_last tui-text_h6">Select</th>
       </tr>
       <tr
@@ -92,9 +127,13 @@
         <td class="tui-table__td">
           <tui-tag [value]="course.author" [autoColor]="true"></tui-tag>
         </td>
-        <td class="tui-table__td">{{ course.price }}</td>
         <td class="tui-table__td">
           <tui-tag [value]="course.category" [autoColor]="true"></tui-tag>
+        </td>
+        <td class="tui-table__td">
+          <button size="s" tuiButton type="button" (click)="show(i)">
+            Preview
+          </button>
         </td>
         <td class="tui-table__td tui-table__td_last">
           <tui-radio
@@ -104,6 +143,58 @@
             (click)="selectEditCourse(course)"
           ></tui-radio>
         </td>
+        <ng-template #preview let-preview>
+          <tui-preview
+            [rotatable]="!(contentUnavailable$ | async)"
+            [zoomable]="!(contentUnavailable$ | async) && !(loading$ | async)"
+          >
+            <tui-preview-title>{{ title$ | async }}</tui-preview-title>
+            <tui-preview-pagination
+              [index]="index$$.value"
+              [length]="images.length"
+              (indexChange)="index$$.next($event)"
+            ></tui-preview-pagination>
+
+            <button
+              icon="tuiIconDownload"
+              title="Download"
+              tuiIconButton
+              tuiPreviewAction
+              type="button"
+              (click)="download()"
+            ></button>
+
+            <button
+              icon="tuiIconClose"
+              title="Close"
+              tuiIconButton
+              tuiPreviewAction
+              type="button"
+              (click)="preview.complete()"
+            ></button>
+
+            <ng-container *ngIf="contentUnavailable$ | async">
+              <div class="t-container">
+                <tui-svg src="tuiIconFileLarge" class="t-icon"></tui-svg>
+                <div>Preview unavailable</div>
+              </div>
+            </ng-container>
+
+            <img
+              *ngIf="imageSrc$ | async as src"
+              alt="img source"
+              height="512"
+              width="512"
+              [src]="src"
+            />
+
+            <tui-loader
+              *ngIf="loading$ | async"
+              size="xl"
+              class="t-loader"
+            ></tui-loader>
+          </tui-preview>
+        </ng-template>
       </tr>
     </tbody>
   </table>

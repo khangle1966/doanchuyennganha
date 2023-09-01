@@ -12,6 +12,7 @@ import { LessonComponent } from './components/admin/components/lesson/lesson.com
 import { QuizComponent } from './components/quiz/quiz.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { QuizEditorComponent } from './components/admin/components/quiz-editor/quiz-editor.component';
+import { CourseComponent } from './components/course/course.component';
 
 const routes: Routes = [
   {
@@ -35,10 +36,10 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
       },
-      {
-        path: 'settings',
-        component: SettingsComponent,
-      },
+      // {
+      //   path: 'settings',
+      //   component: SettingsComponent,
+      // },
       {
         path: 'cart',
         component: CartComponent,
@@ -62,6 +63,10 @@ const routes: Routes = [
       {
         path: 'browse/detail/:id',
         component: DetailComponent,
+      },
+      {
+        path: 'home/course',
+        component: CourseComponent,
       },
     ],
   },

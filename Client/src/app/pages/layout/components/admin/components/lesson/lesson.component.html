@@ -19,27 +19,73 @@
     </div>
     <div id="lesson-list">
       <tui-scrollbar class="scrollbar">
-        <tui-island
-          *ngFor="let lesson of lessonList; let i = index"
-          (click)="selectLesson(lesson)"
-          [ngClass]="[selectedLesson?._id === lesson?._id ? 'selected' : '']"
+        <tui-tiles
+          class="tiles"
+          [(order)]="order"
+          (orderChange)="updateOrdinalList()"
         >
-          <div class="tui-island__content">
-            <figure class="tui-island__figure">
-              <div class="some-figure">
-                <img [src]="lesson.img" alt="" />
+          <tui-tile
+            *ngFor="let lesson of lessonList; let index = index"
+            class="tile"
+            [style.order]="order.get(index)"
+          >
+            <tui-island
+              [hoverable]="true"
+              [ngClass]="[
+                selectedLesson?._id === lesson?._id ? 'selected' : ''
+              ]"
+            >
+              <div class="tui-island__content" (click)="selectLesson(lesson)">
+                <figure class="tui-island__figure">
+                  <div class="some-figure">
+                    <tui-svg src="tuiIconDragLarge" tuiTileHandle></tui-svg>
+                  </div>
+                </figure>
+                <div>
+                  <h3 class="tui-island__title">
+                    {{ lesson.title }}
+                  </h3>
+                  <p class="tui-island__paragraph">
+                    {{ lesson.description }}
+                  </p>
+                </div>
               </div>
-            </figure>
-            <div>
-              <h3 class="tui-island__title">
-                {{ lesson.title }}
-              </h3>
-              <p class="tui-island__paragraph">
-                {{ lesson.description }}
-              </p>
-            </div>
-          </div>
-        </tui-island>
+              <button
+                appearance="none"
+                size="m"
+                tuiButton
+                type="button"
+                class="tui-island__footer-button"
+                (click)="showWarningDialog(template)"
+              >
+                Delete
+              </button>
+            </tui-island>
+            <ng-template #template let-observer>
+              <p>Are you sure to this delete this question ?</p>
+
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                class="tui-space_right-3"
+                appearance="secondary-destructive"
+                (click)="observer.complete()"
+              >
+                Cancel
+              </button>
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                appearance="secondary"
+                (click)="deleteLesson(index); observer.complete()"
+              >
+                Confirm
+              </button>
+            </ng-template>
+          </tui-tile>
+        </tui-tiles>
       </tui-scrollbar>
     </div>
   </div>
@@ -49,24 +95,12 @@
       *ngIf="this.selectedLesson == null; else lessonContent"
     >
       <div class="tui-text_h3 tui-space_top-3 tui-space_bottom-3">
-        This is a course content !!!!
+        {{ course.name }}
       </div>
       <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
+        {{ course.description }}
       </div>
-      <img
-        src="../../../../../../../assets/images/course.png"
-        class="tui-space_top-3 tui-space_bottom-3"
-      />
-      <a href="https://storyset.com/online">Online illustrations by Storyset</a>
+      <img src="{{ course.img }}" class="tui-space_top-3 tui-space_bottom-3" />
     </div>
     <ng-template #lessonContent>
       <div class="top">
@@ -97,7 +131,7 @@
             size="m"
             tuiButton
             type="button"
-            appearance="secondary-destructive"
+            appearance="secondary"
             (click)="isPreview = !isPreview"
             *ngIf="isPreview; else previewBtn"
           >

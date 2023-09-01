@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  TuiDialogModule,
-  TuiAlertModule,
-  TuiTextfieldControllerModule,
-} from '@taiga-ui/core';
+import { TuiTextfieldControllerModule } from '@taiga-ui/core';
 import {
   TuiAccordionModule,
   TuiComboBoxModule,
@@ -13,8 +9,6 @@ import {
   TuiMarkerIconModule,
   TuiPushModule,
   TuiStepperModule,
-  TuiFilterComponent,
-  TuiFilterModule,
   TuiTabsModule,
 } from '@taiga-ui/kit';
 import { TuiSidebarModule } from '@taiga-ui/addon-mobile';
@@ -72,6 +66,9 @@ import { TuiRadioModule } from '@taiga-ui/kit';
 import { TuiCalendarModule } from '@taiga-ui/core';
 import { TuiBreadcrumbsModule } from '@taiga-ui/kit';
 import { TuiLinkModule } from '@taiga-ui/core';
+import { TuiMultiSelectModule } from '@taiga-ui/kit';
+import { TuiCheckboxBlockModule } from '@taiga-ui/kit';
+import { TuiPreviewModule } from '@taiga-ui/addon-preview';
 
 @NgModule({
   declarations: [],
@@ -79,8 +76,6 @@ import { TuiLinkModule } from '@taiga-ui/core';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TuiDialogModule,
-    TuiAlertModule,
     TuiAccordionModule,
     TuiSidebarModule,
     TuiActiveZoneModule,
@@ -146,12 +141,13 @@ import { TuiLinkModule } from '@taiga-ui/core';
     TuiTabsModule,
     TuiBreadcrumbsModule,
     TuiLinkModule,
+    TuiMultiSelectModule,
+    TuiCheckboxBlockModule,
+    TuiPreviewModule,
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
-    TuiDialogModule,
-    TuiAlertModule,
     TuiAccordionModule,
     TuiSidebarModule,
     TuiActiveZoneModule,
@@ -216,6 +212,9 @@ import { TuiLinkModule } from '@taiga-ui/core';
     TuiTabsModule,
     TuiBreadcrumbsModule,
     TuiLinkModule,
+    TuiMultiSelectModule,
+    TuiCheckboxBlockModule,
+    TuiPreviewModule,
   ],
 })
 export class SharedModule {}

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Profile } from 'src/app/models/Profile.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +21,26 @@ export class ProfileService {
     );
   }
 
-  get(idToken: string, id: string) {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${idToken}`,
-    });
+  create(profile: Profile, idToken: string) {
+    return this.httpClient.post<Profile>(
+      `http://localhost:3000/v1/profile`,
+      profile,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${idToken}`,
+        }),
+      }
+    );
+  }
 
-    return this.httpClient.get<any>(`http://localhost:3000/v1/profile/${id}`, {
-      headers,
-    });
+  get(id: string, idToken: string) {
+    return this.httpClient.get<Profile>(
+      `http://localhost:3000/v1/profile/${id}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${idToken}`,
+        }),
+      }
+    );
   }
 }
