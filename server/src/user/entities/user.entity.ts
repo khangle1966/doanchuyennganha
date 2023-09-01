@@ -22,9 +22,6 @@ export class User {
 
   @Prop({ default: null })
   profile: string;
-
-
-
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

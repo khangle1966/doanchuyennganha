@@ -5,13 +5,12 @@ import { Lesson } from './entities/lesson.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-
 @Injectable()
 export class LessonService {
   createLesson(createLessonDto: CreateLessonDto) {
     throw new Error('Method not implemented.');
   }
-  constructor(@InjectModel(Lesson.name) private lessonModel: Model<Lesson>) { }
+  constructor(@InjectModel(Lesson.name) private lessonModel: Model<Lesson>) {}
 
   async create(createLessonDto: CreateLessonDto): Promise<Lesson> {
     try {
@@ -20,9 +19,7 @@ export class LessonService {
       });
       return await newLesson.save();
     } catch (error) {
-      throw new HttpException(
-        error.message, error.status
-      );
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -47,7 +44,8 @@ export class LessonService {
       return this.lessonModel.findByIdAndUpdate(
         { _id: id },
         { ...updateLessonDto },
-        { new: true });
+        { new: true },
+      );
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
@@ -65,8 +63,10 @@ export class LessonService {
   async getLessonsByCourseId(courseId: string): Promise<Lesson[]> {
     try {
       //populate nestjs object mongoose
-      return await this.lessonModel.find({ courseId: courseId })
-        .populate('courseId').exec();
+      return await this.lessonModel
+        .find({ courseId: courseId })
+        .populate('courseId')
+        .exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
@@ -75,20 +75,26 @@ export class LessonService {
   //how to get all lessons by given ordinal number
   async getLessonsByOrdinalNumber(ordinalnumber: number): Promise<Lesson[]> {
     try {
-      return await this.lessonModel.find({ ordinalnumber: ordinalnumber })
-        .populate('courseId').exec();
+      return await this.lessonModel
+        .find({ ordinalnumber: ordinalnumber })
+        .populate('courseId')
+        .exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
   //else
-  async getLessonsByCourseIdAndOrdinalNumber(courseId: string, ordinalnumber: number): Promise<Lesson[]> {
+  async getLessonsByCourseIdAndOrdinalNumber(
+    courseId: string,
+    ordinalnumber: number,
+  ): Promise<Lesson[]> {
     try {
-      return await this.lessonModel.find({ courseId: courseId, ordinalnumber: ordinalnumber })
-        .populate('courseId').exec();
+      return await this.lessonModel
+        .find({ courseId: courseId, ordinalnumber: ordinalnumber })
+        .populate('courseId')
+        .exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
-
 }
