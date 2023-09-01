@@ -1,7 +1,35 @@
 @import "@taiga-ui/core/styles/taiga-ui-local.less";
 
+
 #error-container {
   width: 100%;
   height: 100%;
   background-color: var(--tui-primary);
+  .text-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-direction: row;
+    font-size: 40px;
+    font-weight: bold;
+    .text {
+      
+      margin-left: 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  }
+}
+::ng-deep [tuiWrapper]:after {
+  border: 2px solid;
+}
+
+@media screen and (max-width: 1224px) {
+  .btn {
+    display: none;
+  }
 }
