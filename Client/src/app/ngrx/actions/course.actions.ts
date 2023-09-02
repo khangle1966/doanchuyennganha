@@ -1,10 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Course } from 'src/app/models/Course.model';
 
-// export const get = createAction(
-//   '[course] get course',
-//   props<{idToken:string }>
-// );
 export const get = createAction(
   '[course] get course',
   props<{ idToken: string }>()

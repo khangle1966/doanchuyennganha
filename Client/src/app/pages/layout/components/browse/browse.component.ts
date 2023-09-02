@@ -35,14 +35,16 @@ export class BrowseComponent implements OnInit {
       console.log(value);
 
       if (value) {
-        console.log('làm đúng r' + value);
+        console.log('đúng rồi đó' + value);
         this.store.dispatch(CourseAction.get({ idToken: value }));
       }
     });
+
     this.courseList$.subscribe((item) => {
       console.log(item);
     });
   }
+
   ngOnInit(): void {
     this.cartList$.subscribe((cartList) => {
       if (cartList != undefined) {
@@ -85,35 +87,6 @@ export class BrowseComponent implements OnInit {
       })
       .subscribe();
   }
-
-  // courseList = [
-  //   {
-  //     _id: '123',
-  //     name: 'Front-End',
-  //     category: 'Web Developer',
-  //     img: '../../../../../assets/images/webdev.jpg',
-  //     author: '',
-  //     rating: 345,
-  //     language: '',
-  //     date_Created: '',
-  //     date_Updated: '',
-  //     description: '',
-  //     price: 321,
-  //   },
-  //   {
-  //     _id: '678',
-  //     name: 'Ielts',
-  //     category: 'English',
-  //     img: '../../../../../assets/images/webdev.jpg',
-  //     author: '',
-  //     rating: 345,
-  //     language: '',
-  //     date_Created: '',
-  //     date_Updated: '',
-  //     description: '',
-  //     price: 456,
-  //   },
-  // ];
 
   search = '';
 }
