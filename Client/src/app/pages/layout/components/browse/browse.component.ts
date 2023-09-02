@@ -9,6 +9,7 @@ import * as CartAction from 'src/app/ngrx/actions/cart.actions';
 import { CartState } from 'src/app/ngrx/states/cart.state';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Cart } from 'src/app/models/Cart.model';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
 
 @Component({
   selector: 'app-browse',
@@ -19,15 +20,27 @@ export class BrowseComponent implements OnInit {
   courseList$: Observable<Course[]> = this.store.select('course', 'courseList');
   cartList$ = this.store.select('cart', 'cartList');
   cartList: Course[] = [];
+  idToken$: Observable<string> = this.store.select('idToken', 'idToken');
 
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private router: Router,
-    private store: Store<{ course: CourseState; cart: CartState }>
+    private store: Store<{
+      course: CourseState;
+      cart: CartState;
+      idToken: AuthState;
+    }>
   ) {
-    this.store.dispatch(CourseAction.get());
-    this.courseList$.subscribe((course) => {
-      console.log(course);
+    this.idToken$.subscribe((value) => {
+      console.log(value);
+
+      if (value) {
+        console.log('làm đúng r' + value);
+        this.store.dispatch(CourseAction.get({ idToken: value }));
+      }
+    });
+    this.courseList$.subscribe((item) => {
+      console.log(item);
     });
   }
   ngOnInit(): void {

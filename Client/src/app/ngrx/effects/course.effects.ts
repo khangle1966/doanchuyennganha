@@ -10,12 +10,10 @@ export class CourseEffect {
   get$ = createEffect(() =>
     this.action$.pipe(
       ofType(CourseAction.get),
-      exhaustMap(() =>
-        this.courseService.getCourse().pipe(
-          map((courses) => {
-            console.log('hello')
-            return CourseAction.getSuccess({ courseList: courses });
-
+      exhaustMap((action) =>
+        this.courseService.getCourse(action.idToken).pipe(
+          map((items) => {
+            return CourseAction.getSuccess({ courseList: items });
           }),
           catchError((error) => of(CourseAction.getFailure({ error })))
         )
