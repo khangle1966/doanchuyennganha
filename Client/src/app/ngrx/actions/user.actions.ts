@@ -10,7 +10,7 @@ export const createUserSuccess = createAction('[User] Create User Success');
 
 export const createUserFailure = createAction(
   '[User] Create User Failure',
-  props<{ errorMessage: any }>()
+  props<{ errorMessage: string }>()
 );
 
 export const getUser = createAction(
@@ -25,7 +25,7 @@ export const getUserSuccess = createAction(
 
 export const getUserFailure = createAction(
   '[User] Get Failure',
-  props<{ errorMessage: any }>()
+  props<{ errorMessage: string }>()
 );
 
 export const clearUserInfo = createAction('[User] Clear Info');
