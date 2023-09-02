@@ -29,17 +29,18 @@ export class UserEffects {
   getUser$ = createEffect(() =>
     this.action$.pipe(
       ofType(UserAction.getUser),
-      exhaustMap((action) =>
-        this.userService.getUser(action.uid, action.idToken).pipe(
+      exhaustMap((action) => {
+        return this.userService.getUser(action.uid, action.idToken).pipe(
           map((user) => {
             return UserAction.getUserSuccess({ user: user });
           }),
-          catchError((error) => {
-            console.log(error);
-            return of(UserAction.getUserFailure({ errorMessage: error }));
+          catchError((e) => {
+            return of(
+              UserAction.getUserFailure({ errorMessage: e.error.message })
+            );
           })
-        )
-      )
+        );
+      })
     )
   );
 }

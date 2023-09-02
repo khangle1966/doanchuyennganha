@@ -77,11 +77,12 @@ export class CourseFormComponent {
 
   createNewCourse() {
     let newCourse: Course = {
+      ...this.course,
       ...this.courseForm.value,
       rating: 0,
     };
     console.log(newCourse);
-    this.createEvent.emit(newCourse);
+    // this.createEvent.emit(newCourse);
   }
   categories = [
     'Frontend Developer',
@@ -129,12 +130,20 @@ export class CourseFormComponent {
   ];
 
   updateCourse() {
-    this.updateEvent.emit(this.courseForm.value);
+    let newUpdateCourse: Course = {
+      ...this.course,
+      ...this.courseForm.value,
+    };
+    // console.log(newUpdateCourse);
+    this.updateEvent.emit(newUpdateCourse);
   }
   //upload image func
   async uploadImageToCloud() {
     if (this.control.value != null) {
-      let result = await this.cloudService.upLoadImage(this.control.value);
+      let result = await this.cloudService.upLoadImage(
+        this.control.value,
+        this.course != null ? this.course._id : ''
+      );
       if (typeof result === 'object') {
         this.rejectedFiles$.next(this.control.value);
       } else {
