@@ -6,6 +6,7 @@ import { UserState } from 'src/app/ngrx/states/user.state';
 import * as UserActions from 'src/app/ngrx/actions/user.actions';
 import { TuiAlertService } from '@taiga-ui/core';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
+import * as AuthActions from 'src/app/ngrx/actions/auth.actions';
 
 @Component({
   selector: 'app-loading',
@@ -14,9 +15,12 @@ import { AuthState } from 'src/app/ngrx/states/auth.state';
 })
 export class LoadingComponent {
   idToken$ = this.store.select('auth', 'idToken');
+  idToken = '';
   uid$ = this.store.select('auth', 'uid');
+  uid = '';
   user$ = this.store.select('user', 'user');
   isSuccess$ = this.store.select('user', 'isSuccess');
+  isGetSuccess$ = this.store.select('user', 'isGetSuccess');
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -32,50 +36,60 @@ export class LoadingComponent {
   }
 
   ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('user', 'isLoading').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Creating user info...', { status: 'info' })
+            .subscribe();
+        }
+      }),
+      this.store.select('user', 'getErrorMessage').subscribe((val) => {
+        if (val != '') {
+          this.alerts.open(val, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('user', 'isSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Create user info success !!!', {
+              status: 'success',
+            })
+            .subscribe();
+        }
+      })
+    );
     setTimeout(() => {
       this.subscriptions.push(
-        forkJoin({
-          idToken: this.idToken$.pipe(take(1)),
-          user: this.user$.pipe(take(1)),
+        combineLatest({
+          idToken: this.idToken$,
+          user: this.user$,
+          isGetSuccess: this.isGetSuccess$,
+          isSuccess: this.isSuccess$,
+          uid: this.uid$,
         }).subscribe((res) => {
-          if (res.user.uid) {
-            console.log(res.user);
-            if (res.user.profile) {
+          if (res.isGetSuccess && res.user.uid) {
+            console.log(res);
+            if (res.user.profile != null) {
               this.router.navigateByUrl('/base');
             } else {
               this.router.navigateByUrl('/register');
             }
-          } else {
-            // console.log('alo');
+          }
+          if (!res.isGetSuccess && !res.isSuccess) {
             this.store.dispatch(
               UserActions.createUser({ idToken: res.idToken })
             );
           }
-        }),
-        forkJoin({
-          idToken: this.idToken$.pipe(take(1)),
-          uid: this.uid$.pipe(take(1)),
-          isSuccess: this.isSuccess$.pipe(take(2)),
-        }).subscribe((res) => {
-          if (res.isSuccess) {
-            // console.log(res.idToken, res.uid);
-            this.store.dispatch(
-              UserActions.getUser({ uid: res.uid, idToken: res.idToken })
-            );
-            this.router.navigateByUrl('/register');
-          }
-        }),
-        this.store.select('user', 'isLoading').subscribe((val) => {
-          if (val) {
-            this.alerts.open('User not found !!!', { status: 'error' });
-            this.alerts.open('Creating user info...', { status: 'info' });
-          }
-        }),
-        this.store.select('user', 'isSuccess').subscribe((val) => {
-          if (val) {
-            this.alerts.open('Create user info success !!!', {
-              status: 'success',
-            });
+          if (res.uid && res.idToken && res.isSuccess) {
+            if (res.uid != this.uid && res.idToken != this.idToken) {
+              this.idToken = res.idToken;
+              this.uid = res.uid;
+              // console.log('alo');
+              this.store.dispatch(
+                UserActions.getUser({ uid: res.uid, idToken: res.idToken })
+              );
+            }
           }
         })
       );

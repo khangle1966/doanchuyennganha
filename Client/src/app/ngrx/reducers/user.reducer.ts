@@ -69,7 +69,6 @@ export const userReducer = createReducer(
       isGetLoading: false,
       isGetSuccess: false,
       getErrorMessage: errorMessage,
-      user: <UserInfo>{},
     };
   }),
   on(UserAction.clearUserInfo, (state, { type }) => {

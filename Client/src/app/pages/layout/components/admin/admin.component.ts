@@ -231,4 +231,23 @@ export class AdminComponent implements OnInit {
     this.selectCourse = null;
     this.checkboxList.setValue('Check');
   }
+
+  //update func
+  updateCourse($event: Course) {
+    // console.log($event);
+    this.openEdit = false;
+    this.courseList = this.courseList.map((val) => {
+      if (val._id == $event._id) {
+        console.log('match');
+        this.selectCourse = $event;
+        return $event;
+      } else {
+        return val;
+      }
+    });
+    console.log(this.courseList);
+    this.alerts
+      .open('Update course success !!!', { status: 'success' })
+      .subscribe();
+  }
 }
