@@ -133,14 +133,5 @@ export class HomeComponent {
     this.router.navigate(['/base/profile']);
   }
 
-  updateProfile() {
-    // this.store.dispatch(
-    //   ProfileAction.updateProfile({
-    //     idToken: this.idToken,
-    //     profile: {},
-    //     id: '1',
-    //   })
-    // );
-    // console.log(id, profile);
-  }
+  updateProfile() {}
 }
