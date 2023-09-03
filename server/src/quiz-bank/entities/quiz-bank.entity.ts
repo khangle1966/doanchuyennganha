@@ -8,8 +8,7 @@ export type QuizBankDocument = HydratedDocument<QuizBank>;
 
 export class QuizBank {
 
-
-    @Prop({ required: true })
+    @Prop()
 
     question: string;
 

@@ -11,6 +11,14 @@ export class ReviewService {
     @InjectModel(Review.name) private reviewModel: Model<Review>,
   ) { }
 
+  // compare answer with correct answer in quiz-bank and return score
+  async compareAnswer(quizBankId: string, answer: string) {
+
+  }
+
+
+
+
   async create(createReviewDto: CreateReviewDto): Promise<Review> {
     try {
       const review = new this.reviewModel(createReviewDto);
