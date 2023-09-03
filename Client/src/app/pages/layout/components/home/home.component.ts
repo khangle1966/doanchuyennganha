@@ -109,8 +109,6 @@ export class HomeComponent implements OnDestroy, OnInit {
   });
   readonly courses = ['Chưa học', 'Đang học', 'Đã học xong'];
 
-  idToken: string = '';
-  id: string = '';
   idToken$: Observable<string> = this.store.select('auth', 'idToken');
   profile$: Observable<Profile> = this.store.select('profile', 'profile');
   user$: Observable<UserInfo> = this.store.select('user', 'user');
@@ -162,16 +160,16 @@ export class HomeComponent implements OnDestroy, OnInit {
       combineLatest({
         idToken: this.idToken$,
         user: this.user$,
+        profile: this.profile$,
       }).subscribe((res) => {
         if (
           res.user != undefined &&
           res.idToken != undefined &&
           res.user != null &&
           res.idToken != null &&
-          res.idToken != ''
+          res.idToken != '' &&
+          (res.profile == null || res.profile == undefined)
         ) {
-          this.idToken = res.idToken;
-          this.id = res.user.uid;
           this.store.dispatch(
             ProfileActions.get({ id: res.user.uid, idToken: res.idToken })
           );
