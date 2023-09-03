@@ -26,6 +26,7 @@ import { QuizEditorComponent } from './components/admin/components/quiz-editor/q
 import { QuestionEditorComponent } from './components/admin/components/quiz-editor/components/question-editor/question-editor.component';
 import { QuizFormComponent } from './components/admin/components/quiz-editor/components/quiz-form/quiz-form.component';
 import { LearningComponent } from './components/learning/learning.component';
+import { QuizTestComponent } from './components/learning/components/quiz-test/quiz-test.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { LearningComponent } from './components/learning/learning.component';
     QuestionEditorComponent,
     QuizFormComponent,
     LearningComponent,
+    QuizTestComponent,
   ],
   imports: [
     CommonModule,
