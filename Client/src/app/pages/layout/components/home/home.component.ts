@@ -131,9 +131,7 @@ export class HomeComponent implements OnDestroy, OnInit {
       auth: AuthState;
       user: UserState;
     }>
-  ) {
-    //how to subscribe profile
-  }
+  ) {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((val) => {
