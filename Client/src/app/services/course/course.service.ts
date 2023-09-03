@@ -14,4 +14,14 @@ export class CourseService {
       }),
     });
   }
+  getCourseById(idToken: string, id: string) {
+    return this.httpClient.get<Course>(
+      `http://localhost:3000/v1/course/${id}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${idToken}`,
+        }),
+      }
+    );
+  }
 }

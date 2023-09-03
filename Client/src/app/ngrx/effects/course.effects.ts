@@ -20,4 +20,21 @@ export class CourseEffect {
       )
     )
   );
+
+  getCourseDetail$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CourseAction.getCourseDetail),
+      exhaustMap((action) =>
+        this.courseService.getCourseById(action.idToken, action.id).pipe(
+          map((items) => {
+            console.log(items);
+            return CourseAction.getCourseDetailSuccess({ courseDetail: items });
+          }),
+          catchError((error) =>
+            of(CourseAction.getCourseDetailFailure({ error }))
+          )
+        )
+      )
+    )
+  );
 }

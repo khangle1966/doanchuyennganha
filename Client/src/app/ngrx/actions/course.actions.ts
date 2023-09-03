@@ -13,3 +13,16 @@ export const getFailure = createAction(
   '[course] get course failure',
   props<{ error: any }>()
 );
+//detail
+export const getCourseDetail = createAction(
+  '[course] get course detail',
+  props<{ idToken: string; id: string }>()
+);
+export const getCourseDetailSuccess = createAction(
+  '[course] get course detail success',
+  props<{ courseDetail: Course }>()
+);
+export const getCourseDetailFailure = createAction(
+  '[course] get course detail failure',
+  props<{ error: any }>()
+);
