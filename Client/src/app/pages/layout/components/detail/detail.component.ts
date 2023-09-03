@@ -15,6 +15,7 @@ import * as CourseAction from 'src/app/ngrx/actions/course.actions';
 })
 export class DetailComponent implements OnInit {
   // courseDetail$!: Observable<Course>;
+  //lưu ý thằng dưới !!!!
   courseDetail$: Observable<Course> = this.store.select(
     'course',
     'courseDetail'
