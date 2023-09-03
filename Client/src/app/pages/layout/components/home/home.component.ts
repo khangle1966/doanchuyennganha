@@ -60,48 +60,6 @@ export class HomeComponent implements OnDestroy, OnInit {
       category: 'Web Development',
       imgURL: '../../.././../../assets/images/Picture.png',
     },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
   ];
 
   readonly testForm = new FormGroup({
@@ -121,6 +79,9 @@ export class HomeComponent implements OnDestroy, OnInit {
     email: new FormControl('', Validators.required),
     displayName: new FormControl('', Validators.required),
     userName: new FormControl('', Validators.required),
+    courses: new FormControl('', Validators.required),
+    ongoingCourse: new FormControl('', Validators.required),
+    completedCourse: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -147,6 +108,7 @@ export class HomeComponent implements OnDestroy, OnInit {
           this.homeForm.controls.id.setValue(val.id);
           this.homeForm.controls.email.setValue(val.email);
           this.homeForm.controls.displayName.setValue(val.displayName);
+          this.homeForm.controls.userName.setValue(val.userName);
         }
       }),
       this.profile$.subscribe((profile) => {
