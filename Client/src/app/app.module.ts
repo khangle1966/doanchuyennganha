@@ -44,6 +44,7 @@ import { CourseEffect } from './ngrx/effects/course.effects';
         profile: profileReducer,
         course: CourseReducer,
         cart: CartReducer,
+        idToken: authReducer,
       },
       {}
     ),

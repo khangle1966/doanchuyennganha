@@ -1,5 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 
+export const setIdToken = createAction(
+  '[Auth] Set ID Token',
+  props<{ idToken: string }>()
+);
+
 export const login = createAction('[Auth] Login');
 
 export const loginSuccess = createAction('[Auth] Login Success');

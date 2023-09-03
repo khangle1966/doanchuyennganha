@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as LoginAction from '../actions/auth.actions';
 import { AuthState } from '../states/auth.state';
+import * as idTokenActions from '../actions/auth.actions';
 
 export const initialState: AuthState = {
   idToken: '',
@@ -14,6 +15,14 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
+  on(idTokenActions.setIdToken, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      idToken: action.idToken,
+    };
+  }),
+
   on(LoginAction.login, (state, action) => {
     console.log(action.type);
     return {
