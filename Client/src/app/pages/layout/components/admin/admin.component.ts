@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
       name: 'Angular',
       category: 'Frontend Developer',
       description:
-        'Angular is a platform for building mobile and desktop web applications.',
+        'Angular is a platform for building mobile and desktop web applications.Angular is a platform for building mobile and desktop web applications.Angular is a platform for building mobile and desktop web applications.Angular is a platform for building mobile and desktop web applications.Angular is a platform for building mobile and desktop web applications.Angular is a platform for building mobile and desktop web applications.Angular is a platform for building mobile and desktop web applications.',
       price: 100,
       author: 'Google',
       date_Created: '2021-07-01',

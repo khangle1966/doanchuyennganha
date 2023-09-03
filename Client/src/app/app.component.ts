@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/loading');
       } else {
         // console.log('user logout');
-        this.router.navigateByUrl('/welcome');
       }
     });
 
@@ -49,6 +48,12 @@ export class AppComponent implements OnInit {
         this.store.dispatch(
           UserActions.getUser({ uid: res[1], idToken: res[0] })
         );
+      }
+    });
+
+    this.store.select('auth', 'isLogoutSuccess').subscribe((val) => {
+      if (val) {
+        this.router.navigateByUrl('/login');
       }
     });
   }
