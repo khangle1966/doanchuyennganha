@@ -1,14 +1,14 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 import { Store } from '@ngrx/store';
 import { CourseState } from 'src/app/ngrx/states/course.state';
 import * as CourseAction from 'src/app/ngrx/actions/course.actions';
 import * as CartAction from 'src/app/ngrx/actions/cart.actions';
 import { CartState } from 'src/app/ngrx/states/cart.state';
 import { TuiAlertService } from '@taiga-ui/core';
-import { Cart } from 'src/app/models/Cart.model';
+import { Cart } from 'src/app/models/cart.model';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 
 @Component({

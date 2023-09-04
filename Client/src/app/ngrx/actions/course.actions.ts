@@ -1,28 +1,67 @@
 import { createAction, props } from '@ngrx/store';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 
 export const get = createAction(
-  '[course] get course',
+  '[Course] get all',
   props<{ idToken: string }>()
 );
 export const getSuccess = createAction(
-  '[course] get course success',
+  '[Course] get all success',
   props<{ courseList: Course[] }>()
 );
 export const getFailure = createAction(
-  '[course] get course failure',
-  props<{ error: any }>()
+  '[Course] get all failure',
+  props<{ error: string }>()
 );
 //detail
 export const getCourseDetail = createAction(
-  '[course] get course detail',
+  '[Course] get  detail',
   props<{ idToken: string; id: string }>()
 );
 export const getCourseDetailSuccess = createAction(
-  '[course] get course detail success',
+  '[Course] get  detail success',
   props<{ courseDetail: Course }>()
 );
 export const getCourseDetailFailure = createAction(
-  '[course] get course detail failure',
-  props<{ error: any }>()
+  '[Course] get  detail failure',
+  props<{ error: string }>()
+);
+//create new course
+export const create = createAction(
+  '[Course] create ',
+  props<{ idToken: string; course: Course }>()
+);
+export const createSuccess = createAction(
+  '[Course] create success',
+  props<{ newCourse: Course }>()
+);
+export const createFailure = createAction(
+  '[Course] create failure',
+  props<{ error: string }>()
+);
+//update  course
+export const update = createAction(
+  '[Course] update ',
+  props<{ idToken: string; course: Course }>()
+);
+export const updateSuccess = createAction(
+  '[Course] update success',
+  props<{ updatedCourse: Course }>()
+);
+export const updateFailure = createAction(
+  '[Course] update failure',
+  props<{ error: string }>()
+);
+//delete  course
+export const remove = createAction(
+  '[Course] remove ',
+  props<{ idToken: string; id: string }>()
+);
+export const removeSuccess = createAction(
+  '[Course] remove success',
+  props<{ course: Course }>()
+);
+export const removeFailure = createAction(
+  '[Course] remove failure',
+  props<{ error: string }>()
 );
