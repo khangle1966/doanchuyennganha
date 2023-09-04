@@ -15,14 +15,6 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(idTokenActions.setIdToken, (state, action) => {
-    console.log(action.type);
-    return {
-      ...state,
-      idToken: action.idToken,
-    };
-  }),
-
   on(LoginAction.login, (state, action) => {
     console.log(action.type);
     return {

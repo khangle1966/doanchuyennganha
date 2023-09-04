@@ -26,7 +26,7 @@
       "
       *ngFor="let page of pages; let i = index"
     >
-      <div class="tui-list__item-title" (click)="selected(page.id)">
+      <div class="tui-list__item-title" (click)="selected(i)">
         <tui-svg src="{{ page.icon }}"></tui-svg>
         {{ page.name }}
       </div>
