@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ProfileState } from './ngrx/states/profile.state';
 import { UserState } from './ngrx/states/user.state';
-import { Auth, idToken, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import * as AuthActions from './ngrx/actions/auth.actions';
 import * as UserActions from './ngrx/actions/user.actions';
 import { AuthState } from './ngrx/states/auth.state';
-import { combineLatest, first, forkJoin, merge, take } from 'rxjs';
+import { combineLatest } from 'rxjs';
+import { TuiAlertService } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-root',
@@ -38,28 +39,23 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/loading');
       } else {
         // console.log('user logout');
-        this.router.navigateByUrl('/welcome');
       }
     });
 
     combineLatest([this.idToken$, this.uid$]).subscribe((res) => {
       if (res[0] != '' && res[1] != '') {
-        console.log(res);
+        console.log('Gettingg user info');
         this.store.dispatch(
           UserActions.getUser({ uid: res[1], idToken: res[0] })
         );
       }
     });
+
+    this.store.select('auth', 'isLogoutSuccess').subscribe((val) => {
+      if (val) {
+        this.router.navigateByUrl('/login');
+      }
+    });
   }
-  ngOnInit(): void {
-    // forkJoin({
-    //   idToken: this.idToken$.pipe(take(2)),
-    //   uid: this.uid$.pipe(take(2)),
-    // }).subscribe((res) => {
-    //   console.log(res);
-    //   this.store.dispatch(
-    //     UserActions.getUser({ uid: res.uid, idToken: res.idToken })
-    //   );
-    // });
-  }
+  ngOnInit(): void {}
 }

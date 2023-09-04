@@ -7,6 +7,8 @@ import { ReviewSchema } from './entities/review.entity';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Review', schema: ReviewSchema }]),
+    MongooseModule.forFeature([{ name: 'QuizBank', schema: ReviewSchema }]),
+    MongooseModule.forFeature([{ name: 'Quiz', schema: ReviewSchema }]),
   ],
   controllers: [ReviewController],
   providers: [ReviewService],

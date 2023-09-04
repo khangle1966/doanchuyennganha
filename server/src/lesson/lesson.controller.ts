@@ -18,7 +18,7 @@ import { LessonService } from './lesson.service';
 
 @Controller('v1/lesson')
 export class LessonController {
-  constructor(private lessonsService: LessonService) { }
+  constructor(private lessonsService: LessonService) {}
 
   @Get(':id')
   async getById(@Param('id') id: string): Promise<Lesson> {
@@ -77,15 +77,14 @@ export class LessonController {
   }
 
   @Get('course/:courseId')
-  async getLessonsByCourseId(@Param('courseId') courseId: string): Promise<Lesson[]> {
+  async getLessonsByCourseId(
+    @Param('courseId') courseId: string,
+  ): Promise<Lesson[]> {
     try {
-
       const lessons = await this.lessonsService.getLessonsByCourseId(courseId);
       return lessons;
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
-
 }

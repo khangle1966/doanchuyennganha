@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, Injectable } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
@@ -11,14 +12,13 @@ export class CourseService {
   constructor(
     @InjectModel(Course.name) private courseModel: Model<Course>,
     @InjectModel(Profile.name) private profileModel: Model<Profile>,
-  ) { }
+  ) {}
 
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
     try {
       const newCourse = new this.courseModel(createCourseDto);
       return await newCourse.save();
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
@@ -111,7 +111,7 @@ export class CourseService {
     );
     return profile;
   }
-  
+
   async completeCourse(courseId: string, userId: string): Promise<Profile> {
     const filter = { id: userId };
     const update = { $addToSet: { completeCourse: courseId } };
@@ -125,7 +125,10 @@ export class CourseService {
     return profile;
   }
 
-  async removeOngoingCourse(courseId: string, userId: string): Promise<Profile> {
+  async removeOngoingCourse(
+    courseId: string,
+    userId: string,
+  ): Promise<Profile> {
     const filter = { id: userId };
     const update = { $pull: { ongoingCourse: courseId } };
     const options = { new: true, upsert: false };
@@ -137,8 +140,4 @@ export class CourseService {
     );
     return profile;
   }
-  
-
-
-
 }

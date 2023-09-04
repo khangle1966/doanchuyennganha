@@ -1,16 +1,11 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { Auth, idToken, onAuthStateChanged, user } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store';
-import * as UserAction from 'src/app/ngrx/actions/user.actions';
-import { UserInfo } from 'src/app/models/User.model';
-import { UserService } from 'src/app/services/user/user.service';
+import { Store } from '@ngrx/store';
 import { UserState } from 'src/app/ngrx/states/user.state';
 import { ProfileState } from 'src/app/ngrx/states/profile.state';
 import { Profile } from 'src/app/models/Profile.model';
-import { Subscription, mergeMap } from 'rxjs';
-
+import { Subscription } from 'rxjs';
 import * as ProfileAction from 'src/app/ngrx/actions/profile.actions';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 import { TuiAlertService } from '@taiga-ui/core';
@@ -123,6 +118,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       notifications: [],
       ongoingCourses: [],
       completedCourses: [],
+      role: 'user',
     };
 
     // console.log(regisData);

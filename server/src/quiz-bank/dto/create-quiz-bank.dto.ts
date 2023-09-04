@@ -4,5 +4,5 @@ export class CreateQuizBankDto {
     public question: string,
     public options: string[],
     public answerList: string[],
-  ) { }
+  ) {}
 }

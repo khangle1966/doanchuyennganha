@@ -1,25 +1,27 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { Course } from "src/course/entities/course.entity";
+import { Course } from 'src/course/entities/course.entity';
 
 export type CourseDocument = HydratedDocument<Lesson>;
 @Schema({ timestamps: true })
 export class Lesson {
+  @Prop()
+  ordinalnumber: number;
 
-    @Prop()
-    ordinalnumber: number;
+  @Prop()
+  title: string;
 
-    @Prop()
-    title: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Course' })
+  courseId: string;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Course' })
-    courseId: string;
+  @Prop()
+  img: string;
 
-    @Prop()
-    content: string;
+  @Prop()
+  content: string;
 
-    @Prop()
-    description: string;
+  @Prop()
+  description: string;
 
 }
 

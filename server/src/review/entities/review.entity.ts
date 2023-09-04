@@ -20,7 +20,7 @@ export class Review {
     answer: string[];
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank', required: true })
-    quizBank: object;
+    quizBank: string;
 
 }
 

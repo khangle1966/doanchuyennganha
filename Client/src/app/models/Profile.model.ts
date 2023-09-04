@@ -11,4 +11,5 @@ export interface Profile {
   courses: string[];
   ongoingCourses: string[];
   completedCourses: string[];
+  role: string;
 }

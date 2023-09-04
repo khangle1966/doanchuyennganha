@@ -17,6 +17,16 @@ export class ReviewController {
     }
   }
 
+  @Post('compare')
+  async compareAnswer(@Body() data: any) {
+    try {
+      const compareAnswer = await this.reviewService.compareAnswer(data);
+      return compareAnswer;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   @Get()
   async findAll() {
     try {

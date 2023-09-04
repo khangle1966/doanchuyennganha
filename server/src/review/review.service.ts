@@ -4,16 +4,32 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Review } from './entities/review.entity';
 import { Model } from 'mongoose';
+import { QuizBank } from 'src/quiz-bank/entities/quiz-bank.entity';
+import { Quiz } from 'src/quiz/entities/quiz.entity';
 
 @Injectable()
 export class ReviewService {
   constructor(
     @InjectModel(Review.name) private reviewModel: Model<Review>,
+    @InjectModel(QuizBank.name) private quizBankModel: Model<QuizBank>,
+    @InjectModel(Quiz.name) private quizModel: Model<Quiz>,
   ) { }
 
   // compare answer with correct answer in quiz-bank and return score
-  async compareAnswer(quizBankId: string, answer: string) {
+  async compareAnswer(data: any) {
 
+    const quizBank = await this.quizBankModel.findById(data.quizBankId);
+    console.log(quizBank.answerList);
+    const review = await this.reviewModel.findById(data.reviewId);
+
+    let score = 0;
+    for (let i = 0; i < quizBank.answerList.length; i++) {
+      if (quizBank.answerList[i] === review.answer[i]) {
+        console.log(quizBank.answerList[i], review.answer[i]);
+        score++;
+      }
+    }
+    return score;
   }
 
 

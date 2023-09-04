@@ -62,6 +62,7 @@
             (toggle)="openEditSidebar($event)"
             (editLessons)="editLessons($event)"
             (editQuiz)="editQuiz($event)"
+            (update)="updateCourse($event)"
           >
           </app-course-form>
         </tui-scrollbar>
@@ -121,8 +122,18 @@
         <td class="tui-table__td tui-table__td_first">
           <tui-tag [value]="course.name" [autoColor]="true"></tui-tag>
         </td>
-        <td class="tui-table__td tui-table__td_text_overflow">
-          {{ course.description }}
+        <td class="tui-table__td">
+          <tui-line-clamp
+            [content]="daenerys"
+            [lineHeight]="24"
+            [linesLimit]="1"
+          ></tui-line-clamp>
+
+          <ng-template #daenerys>
+            <div class="hint">
+              {{ course.description }}
+            </div>
+          </ng-template>
         </td>
         <td class="tui-table__td">
           <tui-tag [value]="course.author" [autoColor]="true"></tui-tag>

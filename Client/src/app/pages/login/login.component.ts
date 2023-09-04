@@ -1,6 +1,4 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Subscription } from 'rxjs';
@@ -30,13 +28,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.store.select('auth', 'isSuccessful').subscribe((val) => {
         if (val) {
           this.alerts.open('Login Success !!!', { status: 'info' }).subscribe();
-          // this.router.navigate(['/loading']);
         }
       }),
       this.store.select('auth', 'isLoading').subscribe((val) => {
         if (val) {
           this.alerts.open('Login.... !!!', { status: 'success' }).subscribe();
-          // this.router.navigate(['/loading']);
         }
       }),
       this.store.select('auth', 'errorMessage').subscribe((val) => {

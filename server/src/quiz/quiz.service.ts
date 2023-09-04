@@ -6,13 +6,12 @@ import { UpdateQuizDto } from './dto/update-quiz.dto';
 
 @Injectable()
 export class QuizService {
-  constructor(@InjectModel(Quiz.name) private quizModel: Model<QuizDocument>) { }
+  constructor(@InjectModel(Quiz.name) private quizModel: Model<QuizDocument>) {}
 
   async getQuizById(id: string): Promise<Quiz> {
     try {
       return await this.quizModel.findById(id).exec();
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
@@ -30,8 +29,7 @@ export class QuizService {
     try {
       const quizzes = await this.quizModel.find().exec();
       return quizzes;
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
@@ -40,18 +38,20 @@ export class QuizService {
     try {
       const newQuiz = new this.quizModel(quizData);
       return await newQuiz.save();
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
 
   async updateQuiz(id: string, quizData: Quiz): Promise<Quiz> {
     try {
-      const updatedQuiz = await this.quizModel.findByIdAndUpdate({ _id: id }, { ...quizData }, { new: true });
+      const updatedQuiz = await this.quizModel.findByIdAndUpdate(
+        { _id: id },
+        { ...quizData },
+        { new: true },
+      );
       return updatedQuiz;
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
@@ -60,8 +60,7 @@ export class QuizService {
     try {
       const deletedQuiz = await this.quizModel.findByIdAndDelete(id);
       return deletedQuiz;
-    }
-    catch (error) {
+    } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }

@@ -20,10 +20,16 @@ export class CloudStorageService {
   ) {}
 
   // 'file' comes from the Blob or File API
-  async upLoadImage(file: File | Blob): Promise<string | StorageError> {
+  async upLoadImage(
+    file: File | Blob,
+    courseId: string
+  ): Promise<string | StorageError> {
     console.log(file);
     const uploadTask = uploadBytesResumable(
-      ref(getStorage(this.afApp), `courses/images/${Date.now().toString()}`),
+      ref(
+        getStorage(this.afApp),
+        `courses/${courseId}/images/${Date.now().toString()}`
+      ),
       file
     );
 

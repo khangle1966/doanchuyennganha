@@ -5,5 +5,5 @@ export class CreateLessonDto {
     public courseId: string,
     public content: string,
     public decription: string,
-  ) { }
+  ) {}
 }

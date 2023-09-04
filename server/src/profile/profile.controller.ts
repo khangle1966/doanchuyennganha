@@ -65,6 +65,7 @@ export class ProfileController {
       throw error;
     }
   }
+
   @Get()
   async findAll() {
     try {

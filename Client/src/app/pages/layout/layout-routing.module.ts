@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { HomeComponent } from './components/home/home.component';
@@ -13,6 +13,8 @@ import { QuizComponent } from './components/quiz/quiz.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { QuizEditorComponent } from './components/admin/components/quiz-editor/quiz-editor.component';
 import { CourseComponent } from './components/course/course.component';
+import { RoleGuard } from 'src/app/guards/role.guard';
+import { LearningComponent } from './components/learning/learning.component';
 
 const routes: Routes = [
   {
@@ -27,6 +29,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
+      },
+      {
+        path: 'learning',
+        component: LearningComponent,
       },
       {
         path: 'browse',
@@ -47,14 +53,17 @@ const routes: Routes = [
       {
         path: 'admin',
         component: AdminComponent,
+        canActivate: [RoleGuard],
       },
       {
         path: 'admin/course/:id',
         component: LessonComponent,
+        canActivate: [RoleGuard],
       },
       {
         path: 'admin/course/:id/quiz',
         component: QuizEditorComponent,
+        canActivate: [RoleGuard],
       },
       {
         path: 'quiz',
