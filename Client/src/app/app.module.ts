@@ -35,7 +35,6 @@ import { CourseEffect } from './ngrx/effects/course.effects';
   imports: [
     BrowserModule,
     HttpClientModule,
-    // HttpModule,
     AppRoutingModule,
     StoreModule.forRoot(
       {
@@ -44,7 +43,6 @@ import { CourseEffect } from './ngrx/effects/course.effects';
         profile: profileReducer,
         course: CourseReducer,
         cart: CartReducer,
-        idToken: authReducer,
       },
       {}
     ),
