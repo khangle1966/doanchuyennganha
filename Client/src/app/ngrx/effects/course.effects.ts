@@ -10,14 +10,90 @@ export class CourseEffect {
   get$ = createEffect(() =>
     this.action$.pipe(
       ofType(CourseAction.get),
-      exhaustMap(() =>
-        this.courseService.getCourse().pipe(
-          map((courses) => {
-            console.log('hello')
-            return CourseAction.getSuccess({ courseList: courses });
-
+      exhaustMap((action) =>
+        this.courseService.getCourse(action.idToken).pipe(
+          map((items) => {
+            if (items != undefined || items != null) {
+              return CourseAction.getSuccess({ courseList: items });
+            } else {
+              return CourseAction.getFailure({
+                error: 'Course is undefined or null',
+              });
+            }
           }),
           catchError((error) => of(CourseAction.getFailure({ error })))
+        )
+      )
+    )
+  );
+
+  getCourseDetail$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CourseAction.getCourseDetail),
+      exhaustMap((action) =>
+        this.courseService.getCourseById(action.idToken, action.id).pipe(
+          map((items) => {
+            console.log(items);
+            return CourseAction.getCourseDetailSuccess({ courseDetail: items });
+          }),
+          catchError((error) => {
+            return of(CourseAction.getCourseDetailFailure({ error }));
+          })
+        )
+      )
+    )
+  );
+
+  create$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CourseAction.create),
+      exhaustMap((action) =>
+        this.courseService.create(action.idToken, action.course).pipe(
+          map((item) => {
+            if (item != undefined && item != null) {
+              console.log(item);
+              return CourseAction.createSuccess({ newCourse: item });
+            } else {
+              return CourseAction.createFailure({ error: 'create failure' });
+            }
+          }),
+          catchError((error) => of(CourseAction.createFailure({ error })))
+        )
+      )
+    )
+  );
+
+  update$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CourseAction.update),
+      exhaustMap((action) =>
+        this.courseService.update(action.idToken, action.course).pipe(
+          map((item) => {
+            if (item != undefined && item != null) {
+              return CourseAction.updateSuccess({ updatedCourse: item });
+            } else {
+              return CourseAction.updateFailure({ error: 'update failure' });
+            }
+          }),
+          catchError((error) => of(CourseAction.updateFailure({ error })))
+        )
+      )
+    )
+  );
+
+  remove$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CourseAction.remove),
+      exhaustMap((action) =>
+        this.courseService.remove(action.idToken, action.id).pipe(
+          map((item) => {
+            if (item != undefined && item != null) {
+              return CourseAction.removeSuccess({ course: item });
+            } else {
+              return CourseAction.removeFailure({ error: 'remove failure' });
+            }
+          }),
+          catchError((error) => of(CourseAction.updateFailure({ error })))
         )
       )
     )

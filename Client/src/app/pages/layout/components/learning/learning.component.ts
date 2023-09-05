@@ -3,10 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TuiAlertService } from '@taiga-ui/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { Lesson } from 'src/app/models/Lesson.model';
 import { LessonState } from 'src/app/ngrx/states/lessos.state';
 import * as LessonAction from 'src/app/ngrx/actions/lesson.actions';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
+import { idToken } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-learning',
@@ -16,20 +18,25 @@ import * as LessonAction from 'src/app/ngrx/actions/lesson.actions';
 export class LearningComponent implements OnInit, OnDestroy {
   isPreview: boolean = true;
 
-  idToken = '';
+  idToken$: Observable<string> = this.store.select('auth', 'idToken');
+  lesson$: Observable<Lesson> = this.store.select('lesson', 'lessons');
   subscriptions: Subscription[] = [];
 
-  regisForm = new FormGroup ({
+
+  learnForm= new FormGroup  ({
     _id: new FormControl('', Validators.required),
-    title: new FormControl({ value: '', disabled: true }, Validators.required),
-    content: new FormControl({ value: '', disabled: true }, Validators.required),
-    description: new FormControl({ value: '', disabled: true }, Validators.required),
+    courseId: new FormControl('', Validators.required),
+    title: new FormControl('', Validators.required),
+    content: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    ordinalNum: new FormControl(0,  [Validators.required, Validators.pattern(/^[0-9]+$/)])
   })
 
   constructor(
     private router: Router,
     private store: Store<{
-      lesson : LessonState
+      lesson : LessonState;
+      auth : AuthState
     }>,
 
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
@@ -52,39 +59,41 @@ export class LearningComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.subscriptions.push(
-      this.store.select('lesson').subscribe((lessonState) => {
-        if (lessonState.isSuccess) {
-          this.regisForm.controls.title.setValue(lessonState.lessons[0].title); 
-          this.regisForm.controls.content.setValue(lessonState.lessons[0].content);
-          this.regisForm.controls.description.setValue(lessonState.lessons[0].description);
-        }else {
+      this.store.select('lesson', 'lessons').subscribe((val) => {
+        if (val!= null && val != undefined) {
+          this.learnForm.controls._id.setValue(val._id); 
+          this.learnForm.controls.courseId.setValue(val.courseId); 
+          this.learnForm.controls.title.setValue(val.title); 
+          this.learnForm.controls.content.setValue(val.content);
+          this.learnForm.controls.description.setValue(val.description);
+          this.learnForm.controls.ordinalNum.setValue(val.ordinalNum);
+        }
+      }),
+      this.lesson$.subscribe((lesson) => {
+        if (lesson !=null && lesson != undefined) {
+          console.log(lesson);
+        }
+      }) ,
 
-          this.warningNotification(lessonState.error);
+      combineLatest({
+        idToken: this.idToken$,
+        lesson: this.lesson$,
+      }).subscribe((res) => {
+        if (
+          res.idToken !=  undefined &&
+          res.idToken != null &&
+          res.idToken != '' &&
+          res.lesson != null &&
+          res.lesson != undefined
+        ) {
+          console.log(res.idToken)
+          this.store.dispatch(
+            LessonAction.getLesson({ idToken: res.idToken, courseId: res.lesson.courseId })
+            );
         }
       })
     )
   }
-
-  register() {
-    let regisData: Lesson = {
-      _id: this.regisForm.value._id ?? '',
-      title: this.regisForm.value.title ?? '',
-      content: this.regisForm.value.content ?? '',
-      description: this.regisForm.value.description ?? '',
-      courseId: '',
-      ordinalNum: 0,
-    }
-
-    // this.store.dispatch(
-    //   LessonAction.getLesson({
-    //     _id: regisData,
-    //     idToken: this.idToken,
-    //   })
-    // );
-  }
-
-  
-
   selectedLesson: Lesson | null = null;
   selectLesson(lesson: Lesson) {
     if (this.selectedLesson?._id === lesson._id) {

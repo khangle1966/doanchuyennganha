@@ -11,13 +11,19 @@ import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
   getLesson$ = createEffect(() => this.action$.pipe(
     ofType(LessonAction.getLesson),
     exhaustMap((action) =>
-        this.lessonService.getLesson(action._id, action.idToken).pipe(
-            map((lessonList) => {
-                return LessonAction.getLessonSuccess( {lessons: lessonList})
-            }),
-            catchError((error) => of(LessonAction.getLessonFailure({error: error})))
-        )
+      this.lessonService.getLesson(action.idToken, action.courseId).pipe(
+        map((items) => {
+          if (items != undefined || items != null) {
+            return LessonAction.getLessonSuccess({ lessons: items });
+          } else {
+            return LessonAction.getLessonFailure({
+              error: 'Course is undefined or null',
+            });
+          }
+        }),
+        catchError((error) => of(LessonAction.getLessonFailure({ error })))
+      )
     )
-)
+  )
 );
 }

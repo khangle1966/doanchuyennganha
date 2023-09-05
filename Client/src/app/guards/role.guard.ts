@@ -29,7 +29,7 @@ export class PermissionsService {
     | UrlTree {
     return this.store.select('profile', 'profile').pipe(
       map((profile) => {
-        if (profile == undefined) {
+        if (profile != undefined && profile.role == 'admin') {
           return true;
         } else {
           this.router.navigateByUrl('/no');

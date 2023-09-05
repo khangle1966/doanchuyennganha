@@ -1,4 +1,4 @@
-import { Profile } from 'src/app/models/Profile.model';
+import { Profile } from 'src/app/models/profile.model';
 
 export interface ProfileState {
   profile: Profile;

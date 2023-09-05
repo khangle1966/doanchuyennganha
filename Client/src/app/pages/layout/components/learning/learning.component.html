@@ -14,10 +14,10 @@
                             <div class="tui-island__content">
                                 <div>
                                     <h3 class="tui-island__title">
-                                        Chương 1
+                                        {{learnForm.value.title}}
                                     </h3>
                                     <p class="tui-island__paragraph">
-                                        Khái niệm
+                                        {{learnForm.value.description}}
                                     </p>
                                 </div>
                             </div>
@@ -30,8 +30,8 @@
         </div>
     </div>
 
-    <div id="right-side" [formGroup]="regisForm">
-        <div
+    <div id="right-side" [formGroup]="learnForm">
+        <!-- <div
         id="course-content"
         *ngIf="this.selectedLesson == null; else lessonContent"
       >
@@ -42,13 +42,10 @@
 
         </div>
         <img src="" class="tui-space_top-3 tui-space_bottom-3" />
-      </div>
+      </div> -->
         <ng-template #lessonContent>
             <div class="tui-text_h6 title" formControlName="content">
-            >Lesson Content</div>
-
-            <div id="editor">
-                <app-editor [content]="">hi</app-editor>
+                {{learnForm.value.content}}
             </div>
         </ng-template>
     </div>

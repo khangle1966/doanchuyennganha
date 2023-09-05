@@ -1,11 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import * as LessonAction from '../actions/lesson.actions';
 import { LessonState } from '../states/lessos.state';
+import { Lesson } from 'src/app/models/Lesson.model';
 
 
 
 export const initualState: LessonState = {
-  lessons: [],
+  lessons: <Lesson>{},
+  idToken: '',
   isLoading: false,
   isSuccess: false,
   isGetLoading: false,
@@ -29,21 +31,21 @@ export const LessonReducer = createReducer(
 
     };
   }),
-  on(LessonAction.getLessonSuccess, (state, action) => {
-    console.log('success');
+  on(LessonAction.getLessonSuccess, (state, {type, lessons}) => {
+    console.log(type);
     return {
       ...state,
       isLoading: false,
       isSuccess: true,
       getError: '',
-      lessons: action.lessons
+      lessons
     };
   }),
   on(LessonAction.getLessonFailure, (state, {type , error }) => {
-    console.log(' get faild');
+    console.log(type);
     return {
       ...state,
-      isLoading: true,
+      isLoading: false,
       isSuccess: false,
       getError: error,
 

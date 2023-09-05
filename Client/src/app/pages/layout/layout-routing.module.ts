@@ -10,7 +10,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { LessonComponent } from './components/admin/components/lesson/lesson.component';
 import { QuizComponent } from './components/quiz/quiz.component';
-import { DetailComponent } from './components/detail/detail.component';
+import { DetailComponent } from './components/browse/components/detail/detail.component';
 import { QuizEditorComponent } from './components/admin/components/quiz-editor/quiz-editor.component';
 import { CourseComponent } from './components/course/course.component';
 import { RoleGuard } from 'src/app/guards/role.guard';
@@ -29,10 +29,6 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
-      },
-      {
-        path: 'learning',
-        component: LearningComponent,
       },
       {
         path: 'browse',
@@ -77,6 +73,10 @@ const routes: Routes = [
         path: 'home/course',
         component: CourseComponent,
       },
+      {
+        path:'learning/:id',
+        component: LearningComponent,
+      }
     ],
   },
 ];

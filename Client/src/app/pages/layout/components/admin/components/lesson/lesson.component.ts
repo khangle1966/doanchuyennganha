@@ -7,7 +7,7 @@ import {
 } from '@taiga-ui/core';
 import { Router } from '@angular/router';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 
 @Component({
   selector: 'app-lesson',

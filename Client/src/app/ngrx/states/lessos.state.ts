@@ -2,7 +2,8 @@ import { Lesson } from "src/app/models/Lesson.model";
 
 
 export interface LessonState{
-    lessons: Lesson[];
+    lessons: Lesson;
+    idToken: string;
     isLoading: boolean;
     isSuccess: boolean;
     isGetLoading: boolean;
