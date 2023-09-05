@@ -56,7 +56,7 @@ export class CartComponent implements OnInit {
       );
     } else {
       this.clearAllCart();
-      this.total = 0;
+      this.total = Number(this.total.toFixed(3));
       this.successNotification('Purchase Success');
     }
   }
