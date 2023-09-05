@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 import { CourseState } from 'src/app/ngrx/states/course.state';
 import * as CourseAction from 'src/app/ngrx/actions/course.actions';

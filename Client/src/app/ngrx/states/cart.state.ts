@@ -1,4 +1,4 @@
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 
 export interface CartState {
   cartList: Course[];

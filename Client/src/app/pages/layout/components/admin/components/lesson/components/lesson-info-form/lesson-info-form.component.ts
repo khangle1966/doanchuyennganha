@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Lesson } from 'src/app/models/Lesson.model';
+import { Lesson } from 'src/app/models/lesson.model';
 
 @Component({
   selector: 'app-lesson-info-form',

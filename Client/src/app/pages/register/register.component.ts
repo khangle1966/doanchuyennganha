@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserState } from 'src/app/ngrx/states/user.state';
 import { ProfileState } from 'src/app/ngrx/states/profile.state';
-import { Profile } from 'src/app/models/Profile.model';
+import { Profile } from 'src/app/models/profile.model';
 import { Subscription } from 'rxjs';
 import * as ProfileAction from 'src/app/ngrx/actions/profile.actions';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
