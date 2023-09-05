@@ -98,58 +98,18 @@
       </tui-scrollbar>
     </div>
   </div>
-  <div
-    id="right-side"
-    *ngIf="this.selectedQuestion == null; else questionContent"
+  <tui-loader
+    id="right-loader"
+    [inheritColor]="true"
+    [overlay]="true"
+    [showLoader]="isGetLoading"
   >
-    <div class="top">
-      <div class="tui-text_h6 title">Quiz Content</div>
-      <div class="btn-grp">
-        <button
-          size="m"
-          tuiButton
-          type="button"
-          appearance="secondary"
-          (click)="isPreview = !isPreview"
-          *ngIf="isPreview; else previewBtn"
-        >
-          Editor
-        </button>
-        <ng-template #previewBtn>
-          <button
-            size="m"
-            tuiButton
-            type="button"
-            (click)="isPreview = !isPreview"
-            appearance="secondary"
-          >
-            Preview
-          </button>
-        </ng-template>
-        <button
-          size="m"
-          tuiButton
-          type="button"
-          (click)="save()"
-          [disabled]="isSave"
-        >
-          Save
-        </button>
-      </div>
-    </div>
-    <div id="quiz-form">
-      <app-quiz-form
-        [quiz]="this.quiz"
-        [isPreview]="this.isPreview"
-        [isSave]="this.isSave"
-        (save)="updateQuizContent($event)"
-      ></app-quiz-form>
-    </div>
-  </div>
-  <ng-template #questionContent>
-    <div id="right-side">
+    <div
+      id="right-side"
+      *ngIf="this.selectedQuestion == null; else questionContent"
+    >
       <div class="top">
-        <div class="tui-text_h6 title">Question Content</div>
+        <div class="tui-text_h6 title">Quiz Content</div>
         <div class="btn-grp">
           <button
             size="m"
@@ -183,14 +143,61 @@
           </button>
         </div>
       </div>
-      <div id="quest-editor">
-        <app-question-editor
-          [question]="this.selectedQuestion"
-          [isPreview]="isPreview"
-          [isSave]="isSave"
-          (save)="updateQuestionContent($event)"
-        ></app-question-editor>
+      <div id="quiz-form">
+        <app-quiz-form
+          [quiz]="this.quiz"
+          [isPreview]="this.isPreview"
+          [isSave]="this.isSave"
+          (save)="updateQuizContent($event)"
+        ></app-quiz-form>
       </div>
     </div>
-  </ng-template>
+    <ng-template #questionContent>
+      <div id="right-side">
+        <div class="top">
+          <div class="tui-text_h6 title">Question Content</div>
+          <div class="btn-grp">
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              appearance="secondary"
+              (click)="isPreview = !isPreview"
+              *ngIf="isPreview; else previewBtn"
+            >
+              Editor
+            </button>
+            <ng-template #previewBtn>
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                (click)="isPreview = !isPreview"
+                appearance="secondary"
+              >
+                Preview
+              </button>
+            </ng-template>
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              (click)="save()"
+              [disabled]="isSave"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+        <div id="quest-editor">
+          <app-question-editor
+            [question]="this.selectedQuestion"
+            [isPreview]="isPreview"
+            [isSave]="isSave"
+            (save)="updateQuestionContent($event)"
+          ></app-question-editor>
+        </div>
+      </div>
+    </ng-template>
+  </tui-loader>
 </div>

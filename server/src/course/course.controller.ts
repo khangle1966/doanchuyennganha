@@ -9,13 +9,13 @@ import {
   Put,
   Query,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Profile } from 'src/profile/entities/profile.entity';
 import { Course } from './entities/course.entity';
-import { error } from 'console';
 
 @Controller('v1/course')
 export class CourseController {
@@ -23,6 +23,16 @@ export class CourseController {
 
   @Post()
   async create(@Body() createCourseDto: CreateCourseDto): Promise<Course> {
+    const requiredFields = ['name'];
+    const missingFields = requiredFields.filter(
+      (field) => !createCourseDto[field],
+    );
+    if (missingFields.length > 0) {
+      throw new HttpException(
+        `Missing required fields: ${missingFields.join(', ')}`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     try {
       const createCourse = await this.courseService.create(createCourseDto);
       return createCourse;

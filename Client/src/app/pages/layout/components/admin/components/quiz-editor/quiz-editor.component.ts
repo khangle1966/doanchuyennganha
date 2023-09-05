@@ -1,20 +1,25 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   TuiAlertService,
   TuiDialogContext,
   TuiDialogService,
 } from '@taiga-ui/core';
-import { Question } from 'src/app/models/Question.model';
+import { Question } from 'src/app/models/question.model';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { Quiz } from 'src/app/models/Quiz.model';
+import { Quiz } from 'src/app/models/quiz.model';
+import { Store } from '@ngrx/store';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
+import { QuizState } from 'src/app/ngrx/states/quiz.state';
+import * as QuizActions from 'src/app/ngrx/actions/quiz.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-quiz-editor',
   templateUrl: './quiz-editor.component.html',
   styleUrls: ['./quiz-editor.component.less'],
 })
-export class QuizEditorComponent {
+export class QuizEditorComponent implements OnInit, OnDestroy {
   //update func
   updateQuestionContent(event: Question) {
     if (this.selectedQuestion != null) {
@@ -29,14 +34,17 @@ export class QuizEditorComponent {
           return quest;
         }
       });
-      this.successNotification('Question updated success !!!');
+      this.alerts
+        .open('Question updated success !!!', { status: 'success' })
+        .subscribe();
       console.log('lesonList: ', this.questionList);
     }
   }
 
   updateQuizContent($event: Quiz) {
-    this.quiz = $event;
-    this.successNotification('Update quiz info success !!!');
+    this.store.dispatch(
+      QuizActions.update({ idToken: this.idToken, quiz: $event })
+    );
   }
 
   save() {
@@ -48,12 +56,12 @@ export class QuizEditorComponent {
 
   quiz: Quiz = {
     _id: Date.now().toString(),
-    content: `Bài quiz tổng hợp kiến thức đã học của course !!!`,
+    content: ``,
     courseId: this.router.url.split('/')[4],
-    duration: 20,
-    total: 100,
-    title: 'This is a quiz content !!!!',
-    passCond: 80,
+    duration: 0,
+    total: 0,
+    title: '0',
+    passCond: 0,
   };
   editQuiz() {
     this.selectedQuestion = null;
@@ -63,7 +71,9 @@ export class QuizEditorComponent {
   selectedQuestion: Question | null = null;
   selectQuestion(question: Question) {
     if (this.selectedQuestion?._id === question._id) {
-      this.warningNotification('Question already selected !!!');
+      this.alerts
+        .open('Question already selected !!!', { status: 'info' })
+        .subscribe();
       return;
     }
     console.log('selected quest', question);
@@ -120,12 +130,17 @@ export class QuizEditorComponent {
         return;
       }
     });
-    this.successNotification('Delete question success !!!');
+    this.alerts
+      .open('Delete question success !!!', { status: 'success' })
+      .subscribe();
     console.log(this.questionList);
   }
 
   isPreview: boolean = true;
   isSave: boolean = false;
+  idToken = '';
+  subscriptions: Subscription[] = [];
+  isGetLoading: boolean = false;
 
   items = [
     {
@@ -138,35 +153,113 @@ export class QuizEditorComponent {
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private router: Router,
     @Inject(TuiDialogService)
-    private readonly dialogs: TuiDialogService
+    private readonly dialogs: TuiDialogService,
+    private store: Store<{ auth: AuthState; quiz: QuizState }>
   ) {
     this.items.push({
       caption: 'Current',
       routerLink: this.router.url,
     });
   }
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        if (idToken != '' && idToken != null && idToken != undefined) {
+          this.idToken = idToken;
+          this.store.dispatch(
+            QuizActions.get({
+              idToken: this.idToken,
+              id: this.router.url.split('/')[4],
+            })
+          );
+        }
+      }),
+      this.store.select('quiz', 'quiz').subscribe((quiz) => {
+        if (quiz != null && quiz != undefined) {
+          this.quiz = quiz;
+        }
+      }),
+      this.store.select('quiz', 'isGetLoading').subscribe((isGetLoading) => {
+        this.isGetLoading = isGetLoading;
+      }),
+      this.store.select('quiz', 'isGetSuccess').subscribe((isGetSuccess) => {
+        if (isGetSuccess) {
+          this.alerts
+            .open('Load quiz success !!!', { status: 'success' })
+            .subscribe();
+        }
+      }),
+      this.store.select('quiz', 'getMessError').subscribe((getMessError) => {
+        if (getMessError != '') {
+          this.alerts.open(getMessError, { status: 'error' }).subscribe();
+          if (getMessError == 'Quiz is undefined or null') {
+            let newQuiz = {
+              content: `Bài quiz tổng hợp kiến thức đã học của course !!!`,
+              courseId: this.router.url.split('/')[4],
+              duration: 20,
+              total: 100,
+              title: 'This is a quiz content !!!!',
+              passCond: 80,
+            };
+            this.store.dispatch(
+              QuizActions.create({
+                idToken: this.idToken,
+                quiz: newQuiz as Quiz,
+              })
+            );
+          }
+        }
+      }),
+      this.store
+        .select('quiz', 'isCreateLoading')
+        .subscribe((isCreateLoading) => {
+          if (isCreateLoading) {
+            this.alerts
+              .open('Creating quiz...', { status: 'info' })
+              .subscribe();
+          }
+        }),
+      this.store
+        .select('quiz', 'isCreateSuccess')
+        .subscribe((isCreateSuccess) => {
+          if (isCreateSuccess) {
+            this.alerts
+              .open('Create quiz success !!!', { status: 'success' })
+              .subscribe();
+            this.store.dispatch(
+              QuizActions.get({
+                idToken: this.idToken,
+                id: this.router.url.split('/')[4],
+              })
+            );
+          }
+        }),
+      this.store
+        .select('quiz', 'createMessError')
+        .subscribe((createMessError) => {
+          if (createMessError != '') {
+            this.alerts.open(createMessError, { status: 'error' }).subscribe();
+          }
+        }),
+      this.store
+        .select('quiz', 'isUpdateSuccess')
+        .subscribe((isUpdateSuccess) => {
+          if (isUpdateSuccess) {
+            this.alerts
+              .open('Update quiz success !!!', { status: 'success' })
+              .subscribe();
+          }
+        }),
+      this.store
+        .select('quiz', 'updateMessError')
+        .subscribe((updateMessError) => {
+          if (updateMessError != '') {
+            this.alerts.open(updateMessError, { status: 'error' }).subscribe();
+          }
+        })
+    );
+  }
   ngOnDestroy(): void {
-    console.log('destroy');
-  }
-
-  //noti funcs
-  successNotification(message: string): void {
-    this.alerts
-      .open('', {
-        label: message,
-        status: 'success',
-        autoClose: 4000,
-      })
-      .subscribe();
-  }
-
-  warningNotification(message: string): void {
-    this.alerts
-      .open('', {
-        label: message,
-        status: 'warning',
-        autoClose: 4000,
-      })
-      .subscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

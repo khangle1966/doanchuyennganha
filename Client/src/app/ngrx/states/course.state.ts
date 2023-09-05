@@ -1,14 +1,17 @@
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 
 export interface CourseState {
   isLoading: boolean;
   isSuccess: boolean;
   isDelSuccess: boolean;
-  isDelloading: boolean;
+  isDelLoading: boolean;
+  delErrMess: string;
   isAddSuccess: boolean;
-  isAddloading: boolean;
+  isAddLoading: boolean;
+  addErrMess: string;
   isUpSuccess: boolean;
   isUpLoading: boolean;
+  updateErrMess: string;
   courseList: Course[];
   courseDetail: Course;
   error: string;

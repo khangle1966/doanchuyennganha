@@ -7,7 +7,7 @@ export type ReviewDocument = HydratedDocument<Review>;
 
 @Schema({ timestamps: true })
 export class Review {
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz', required: true })
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz' })
     quizId: string;
 
     @Prop({ required: true })
@@ -19,8 +19,8 @@ export class Review {
     @Prop()
     answer: string[];
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank', required: true })
-    quizBankId: string[];
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank' })
+    quizBankId: string;
 
 }
 

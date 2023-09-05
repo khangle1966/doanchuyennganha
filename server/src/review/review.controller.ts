@@ -20,11 +20,6 @@ export class ReviewController {
   @Post('compare')
   async compareAnswer(@Body() data: any) {
     try {
-      const review = await this.reviewService.create(data);
-      console.log(review);
-      if (!review) {
-        throw new Error('Review not success');
-      }
       const compare = await this.reviewService.compareAnswer(data);
       return compare;
     } catch (error) {

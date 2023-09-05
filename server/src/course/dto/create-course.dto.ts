@@ -9,7 +9,5 @@ export class CreateCourseDto {
     public language: string,
     public price: number,
     public author: string,
-    public skill: string[],
-    public certificate: string,
   ) { }
 }

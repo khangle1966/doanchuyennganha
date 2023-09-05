@@ -30,6 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseReducer } from './ngrx/reducers/course.reducer';
 import { CartReducer } from './ngrx/reducers/cart.reducer';
 import { CourseEffect } from './ngrx/effects/course.effects';
+import { quizReducer } from './ngrx/reducers/quiz.reducer';
+import { QuizEffects } from './ngrx/effects/quiz.effects';
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   imports: [
@@ -43,6 +45,7 @@ import { CourseEffect } from './ngrx/effects/course.effects';
         profile: profileReducer,
         course: CourseReducer,
         cart: CartReducer,
+        quiz: quizReducer,
       },
       {}
     ),
@@ -51,6 +54,7 @@ import { CourseEffect } from './ngrx/effects/course.effects';
       UserEffects,
       ProfileEffects,
       CourseEffect,
+      QuizEffects,
     ]),
     BrowserAnimationsModule,
     HttpClientModule,

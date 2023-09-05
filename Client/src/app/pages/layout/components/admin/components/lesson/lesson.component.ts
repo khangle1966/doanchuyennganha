@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { Lesson } from 'src/app/models/Lesson.model';
+import { Lesson } from 'src/app/models/lesson.model';
 import {
   TuiAlertService,
   TuiDialogContext,
@@ -7,7 +7,7 @@ import {
 } from '@taiga-ui/core';
 import { Router } from '@angular/router';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 
 @Component({
   selector: 'app-lesson',

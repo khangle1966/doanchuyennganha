@@ -19,31 +19,28 @@ export class ReviewService {
   async compareAnswer(data: any) {
     try {
       const quizBank = await this.quizBankModel.findById(data.quizBankId);
-      console.log(quizBank);
       let score = 0;
-      for (let i = 0; i < data.answer.length; i++) {
-        if (data.answer[i] === quizBank.answerList[i]) {
-          score += 10;
+      for (let i = 0; i < data.quizBankId.length; i++) {
+        for (let i = 0; i < data.answer.length; i++) {
+          if (data.answer[i] === quizBank.answerList[i]) {
+            console.log(data.answer[i], quizBank.answerList[i]);
+            score += 10;
+          }
         }
       }
-      // return score;
       const review = new this.reviewModel({
         ...data,
         score,
         quizBank,
         // quiz,
       });
-      return review;
+      return review.save();
 
 
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
-
-
-
-
   async create(createReviewDto: CreateReviewDto): Promise<Review> {
     try {
       const review = new this.reviewModel(createReviewDto);

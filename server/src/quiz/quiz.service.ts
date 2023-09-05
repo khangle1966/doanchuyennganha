@@ -2,7 +2,6 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Quiz, QuizDocument } from './entities/quiz.entity';
-import { UpdateQuizDto } from './dto/update-quiz.dto';
 
 @Injectable()
 export class QuizService {
@@ -10,21 +9,12 @@ export class QuizService {
 
   async getQuizById(id: string): Promise<Quiz> {
     try {
-      return await this.quizModel.findById(id).exec();
+      return await this.quizModel.findOne({ courseId: id }).exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
 
-  // async getAllQuizzes(page: number, limit: number): Promise<Quiz[]> {
-  //   try {
-  //     const quizzes = await this.quizModel.find().skip((page - 1) * limit).limit(limit).exec();
-  //     return quizzes;
-  //   }
-  //   catch (error) {
-  //     throw new HttpException(error.message, error.status);
-  //   }
-  // }
   async getAllQuizzes(): Promise<Quiz[]> {
     try {
       const quizzes = await this.quizModel.find().exec();
@@ -45,7 +35,7 @@ export class QuizService {
 
   async updateQuiz(id: string, quizData: Quiz): Promise<Quiz> {
     try {
-      const updatedQuiz = await this.quizModel.findByIdAndUpdate(
+      const updatedQuiz = await this.quizModel.findOneAndUpdate(
         { _id: id },
         { ...quizData },
         { new: true },

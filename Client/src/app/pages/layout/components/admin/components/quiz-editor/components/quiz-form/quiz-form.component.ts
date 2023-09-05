@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TuiAlertService } from '@taiga-ui/core';
-import { tuiInputNumberOptionsProvider } from '@taiga-ui/kit';
-import { Quiz } from 'src/app/models/Quiz.model';
+import { Quiz } from 'src/app/models/quiz.model';
 
 @Component({
   selector: 'app-quiz-form',
@@ -43,7 +42,12 @@ export class QuizFormComponent {
         );
         return;
       }
-      this.saveEvent.emit(this.quizForm.value);
+      let newQuizContent = {
+        ...this.quizForm.value,
+        _id: this.quiz._id,
+        courseId: this.quiz.courseId,
+      };
+      this.saveEvent.emit(newQuizContent);
     }
   }
   @Output('save') saveEvent: EventEmitter<Quiz> = new EventEmitter();
