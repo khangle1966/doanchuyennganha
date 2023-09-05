@@ -56,6 +56,7 @@ export class CourseService {
       }
     );
   }
+
   buyCoure(idToken: string, courseId: string, userId: string) {
     return this.httpClient.put<any>(
       `http://localhost:3000/v1/course/${courseId}`,
