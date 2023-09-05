@@ -20,7 +20,7 @@ export class BrowseComponent implements OnInit {
   courseList$: Observable<Course[]> = this.store.select('course', 'courseList');
   cartList$ = this.store.select('cart', 'cartList');
   cartList: Course[] = [];
-  idToken$: Observable<string> = this.store.select('idToken', 'idToken');
+  idToken$: Observable<string> = this.store.select('auth', 'idToken');
 
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
@@ -28,7 +28,7 @@ export class BrowseComponent implements OnInit {
     private store: Store<{
       course: CourseState;
       cart: CartState;
-      idToken: AuthState;
+      auth: AuthState;
     }>
   ) {
     this.idToken$.subscribe((value) => {
