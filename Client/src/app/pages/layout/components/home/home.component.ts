@@ -65,13 +65,16 @@ export class HomeComponent implements OnDestroy, OnInit {
   readonly testForm = new FormGroup({
     testValue: new FormControl('Đang học'),
   });
-  readonly courses = ['Chưa học', 'Đang học', 'Đã học xong'];
+  readonly courses_state = ['Chưa học', 'Đang học', 'Đã học xong'];
 
   idToken$: Observable<string> = this.store.select('auth', 'idToken');
   profile$: Observable<Profile> = this.store.select('profile', 'profile');
   user$: Observable<UserInfo> = this.store.select('user', 'user');
 
   subscriptions: Subscription[] = [];
+  courses: string[] = [];
+  ongoingCourses: string[] = [];
+  completedCourses: string[] = [];
 
   homeForm = new FormGroup({
     id: new FormControl('', Validators.required),
@@ -113,7 +116,13 @@ export class HomeComponent implements OnDestroy, OnInit {
       }),
       this.profile$.subscribe((profile) => {
         if (profile != null && profile != undefined) {
+          this.courses = profile.courses || [];
+          this.ongoingCourses = profile.ongoingCourses || [];
+          this.completedCourses = profile.completedCourses || [];
           console.log(profile);
+          console.log('Courses:', this.courses);
+          console.log('Ongoing Courses:', this.ongoingCourses);
+          console.log('Completed Courses:', this.completedCourses);
         }
       }),
 
@@ -142,5 +151,7 @@ export class HomeComponent implements OnDestroy, OnInit {
     this.router.navigate(['/base/profile']);
   }
 
-  updateProfile() {}
+  toBuy() {
+    this.router.navigate(['base/browse']);
+  }
 }

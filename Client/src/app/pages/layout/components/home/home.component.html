@@ -17,7 +17,7 @@
           <div class="filter">
             <form class="group" [formGroup]="testForm">
               <div tuiGroup class="group" [collapsed]="true">
-                <tui-radio-block *ngFor="let course of courses" contentAlign="right" formControlName="testValue"
+                <tui-radio-block *ngFor="let course of courses_state" contentAlign="right" formControlName="testValue"
                   size="m" [hideRadio]="true" [item]="course">
                   {{ course }}
                 </tui-radio-block>
@@ -26,7 +26,7 @@
           </div>
 
           <button tuiIconButton type="button" class="tui-space_right-3 tui-space_bottom-3" icon="tuiIconPlusLarge"
-            [size]="'m'"></button>
+            (click)="toBuy()" [size]="'m'"></button>
         </div>
         <tui-scrollbar class="box">
           <div class="list_course">
@@ -60,7 +60,8 @@
       </div>
       <div class="myProfile_body">
         <div class="avatar">
-          <tui-avatar text="alex inkin" class="tui-space_top-1" [size]="'xl'"></tui-avatar>
+          <tui-avatar text="alex inkin" class="tui-space_top-1" [size]="'xl'"
+            avatarUrl="{{homeForm.value.avatar}}"></tui-avatar>
         </div>
 
         <p class="name">{{homeForm.value.userName}}</p>
