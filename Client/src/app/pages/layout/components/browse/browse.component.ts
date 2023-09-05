@@ -8,7 +8,6 @@ import * as CourseAction from 'src/app/ngrx/actions/course.actions';
 import * as CartAction from 'src/app/ngrx/actions/cart.actions';
 import { CartState } from 'src/app/ngrx/states/cart.state';
 import { TuiAlertService } from '@taiga-ui/core';
-import { Cart } from 'src/app/models/cart.model';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 
 @Component({
@@ -20,7 +19,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   courseList$: Observable<Course[]> = this.store.select('course', 'courseList');
   cartList$ = this.store.select('cart', 'cartList');
   cartList: Course[] = [];
-  idToken$: Observable<string> = this.store.select('idToken', 'idToken');
+  idToken$: Observable<string> = this.store.select('auth', 'idToken');
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -29,7 +28,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
     private store: Store<{
       course: CourseState;
       cart: CartState;
-      idToken: AuthState;
+      auth: AuthState;
     }>
   ) {}
   ngOnDestroy(): void {

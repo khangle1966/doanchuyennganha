@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Course } from 'src/app/models/course.model';
@@ -24,6 +24,7 @@ export class CartComponent implements OnInit {
     console.log('chay chua');
     console.log(this.cartList$);
   }
+
   ngOnInit(): void {
     this.cartList$.subscribe((cartList) => {
       if (cartList != undefined) {
@@ -56,7 +57,7 @@ export class CartComponent implements OnInit {
       );
     } else {
       this.clearAllCart();
-      this.total = 0;
+      this.total = Number(this.total.toFixed(3));
       this.successNotification('Purchase Success');
     }
   }

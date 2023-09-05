@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import * as LoginAction from '../actions/auth.actions';
+import * as LoginActions from '../actions/auth.actions';
 import { AuthState } from '../states/auth.state';
-import * as idTokenActions from '../actions/auth.actions';
 
 export const initialState: AuthState = {
   idToken: '',
@@ -15,7 +14,7 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(LoginAction.login, (state, action) => {
+  on(LoginActions.login, (state, action) => {
     console.log(action.type);
     return {
       ...state,
@@ -24,7 +23,7 @@ export const authReducer = createReducer(
       errorMessage: '',
     };
   }),
-  on(LoginAction.loginSuccess, (state, action) => {
+  on(LoginActions.loginSuccess, (state, action) => {
     console.log(action.type);
     return {
       ...state,
@@ -33,7 +32,7 @@ export const authReducer = createReducer(
       errorMessage: '',
     };
   }),
-  on(LoginAction.loginFailure, (state, { errorMessage, type }) => {
+  on(LoginActions.loginFailure, (state, { errorMessage, type }) => {
     console.log(type);
     return {
       ...state,
@@ -42,7 +41,7 @@ export const authReducer = createReducer(
       errorMessage,
     };
   }),
-  on(LoginAction.logout, (state, action) => {
+  on(LoginActions.logout, (state, action) => {
     console.log(action.type);
     return {
       ...state,
@@ -50,7 +49,7 @@ export const authReducer = createReducer(
       logoutErrorMessage: '',
     };
   }),
-  on(LoginAction.logoutSuccess, (state, action) => {
+  on(LoginActions.logoutSuccess, (state, action) => {
     console.log(action.type);
     return {
       ...state,
@@ -60,7 +59,7 @@ export const authReducer = createReducer(
       uid: '',
     };
   }),
-  on(LoginAction.logoutFailure, (state, { errorMessage, type }) => {
+  on(LoginActions.logoutFailure, (state, { errorMessage, type }) => {
     console.log(type);
     return {
       ...state,
@@ -68,14 +67,14 @@ export const authReducer = createReducer(
       logoutErrorMessage: errorMessage,
     };
   }),
-  on(LoginAction.storedIdToken, (state, { idToken, type }) => {
+  on(LoginActions.storedIdToken, (state, { idToken, type }) => {
     console.log(type);
     return {
       ...state,
       idToken,
     };
   }),
-  on(LoginAction.storedUserUid, (state, action) => {
+  on(LoginActions.storedUserUid, (state, action) => {
     console.log(action.type);
     return {
       ...state,

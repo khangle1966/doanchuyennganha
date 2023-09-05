@@ -36,7 +36,7 @@ export class ProfileEffects {
     this.action$.pipe(
       ofType(ProfileActions.get),
       switchMap((action) => {
-        return this.profileService.get(action.id, action.idToken);
+        return this.profileService.getById(action.id, action.idToken);
       }),
       map((profile) => {
         return ProfileActions.getSuccess({ profile });

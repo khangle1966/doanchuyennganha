@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as QuizActions from '../actions/quiz.actions';
 import { QuizState } from '../states/quiz.state';
-import { Quiz } from 'src/app/models/quiz.model';
 
 export const initialState: QuizState = {
   quiz: null,

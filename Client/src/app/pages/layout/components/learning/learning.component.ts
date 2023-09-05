@@ -8,12 +8,11 @@ import { Lesson } from 'src/app/models/lesson.model';
 import { LessonState } from 'src/app/ngrx/states/lessos.state';
 import * as LessonAction from 'src/app/ngrx/actions/lesson.actions';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
-import { idToken } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-learning',
   templateUrl: './learning.component.html',
-  styleUrls: ['./learning.component.less']
+  styleUrls: ['./learning.component.less'],
 })
 export class LearningComponent implements OnInit, OnDestroy {
   isPreview: boolean = true;
@@ -22,25 +21,26 @@ export class LearningComponent implements OnInit, OnDestroy {
   lesson$: Observable<Lesson> = this.store.select('lesson', 'lessons');
   subscriptions: Subscription[] = [];
 
-
-  learnForm= new FormGroup  ({
+  learnForm = new FormGroup({
     _id: new FormControl('', Validators.required),
     courseId: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
     content: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    ordinalNum: new FormControl(0,  [Validators.required, Validators.pattern(/^[0-9]+$/)])
-  })
+    ordinalNum: new FormControl(0, [
+      Validators.required,
+      Validators.pattern(/^[0-9]+$/),
+    ]),
+  });
 
   constructor(
     private router: Router,
     private store: Store<{
-      lesson : LessonState;
-      auth : AuthState
+      lesson: LessonState;
+      auth: AuthState;
     }>,
 
-    @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
-
+    @Inject(TuiAlertService) private readonly alerts: TuiAlertService
   ) {}
   warningNotification(message: string): void {
     this.alerts
@@ -60,39 +60,42 @@ export class LearningComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.store.select('lesson', 'lessons').subscribe((val) => {
-        if (val!= null && val != undefined) {
-          this.learnForm.controls._id.setValue(val._id); 
-          this.learnForm.controls.courseId.setValue(val.courseId); 
-          this.learnForm.controls.title.setValue(val.title); 
+        if (val != null && val != undefined) {
+          this.learnForm.controls._id.setValue(val._id);
+          this.learnForm.controls.courseId.setValue(val.courseId);
+          this.learnForm.controls.title.setValue(val.title);
           this.learnForm.controls.content.setValue(val.content);
           this.learnForm.controls.description.setValue(val.description);
           this.learnForm.controls.ordinalNum.setValue(val.ordinalNum);
         }
       }),
       this.lesson$.subscribe((lesson) => {
-        if (lesson !=null && lesson != undefined) {
+        if (lesson != null && lesson != undefined) {
           console.log(lesson);
         }
-      }) ,
+      }),
 
       combineLatest({
         idToken: this.idToken$,
         lesson: this.lesson$,
       }).subscribe((res) => {
         if (
-          res.idToken !=  undefined &&
+          res.idToken != undefined &&
           res.idToken != null &&
           res.idToken != '' &&
           res.lesson != null &&
           res.lesson != undefined
         ) {
-          console.log(res.idToken)
+          console.log(res.idToken);
           this.store.dispatch(
-            LessonAction.getLesson({ idToken: res.idToken, courseId: res.lesson.courseId })
-            );
+            LessonAction.getLesson({
+              idToken: res.idToken,
+              courseId: res.lesson.courseId,
+            })
+          );
         }
       })
-    )
+    );
   }
   selectedLesson: Lesson | null = null;
   selectLesson(lesson: Lesson) {
@@ -102,8 +105,10 @@ export class LearningComponent implements OnInit, OnDestroy {
     }
     this.selectedLesson = lesson;
     this.isPreview = true;
-}
+  }
 
-
-
+  backhome() {
+    this.router.navigate(['/base/home']);
+  }
+  search = '';
 }

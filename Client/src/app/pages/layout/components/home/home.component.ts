@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { TuiBooleanHandler } from '@taiga-ui/cdk';
 import { Observable, Subscription, combineLatest } from 'rxjs';
@@ -14,6 +14,7 @@ import { ProfileService } from 'src/app/services/profile/profile.service';
 import { Router } from '@angular/router';
 import * as ProfileActions from 'src/app/ngrx/actions/profile.actions';
 import { UserState } from 'src/app/ngrx/states/user.state';
+import { Course } from 'src/app/models/course.model';
 import { Profile } from 'src/app/models/profile.model';
 import { UserInfo } from 'src/app/models/user.model';
 
@@ -41,79 +42,20 @@ export class HomeComponent implements OnDestroy, OnInit {
     this.open = active && this.open;
   }
 
-  course = [
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-  ];
-
   readonly testForm = new FormGroup({
     testValue: new FormControl('Đang học'),
   });
-  readonly courses = ['Chưa học', 'Đang học', 'Đã học xong'];
+  readonly courses_state = ['Chưa học', 'Đang học', 'Đã học xong'];
 
   idToken$: Observable<string> = this.store.select('auth', 'idToken');
   profile$: Observable<Profile> = this.store.select('profile', 'profile');
   user$: Observable<UserInfo> = this.store.select('user', 'user');
 
+  state: string | undefined;
   subscriptions: Subscription[] = [];
+  courses: Course[] = [];
+  ongoingCourses: Course[] = [];
+  completedCourses: Course[] = [];
 
   homeForm = new FormGroup({
     id: new FormControl('', Validators.required),
@@ -121,6 +63,9 @@ export class HomeComponent implements OnDestroy, OnInit {
     email: new FormControl('', Validators.required),
     displayName: new FormControl('', Validators.required),
     userName: new FormControl('', Validators.required),
+    courses: new FormArray([], Validators.required),
+    ongoingCourses: new FormArray([], Validators.required),
+    completedCourses: new FormArray([], Validators.required),
   });
 
   constructor(
@@ -131,9 +76,7 @@ export class HomeComponent implements OnDestroy, OnInit {
       auth: AuthState;
       user: UserState;
     }>
-  ) {
-    //how to subscribe profile
-  }
+  ) {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((val) => {
@@ -149,10 +92,14 @@ export class HomeComponent implements OnDestroy, OnInit {
           this.homeForm.controls.id.setValue(val.id);
           this.homeForm.controls.email.setValue(val.email);
           this.homeForm.controls.displayName.setValue(val.displayName);
+          this.homeForm.controls.userName.setValue(val.userName);
         }
       }),
       this.profile$.subscribe((profile) => {
         if (profile != null && profile != undefined) {
+          this.courses = profile.courses || [];
+          this.ongoingCourses = profile.ongoingCourses || [];
+          this.completedCourses = profile.completedCourses || [];
           console.log(profile);
         }
       }),
@@ -182,5 +129,11 @@ export class HomeComponent implements OnDestroy, OnInit {
     this.router.navigate(['/base/profile']);
   }
 
-  updateProfile() {}
+  toBuy() {
+    this.router.navigate(['base/browse']);
+  }
+
+  toCourse(course: Course) {
+    this.router.navigate(['base/course', course._id]);
+  }
 }
