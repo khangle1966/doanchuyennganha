@@ -1,14 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Course } from 'src/app/models/Course.model';
+import { Observable, Subscription } from 'rxjs';
+import { Course } from 'src/app/models/course.model';
 import { Store } from '@ngrx/store';
 import { CourseState } from 'src/app/ngrx/states/course.state';
 import * as CourseAction from 'src/app/ngrx/actions/course.actions';
 import * as CartAction from 'src/app/ngrx/actions/cart.actions';
 import { CartState } from 'src/app/ngrx/states/cart.state';
 import { TuiAlertService } from '@taiga-ui/core';
-import { Cart } from 'src/app/models/Cart.model';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 
 @Component({
@@ -16,11 +15,12 @@ import { AuthState } from 'src/app/ngrx/states/auth.state';
   templateUrl: './browse.component.html',
   styleUrls: ['./browse.component.less'],
 })
-export class BrowseComponent implements OnInit {
+export class BrowseComponent implements OnInit, OnDestroy {
   courseList$: Observable<Course[]> = this.store.select('course', 'courseList');
   cartList$ = this.store.select('cart', 'cartList');
   cartList: Course[] = [];
-  idToken$: Observable<string> = this.store.select('idToken', 'idToken');
+  idToken$: Observable<string> = this.store.select('auth', 'idToken');
+  subscriptions: Subscription[] = [];
 
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
@@ -28,30 +28,37 @@ export class BrowseComponent implements OnInit {
     private store: Store<{
       course: CourseState;
       cart: CartState;
-      idToken: AuthState;
+      auth: AuthState;
     }>
-  ) {
-    this.idToken$.subscribe((value) => {
-      console.log(value);
-
-      if (value) {
-        console.log('đúng rồi đó' + value);
-        this.store.dispatch(CourseAction.get({ idToken: value }));
-      }
-    });
-
-    this.courseList$.subscribe((item) => {
-      console.log(item);
+  ) {}
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
     });
   }
 
   ngOnInit(): void {
-    this.cartList$.subscribe((cartList) => {
-      if (cartList != undefined) {
-        this.cartList = cartList;
-        console.log(this.cartList);
-      }
-    });
+    this.subscriptions.push(
+      this.cartList$.subscribe((cartList) => {
+        if (cartList != undefined) {
+          this.cartList = cartList;
+          console.log('cartListL: ', this.cartList);
+        }
+      }),
+      this.idToken$.subscribe((value) => {
+        console.log(value);
+        if (value) {
+          // console.log('đúng rồi đó' + value);
+          this.store.dispatch(CourseAction.get({ idToken: value }));
+        }
+      }),
+
+      this.courseList$.subscribe((item) => {
+        if (item != undefined && item.length > 0) {
+          console.log('courseList: ', item);
+        }
+      })
+    );
   }
 
   backhome() {

@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { CartState } from '../states/cart.state';
 import * as CartAction from '../actions/cart.actions';
-import { Profile } from 'src/app/models/Profile.model';
+import { Profile } from 'src/app/models/profile.model';
 
 export const initualState: CartState = {
   cartList: [],

@@ -1,4 +1,4 @@
-import { QuizBank } from './QuizBank.model';
+import { QuizBank } from './quizBank';
 
 export interface Question {
   _id: string;

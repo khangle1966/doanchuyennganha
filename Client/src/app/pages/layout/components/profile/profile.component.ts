@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Course } from 'src/app/models/Course.model';
-import { Profile } from 'src/app/models/Profile.model';
+import { Course } from 'src/app/models/course.model';
+import { Profile } from 'src/app/models/profile.model';
 import * as AuthActions from '../../../../ngrx/actions/auth.actions';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 

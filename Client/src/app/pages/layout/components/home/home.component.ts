@@ -14,9 +14,9 @@ import { ProfileService } from 'src/app/services/profile/profile.service';
 import { Router } from '@angular/router';
 import * as ProfileActions from 'src/app/ngrx/actions/profile.actions';
 import { UserState } from 'src/app/ngrx/states/user.state';
-import { Profile } from 'src/app/models/Profile.model';
-import { UserInfo } from 'src/app/models/User.model';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
+import { Profile } from 'src/app/models/profile.model';
+import { UserInfo } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-home',

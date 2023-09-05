@@ -57,19 +57,24 @@
       }
     }
   }
-  #right-side {
-    height: 100%;
+  #right-loader {
+    display: flex;
     width: 70%;
-    min-width: 750px;
-    padding: 0.625rem;
-
-    #quiz-form,
-    #quest-editor {
-      overflow: auto;
-      height: calc(100% - 2.75rem - 1.25rem);
+    margin: 1rem 0;
+    #right-side {
+      height: 100%;
       width: 100%;
+      min-width: 750px;
+      padding: 0.625rem;
+      #quiz-form,
+      #quest-editor {
+        overflow: auto;
+        height: calc(100% - 2.75rem - 1.25rem);
+        width: 100%;
+      }
     }
   }
+
   .top {
     min-height: 2.75rem;
     width: 100%;

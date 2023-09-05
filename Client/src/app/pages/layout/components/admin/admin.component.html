@@ -103,110 +103,120 @@
       </ng-template>
     </div>
   </div>
-  <table class="tui-table">
-    <tbody>
-      <tr
-        class="tui-table__tr tui-table__tr_border_none tui-table__tr_hover_disabled"
-      >
-        <th class="tui-table__th tui-table__th_first tui-text_h6">Name</th>
-        <th class="tui-table__th tui-text_h6">Description</th>
-        <th class="tui-table__th tui-text_h6">Author</th>
-        <th class="tui-table__th tui-text_h6">Category</th>
-        <th class="tui-table__th tui-text_h6">Image</th>
-        <th class="tui-table__th tui-table__th_last tui-text_h6">Select</th>
-      </tr>
-      <tr
-        class="tui-table__tr tui-table__tr_border_none tui-table__tr_cursor_pointer"
-        *ngFor="let course of courseList; let i = index"
-      >
-        <td class="tui-table__td tui-table__td_first">
-          <tui-tag [value]="course.name" [autoColor]="true"></tui-tag>
-        </td>
-        <td class="tui-table__td">
-          <tui-line-clamp
-            [content]="daenerys"
-            [lineHeight]="24"
-            [linesLimit]="1"
-          ></tui-line-clamp>
+  <tui-loader
+    class="loader"
+    [inheritColor]="true"
+    [overlay]="true"
+    [showLoader]="isLoading"
+    size="xl"
+  >
+    <table class="tui-table">
+      <tbody>
+        <tr
+          class="tui-table__tr tui-table__tr_border_none tui-table__tr_hover_disabled"
+        >
+          <th class="tui-table__th tui-table__th_first tui-text_h6">Name</th>
+          <th class="tui-table__th tui-text_h6">Description</th>
+          <th class="tui-table__th tui-text_h6">Author</th>
+          <th class="tui-table__th tui-text_h6">Category</th>
+          <th class="tui-table__th tui-text_h6">Image</th>
+          <th class="tui-table__th tui-table__th_last tui-text_h6">Select</th>
+        </tr>
 
-          <ng-template #daenerys>
-            <div class="hint">
-              {{ course.description }}
-            </div>
-          </ng-template>
-        </td>
-        <td class="tui-table__td">
-          <tui-tag [value]="course.author" [autoColor]="true"></tui-tag>
-        </td>
-        <td class="tui-table__td">
-          <tui-tag [value]="course.category" [autoColor]="true"></tui-tag>
-        </td>
-        <td class="tui-table__td">
-          <button size="s" tuiButton type="button" (click)="show(i)">
-            Preview
-          </button>
-        </td>
-        <td class="tui-table__td tui-table__td_last">
-          <tui-radio
-            [size]="'l'"
-            [formControl]="checkboxList"
-            item="{{ i }}"
-            (click)="selectEditCourse(course)"
-          ></tui-radio>
-        </td>
-        <ng-template #preview let-preview>
-          <tui-preview
-            [rotatable]="!(contentUnavailable$ | async)"
-            [zoomable]="!(contentUnavailable$ | async) && !(loading$ | async)"
-          >
-            <tui-preview-title>{{ title$ | async }}</tui-preview-title>
-            <tui-preview-pagination
-              [index]="index$$.value"
-              [length]="images.length"
-              (indexChange)="index$$.next($event)"
-            ></tui-preview-pagination>
+        <tr
+          class="tui-table__tr tui-table__tr_border_none tui-table__tr_cursor_pointer"
+          *ngFor="let course of courseList; let i = index"
+        >
+          <td class="tui-table__td tui-table__td_first">
+            <tui-tag [value]="course.name" [autoColor]="true"></tui-tag>
+          </td>
+          <td class="tui-table__td">
+            <tui-line-clamp
+              [content]="daenerys"
+              [lineHeight]="24"
+              [linesLimit]="1"
+            ></tui-line-clamp>
 
-            <button
-              icon="tuiIconDownload"
-              title="Download"
-              tuiIconButton
-              tuiPreviewAction
-              type="button"
-              (click)="download()"
-            ></button>
-
-            <button
-              icon="tuiIconClose"
-              title="Close"
-              tuiIconButton
-              tuiPreviewAction
-              type="button"
-              (click)="preview.complete()"
-            ></button>
-
-            <ng-container *ngIf="contentUnavailable$ | async">
-              <div class="t-container">
-                <tui-svg src="tuiIconFileLarge" class="t-icon"></tui-svg>
-                <div>Preview unavailable</div>
+            <ng-template #daenerys>
+              <div class="hint">
+                {{ course.description }}
               </div>
-            </ng-container>
+            </ng-template>
+          </td>
+          <td class="tui-table__td">
+            <tui-tag [value]="course.author" [autoColor]="true"></tui-tag>
+          </td>
+          <td class="tui-table__td">
+            <tui-tag [value]="course.category" [autoColor]="true"></tui-tag>
+          </td>
+          <td class="tui-table__td">
+            <button size="s" tuiButton type="button" (click)="show(i)">
+              Preview
+            </button>
+          </td>
+          <td class="tui-table__td tui-table__td_last">
+            <tui-radio
+              [size]="'l'"
+              [formControl]="checkboxList"
+              item="{{ i }}"
+              (click)="selectEditCourse(course)"
+            ></tui-radio>
+          </td>
 
-            <img
-              *ngIf="imageSrc$ | async as src"
-              alt="img source"
-              height="512"
-              width="512"
-              [src]="src"
-            />
+          <ng-template #preview let-preview>
+            <tui-preview
+              [rotatable]="!(contentUnavailable$ | async)"
+              [zoomable]="!(contentUnavailable$ | async) && !(loading$ | async)"
+            >
+              <tui-preview-title>{{ title$ | async }}</tui-preview-title>
+              <tui-preview-pagination
+                [index]="index$$.value"
+                [length]="images.length"
+                (indexChange)="index$$.next($event)"
+              ></tui-preview-pagination>
 
-            <tui-loader
-              *ngIf="loading$ | async"
-              size="xl"
-              class="t-loader"
-            ></tui-loader>
-          </tui-preview>
-        </ng-template>
-      </tr>
-    </tbody>
-  </table>
+              <button
+                icon="tuiIconDownload"
+                title="Download"
+                tuiIconButton
+                tuiPreviewAction
+                type="button"
+                (click)="download()"
+              ></button>
+
+              <button
+                icon="tuiIconClose"
+                title="Close"
+                tuiIconButton
+                tuiPreviewAction
+                type="button"
+                (click)="preview.complete()"
+              ></button>
+
+              <ng-container *ngIf="contentUnavailable$ | async">
+                <div class="t-container">
+                  <tui-svg src="tuiIconFileLarge" class="t-icon"></tui-svg>
+                  <div>Preview unavailable</div>
+                </div>
+              </ng-container>
+
+              <img
+                *ngIf="imageSrc$ | async as src"
+                alt="img source"
+                height="512"
+                width="512"
+                [src]="src"
+              />
+
+              <tui-loader
+                *ngIf="loading$ | async"
+                size="xl"
+                class="t-loader"
+              ></tui-loader>
+            </tui-preview>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </tui-loader>
 </div>

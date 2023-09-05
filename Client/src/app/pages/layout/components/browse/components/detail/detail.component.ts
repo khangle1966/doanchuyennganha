@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 import { CourseState } from 'src/app/ngrx/states/course.state';
 import * as CourseAction from 'src/app/ngrx/actions/course.actions';
+import * as CartAction from 'src/app/ngrx/actions/cart.actions';
+import { CartState } from 'src/app/ngrx/states/cart.state';
+import { TuiAlertService } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-detail',
@@ -14,22 +17,35 @@ import * as CourseAction from 'src/app/ngrx/actions/course.actions';
   styleUrls: ['./detail.component.less'],
 })
 export class DetailComponent implements OnInit {
-  // courseDetail$!: Observable<Course>;
   //lưu ý thằng dưới !!!!
   courseDetail$: Observable<Course> = this.store.select(
     'course',
     'courseDetail'
   );
   idToken$: Observable<string> = this.store.select('auth', 'idToken');
+  cartList$ = this.store.select('cart', 'cartList');
+  cartList: Course[] = [];
 
   constructor(
+    @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private router: Router,
     private route: ActivatedRoute,
 
-    private store: Store<{ course: CourseState; auth: AuthState }>
+    private store: Store<{
+      course: CourseState;
+      auth: AuthState;
+      cart: CartState;
+    }>
   ) {}
 
   ngOnInit(): void {
+    this.cartList$.subscribe((cartList) => {
+      if (cartList != undefined) {
+        this.cartList = cartList;
+        console.log(this.cartList);
+      }
+    });
+
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -43,6 +59,32 @@ export class DetailComponent implements OnInit {
         });
       }
     });
+  }
+
+  addCourseToCart(course: Course) {
+    let isExist = false;
+    this.cartList.forEach((item) => {
+      console.log(item);
+      if (item._id == course._id) {
+        this.warningNotification(`${course.name} is already in the cart`);
+        isExist = true;
+        return;
+      }
+    });
+    if (isExist) {
+      return;
+    }
+    this.store.dispatch(CartAction.addCourseToCart({ course }));
+  }
+
+  warningNotification(message: string): void {
+    this.alerts
+      .open('', {
+        label: message,
+        status: 'warning',
+        autoClose: 4000,
+      })
+      .subscribe();
   }
 
   backhome() {

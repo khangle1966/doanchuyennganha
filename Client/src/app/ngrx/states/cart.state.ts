@@ -1,5 +1,5 @@
-import { Course } from 'src/app/models/Course.model';
-import { Profile } from 'src/app/models/Profile.model';
+import { Course } from 'src/app/models/course.model';
+import { Profile } from 'src/app/models/profile.model';
 
 export interface CartState {
   cartList: Course[];

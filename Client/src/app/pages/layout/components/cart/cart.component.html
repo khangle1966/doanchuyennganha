@@ -29,7 +29,7 @@
                         </div>
                         <div class="course-cont">
                             <h2>{{course.name}}</h2>
-                            <p>{{course.price}}</p>
+                            <p>$ {{course.price}}</p>
                         </div>
                         <div class="course-ic">
                             <tui-svg (click)="removeCourseFromCart(course)" src="tuiIconCloseLarge"></tui-svg>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="price-cart">
                             <span>Provisional</span>
-                            <span>{{total$ | async}}</span>
+                            <span>$ {{total$ | async}}</span>
                         </div>
                         <div class="count-cart">
                             <span>Discount</span>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="total-cart">
                             <span>Total</span>
-                            <span>{{total$ | async}}</span>
+                            <span>$ {{total$ | async}}</span>
                         </div>
                     </div>
                     <div class="bot-cart">

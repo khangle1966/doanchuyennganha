@@ -115,9 +115,14 @@
                         <!-- <tui-push class="course" *ngFor="let course of courseList ; let i=index;" heading={{course.name}}> -->
                         <img [src]=course.img alt="" />
                         <!-- <tui-svg src="tuiIconSettingsLarge"></tui-svg> -->
-                        <p>
-                            {{course.category}}
-                        </p>
+                        <div class="cate-price">
+                            <p>
+                                {{course.category}}
+                            </p>
+                            <p class="price">
+                                $ {{course.price}}
+                            </p>
+                        </div>
                         <div class="btn-course">
                             <button tuiButton type="button" appearance="secondary"
                                 class="tui-space_right-3 tui-space_bottom-3" (click)="description(course._id)">

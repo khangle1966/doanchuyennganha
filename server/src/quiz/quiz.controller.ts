@@ -22,24 +22,13 @@ export class QuizController {
   async getById(@Param('id') id: string) {
     try {
       const quiz = await this.quizService.getQuizById(id);
+      // console.log(quiz);
       return quiz;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
 
-  // @Get()
-  // async getAll(@Query('page') page: number, @Query('limit') limit: number) {
-  //   try {
-  //     const quizzes = await this.quizService.getAllQuizzes(page, limit);
-  //     return { statusCode: HttpStatus.OK, data: quizzes };
-  //   } catch (error) {
-  //     throw new HttpException(
-  //       'Internal Server Error',
-  //       HttpStatus.INTERNAL_SERVER_ERROR,
-  //     );
-  //   }
-  // }
   @Get()
   async getAll() {
     try {
@@ -64,6 +53,10 @@ export class QuizController {
   async update(@Param('id') id: string, @Body() quizData: Quiz) {
     try {
       const updatedQuiz = await this.quizService.updateQuiz(id, quizData);
+      if (!updatedQuiz) {
+        throw new HttpException('Quiz not found', HttpStatus.BAD_REQUEST);
+      }
+      // console.log(updatedQuiz);
       return updatedQuiz;
     } catch (error) {
       throw new HttpException(error.message, error.status);
@@ -80,22 +73,3 @@ export class QuizController {
     }
   }
 }
-
-// @Delete(':id')
-//   async delete(@Param('id') id: string) {
-//     try {
-//       const deletedQuiz = await this.quizService.deleteQuiz(id);
-//       if (deletedQuiz === undefined) {
-//         throw new HttpException('Quiz not found', HttpStatus.NOT_FOUND);
-//       }
-//       return {
-//         statusCode: HttpStatus.OK,
-//         message: 'Quiz deleted successfully',
-//       };
-//     } catch (error) {
-//       throw new HttpException(
-//         'Internal Server Error',
-//         HttpStatus.INTERNAL_SERVER_ERROR,
-//       );
-//     }
-//   }

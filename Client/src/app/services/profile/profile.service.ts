@@ -1,7 +1,8 @@
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Profile } from 'src/app/models/Profile.model';
+import { Profile } from 'src/app/models/profile.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class ProfileService {
       Authorization: `Bearer ${idToken}`,
     });
     return this.httpClient.put<any>(
-      `http://localhost:3000/v1/profile/${id}`,
+      environment.local_url + `profile/${id}`,
       profile,
       {
         headers,
@@ -24,7 +25,7 @@ export class ProfileService {
 
   create(profile: Profile, idToken: string) {
     return this.httpClient.post<any>(
-      `http://localhost:3000/v1/profile`,
+      environment.local_url + `profile`,
       profile,
       {
         headers: new HttpHeaders({
@@ -36,7 +37,7 @@ export class ProfileService {
 
   getById(id: string, idToken: string) {
     return this.httpClient.get<Profile>(
-      `http://localhost:3000/v1/profile/${id}`,
+      environment.local_url + `profile/${id}`,
       {
         headers: new HttpHeaders({
           Authorization: `Bearer ${idToken}`,

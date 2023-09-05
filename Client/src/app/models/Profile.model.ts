@@ -1,4 +1,4 @@
-import { Course } from './Course.model';
+import { Course } from './course.model';
 
 export interface Profile {
   id: string;

@@ -32,7 +32,7 @@ export class Profile {
   @Prop()
   bio: string;
 
-  @Prop({ default: null })
+  @Prop()
   role: string;
 
   @Prop()
