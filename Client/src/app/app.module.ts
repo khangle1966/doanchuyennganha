@@ -30,6 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseReducer } from './ngrx/reducers/course.reducer';
 import { CartReducer } from './ngrx/reducers/cart.reducer';
 import { CourseEffect } from './ngrx/effects/course.effects';
+import { LessonReducer } from './ngrx/reducers/lesson.reducer';
+import { LessonEffect } from './ngrx/effects/lesson.effects';
 import { quizReducer } from './ngrx/reducers/quiz.reducer';
 import { QuizEffects } from './ngrx/effects/quiz.effects';
 import { questionReducer } from './ngrx/reducers/question.reducer';
@@ -47,6 +49,7 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
         profile: profileReducer,
         course: CourseReducer,
         cart: CartReducer,
+        lesson: LessonReducer,
         quiz: quizReducer,
         question: questionReducer,
       },
@@ -57,6 +60,7 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
       UserEffects,
       ProfileEffects,
       CourseEffect,
+      LessonEffect,
       QuizEffects,
       QuestionEffects,
     ]),

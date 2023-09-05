@@ -30,14 +30,17 @@ export const getFailure = createAction(
 
 export const updateProfile = createAction(
   '[Profile] Update Profile',
-  props<{ idToken: string; profile: Profile; id: string }>()
+  props<{ idToken: string; profile: Profile }>()
 );
 
 export const updateProfileSuccess = createAction(
-  '[Profile] Update Profile Success'
+  '[Profile] Update Profile Success',
+  props<{ profile: Profile }>()
 );
 
 export const updateProfileFailure = createAction(
   '[Profile] Update Profile Failure',
   props<{ errorMessage: any }>()
 );
+
+export const clearState = createAction('[Profile] Clear State');

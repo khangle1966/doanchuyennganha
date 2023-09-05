@@ -10,12 +10,12 @@ import { environment } from 'src/environments/environment';
 export class ProfileService {
   constructor(private httpClient: HttpClient) {}
 
-  updateProfile(idToken: string, profile: any, id: string) {
+  updateProfile(idToken: string, profile: any) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${idToken}`,
     });
     return this.httpClient.put<any>(
-      environment.local_url + `profile/${id}`,
+      environment.local_url + `profile/${profile.id}`,
       profile,
       {
         headers,
@@ -35,7 +35,7 @@ export class ProfileService {
     );
   }
 
-  get(id: string, idToken: string) {
+  getById(id: string, idToken: string) {
     return this.httpClient.get<Profile>(
       environment.local_url + `profile/${id}`,
       {

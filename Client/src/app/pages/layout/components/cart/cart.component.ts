@@ -1,10 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Course } from 'src/app/models/course.model';
 import { CartState } from 'src/app/ngrx/states/cart.state';
 import * as CartAction from 'src/app/ngrx/actions/cart.actions';
+import * as ProfileAction from 'src/app/ngrx/actions/profile.actions';
 import { TuiAlertService } from '@taiga-ui/core';
+import { CourseState } from 'src/app/ngrx/states/course.state';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
+import { ProfileState } from 'src/app/ngrx/states/profile.state';
+import { Observable, Subscription } from 'rxjs';
+import { Profile } from 'src/app/models/profile.model';
 
 @Component({
   selector: 'app-cart',
@@ -16,20 +22,70 @@ export class CartComponent implements OnInit {
   cartList: Course[] = [];
   total$ = this.store.select((state) => state.cart.total);
   total: number = 0;
+  profile: Profile = <Profile>{};
+
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private router: Router,
-    private store: Store<{ cart: CartState }>
-  ) {
-    console.log('chay chua');
-    console.log(this.cartList$);
-  }
+    private store: Store<{
+      cart: CartState;
+      course: CourseState;
+      auth: AuthState;
+      profile: ProfileState;
+    }>
+  ) {}
+
   ngOnInit(): void {
-    this.cartList$.subscribe((cartList) => {
-      if (cartList != undefined) {
-        this.cartList = cartList;
-        console.log(this.cartList);
-      }
+    this.subscriptions.push(
+      this.cartList$.subscribe((cartList) => {
+        if (cartList != undefined) {
+          this.cartList = cartList;
+          console.log(this.cartList);
+        }
+      }),
+      this.store.select('profile', 'profile').subscribe((profile) => {
+        if (profile != null && profile != undefined) {
+          //console.log(profile);
+          this.profile = profile;
+        }
+      }),
+      this.store.select('auth', 'idToken').subscribe((val) => {
+        if (val != '') {
+          this.idToken = val;
+        }
+      }),
+      this.store.select('profile', 'isUpdateSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Buy Course Success !!!', { status: 'success' })
+            .subscribe();
+          this.clearAllCart();
+          this.store.dispatch(ProfileAction.clearState());
+          this.store.dispatch(
+            ProfileAction.get({ idToken: this.idToken, id: this.profile.id })
+          );
+        }
+      }),
+      this.store.select('profile', 'isLoading').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Buying Course... !!!', { status: 'info' })
+            .subscribe();
+        }
+      }),
+      this.store.select('profile', 'errorMessage').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Buy Course Fail: ' + val, { status: 'error' })
+            .subscribe();
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
     });
   }
 
@@ -79,5 +135,26 @@ export class CartComponent implements OnInit {
         autoClose: 4000,
       })
       .subscribe();
+  }
+
+  idToken = '';
+  courseId: any = [];
+  id: string[] = [];
+  subscriptions: Subscription[] = [];
+
+  buyCourse() {
+    this.courseId = this.cartList.map((course) => course._id);
+    let newProfile: Profile = {
+      ...this.profile,
+      courses: [...this.profile.courses, ...this.courseId],
+    };
+
+    console.log(newProfile);
+    this.store.dispatch(
+      ProfileAction.updateProfile({
+        idToken: this.idToken,
+        profile: newProfile,
+      })
+    );
   }
 }

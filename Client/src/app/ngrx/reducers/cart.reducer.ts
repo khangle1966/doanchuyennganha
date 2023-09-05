@@ -34,6 +34,7 @@ export const CartReducer = createReducer(
     };
     return newState;
   }),
+
   on(CartAction.clearAllCart, (state, action) => {
     console.log(action.type);
     const productList = state.courseList.map((course) => {
