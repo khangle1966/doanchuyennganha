@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { Observable, Subject, finalize, map, of, switchMap, timer } from 'rxjs';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 import { CloudStorageService } from 'src/app/services/cloud-storage/cloud-storage.service';
 
 @Component({
@@ -39,7 +39,7 @@ export class CourseFormComponent {
 
   ngOnInit(): void {
     if (this.isEdit) {
-      console.log(this.course);
+      console.log(this.course?._id);
       if (this.course != null) {
         this.courseForm = new FormGroup({
           _id: new FormControl(
@@ -82,7 +82,7 @@ export class CourseFormComponent {
       rating: 0,
     };
     console.log(newCourse);
-    // this.createEvent.emit(newCourse);
+    this.createEvent.emit(newCourse);
   }
   categories = [
     'Frontend Developer',

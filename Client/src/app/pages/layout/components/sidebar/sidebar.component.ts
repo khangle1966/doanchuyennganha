@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { combineLatest } from 'rxjs';
 import { ProfileState } from 'src/app/ngrx/states/profile.state';
 
 interface Page {
@@ -65,30 +66,67 @@ export class SidebarComponent {
       icon: 'tuiIconSettingsLarge',
     },
   ];
+  profile$ = this.store.select('profile', 'profile');
+  route$ = this.router.events;
 
-  value = '';
   pageSelected: number = 0;
+  url = '';
   constructor(
     private router: Router,
     private store: Store<{ profile: ProfileState }>
   ) {
-    this.router.events.subscribe((val) => {
-      this.router.url === '/base/home' ? (this.pageSelected = 0) : null;
-      this.router.url.includes('/base/learning')
-        ? (this.pageSelected = 1)
-        : null;
-      this.router.url.includes('/base/browse') ? (this.pageSelected = 2) : null;
-      this.router.url === '/base/profile' ? (this.pageSelected = 3) : null;
-      this.router.url === '/base/cart' ? (this.pageSelected = 4) : null;
-      this.router.url.includes('/base/admin') ? (this.pageSelected = 5) : null;
-      this.router.url === '/base/settings' ? (this.pageSelected = 6) : null;
+    combineLatest({
+      route: this.route$,
+      profile: this.profile$,
+    }).subscribe((res) => {
+      if (res.profile != undefined) {
+        if (res.profile.role != 'admin') {
+          if (this.pages.length != 6) {
+            this.pages.splice(5, 1);
+            this.pages[this.pages.length - 1].id = this.pages.length - 1;
+            console.log('pages:', this.pages);
+          }
+          if (this.router.url != this.url) {
+            this.url = this.router.url;
+            this.router.url === '/base/home' ? (this.pageSelected = 0) : null;
+            this.router.url.includes('/base/learning')
+              ? (this.pageSelected = 1)
+              : null;
+            this.router.url.includes('/base/browse')
+              ? (this.pageSelected = 2)
+              : null;
+            this.router.url === '/base/profile'
+              ? (this.pageSelected = 3)
+              : null;
+            this.router.url === '/base/cart' ? (this.pageSelected = 4) : null;
+            this.router.url === '/base/settings'
+              ? (this.pageSelected = 5)
+              : null;
+          }
+        } else {
+          if (this.router.url != this.url) {
+            this.url = this.router.url;
+            this.router.url === '/base/home' ? (this.pageSelected = 0) : null;
+            this.router.url.includes('/base/learning')
+              ? (this.pageSelected = 1)
+              : null;
+            this.router.url.includes('/base/browse')
+              ? (this.pageSelected = 2)
+              : null;
+            this.router.url === '/base/profile'
+              ? (this.pageSelected = 3)
+              : null;
+            this.router.url === '/base/cart' ? (this.pageSelected = 4) : null;
+            this.router.url.includes('/base/admin')
+              ? (this.pageSelected = 5)
+              : null;
+            this.router.url === '/base/settings'
+              ? (this.pageSelected = 6)
+              : null;
+          }
+        }
+      }
     });
-    // this.store.select('profile', 'profile').subscribe((val) => {
-    //   if (val.role != 'admin') {
-    //     this.pages.splice(4, 1);
-    //     this.pages[this.pages.length - 1].id = this.pages.length - 1;
-    //   }
-    // });
   }
 
   selected(index: number) {

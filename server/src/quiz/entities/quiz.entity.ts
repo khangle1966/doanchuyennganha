@@ -21,7 +21,7 @@ export class Quiz {
   total: number;
 
   @Prop()
-  time: number;
+  duration: number;
 }
 
 export const QuizSchema = SchemaFactory.createForClass(Quiz);

@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { Course } from 'src/course/entities/course.entity';
 
 export type CourseDocument = HydratedDocument<Lesson>;
 @Schema({ timestamps: true })

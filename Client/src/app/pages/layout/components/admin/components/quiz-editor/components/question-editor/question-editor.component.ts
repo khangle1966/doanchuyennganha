@@ -12,7 +12,7 @@ import {
   TuiDialogService,
   TuiDialogContext,
 } from '@taiga-ui/core';
-import { Question } from 'src/app/models/Question.model';
+import { Question } from 'src/app/models/question.model';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 
 @Component({

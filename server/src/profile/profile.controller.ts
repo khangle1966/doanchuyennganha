@@ -25,6 +25,16 @@ export class ProfileController {
 
   @Post()
   async create(@Body() createProfileDto: CreateProfileDto): Promise<Profile> {
+    const requiredFields = ['id', 'email', 'userName'];
+    const missingFields = requiredFields.filter(
+      (field) => !createProfileDto[field],
+    );
+    if (missingFields.length > 0) {
+      throw new HttpException(
+        `Missing required fields: ${missingFields.join(', ')}`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     try {
       const isExist = await this.profileService.findOne(createProfileDto.id);
       if (isExist) {

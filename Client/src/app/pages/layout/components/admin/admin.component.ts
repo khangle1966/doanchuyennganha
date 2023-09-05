@@ -1,6 +1,7 @@
 import {
   Component,
   Inject,
+  OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -17,6 +18,7 @@ import {
 import {
   BehaviorSubject,
   Observable,
+  Subscription,
   filter,
   map,
   of,
@@ -24,15 +26,20 @@ import {
   switchMap,
   timer,
 } from 'rxjs';
-import { Course } from 'src/app/models/Course.model';
+import { Course } from 'src/app/models/course.model';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
+import { Store } from '@ngrx/store';
+import { CourseState } from 'src/app/ngrx/states/course.state';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
+import * as CourseActions from '../../../../ngrx/actions/course.actions';
+import { QuizState } from 'src/app/ngrx/states/quiz.state';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.less'],
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
   @ViewChild('preview')
   readonly preview?: TemplateRef<TuiDialogContext>;
 
@@ -109,6 +116,9 @@ export class AdminComponent implements OnInit {
       language: 'English',
     },
   ];
+  isLoading = false;
+  idToken = '';
+  subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
@@ -117,16 +127,148 @@ export class AdminComponent implements OnInit {
     @Inject(TuiAlertService)
     private readonly alerts: TuiAlertService,
     @Inject(TuiDialogService)
-    private readonly dialogs: TuiDialogService
+    private readonly dialogs: TuiDialogService,
+    private store: Store<{
+      course: CourseState;
+      auth: AuthState;
+      quiz: QuizState;
+    }>
   ) {}
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
+    });
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        if (idToken != '' && idToken != undefined && idToken != null) {
+          this.idToken = idToken;
+          this.store.dispatch(CourseActions.get({ idToken }));
+        } else {
+          this.alerts
+            .open('idToken is empty !!!', { status: 'error' })
+            .subscribe();
+        }
+      }),
+      this.store.select('course', 'courseList').subscribe((courseList) => {
+        if (
+          courseList != undefined &&
+          courseList != null &&
+          courseList.length > 0
+        ) {
+          console.log('courseList: ', courseList);
+
+          this.courseList = courseList;
+        }
+      }),
+      this.store.select('course', 'isLoading').subscribe((val) => {
+        this.isLoading = val;
+        // console.log(this.isLoading);
+      }),
+      this.store.select('course', 'isSuccess').subscribe((val) => {
+        if (val) {
+          // this.alerts
+          //   .open('List Course Success !!!', { status: 'success' })
+          //   .subscribe();
+        }
+      }),
+      this.store.select('course', 'error').subscribe((val) => {
+        if (val != '' && val != undefined && val != null) {
+          this.alerts.open(val, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('course', 'isAddLoading').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Creating Course...', { status: 'info' })
+            .subscribe();
+        }
+      }),
+      this.store.select('course', 'isAddSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Create Course Success !!!', { status: 'success' })
+            .subscribe();
+          this.store.dispatch(CourseActions.get({ idToken: this.idToken }));
+        }
+      }),
+      this.store.select('course', 'addErrMess').subscribe((val) => {
+        if (val != '' && val != undefined && val != null) {
+          this.alerts.open(val, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('course', 'isUpLoading').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Updating Course...', { status: 'info' })
+            .subscribe();
+        }
+      }),
+      this.store.select('course', 'isUpSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Updated Course Success !!!', { status: 'success' })
+            .subscribe();
+          this.store.dispatch(CourseActions.get({ idToken: this.idToken }));
+        }
+      }),
+      this.store.select('course', 'updateErrMess').subscribe((val) => {
+        if (val != '' && val != undefined && val != null) {
+          this.alerts.open(val, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('course', 'isDelLoading').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Deleting Course...', { status: 'info' })
+            .subscribe();
+        }
+      }),
+      this.store.select('course', 'isDelSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Deleted Course Success !!!', { status: 'success' })
+            .subscribe();
+          this.checkboxList.setValue('Check');
+          this.selectCourse = null;
+          this.store.dispatch(CourseActions.get({ idToken: this.idToken }));
+        }
+      }),
+      this.store.select('course', 'delErrMess').subscribe((val) => {
+        if (val != '' && val != undefined && val != null) {
+          this.alerts.open(val, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('quiz', 'isCreateLoading').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open(`Creating Course's Quiz ...`, { status: 'info' })
+            .subscribe();
+        }
+      }),
+      this.store.select('quiz', 'isCreateSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+
+            .open(`Create Course's Quiz Success !!!`, { status: 'success' })
+            .subscribe();
+        }
+      }),
+      this.store.select('quiz', 'createMessError').subscribe((val) => {
+        if (val != '' && val != undefined && val != null) {
+          this.alerts.open(val, { status: 'error' }).subscribe();
+        }
+      })
+    );
+  }
 
   selectCourse: Course | null = null;
   selectEditCourse(course: Course) {
     if (this.selectCourse?._id !== course._id) {
       this.selectCourse = <Course>{ ...course };
-      console.log('select courrse', this.selectCourse);
+      console.log('select courrse', this.selectCourse._id);
     }
   }
 
@@ -213,10 +355,9 @@ export class AdminComponent implements OnInit {
   //create func
   createCourse(course: Course) {
     this.openCreate = false;
-    this.courseList.push(course);
-    this.alerts
-      .open('Create new course success !!!', { status: 'success' })
-      .subscribe();
+    this.store.dispatch(
+      CourseActions.create({ idToken: this.idToken, course })
+    );
   }
 
   //delete func
@@ -225,29 +366,23 @@ export class AdminComponent implements OnInit {
   }
 
   deleteCourse() {
-    this.courseList = this.courseList.filter(
-      (val) => val._id != this.selectCourse?._id
+    if (this.selectCourse == null) {
+      this.alerts
+        .open('Please select course !!!', { status: 'error' })
+        .subscribe();
+      return;
+    }
+    this.store.dispatch(
+      CourseActions.remove({ idToken: this.idToken, id: this.selectCourse._id })
     );
-    this.selectCourse = null;
-    this.checkboxList.setValue('Check');
   }
 
   //update func
   updateCourse($event: Course) {
     // console.log($event);
     this.openEdit = false;
-    this.courseList = this.courseList.map((val) => {
-      if (val._id == $event._id) {
-        console.log('match');
-        this.selectCourse = $event;
-        return $event;
-      } else {
-        return val;
-      }
-    });
-    console.log(this.courseList);
-    this.alerts
-      .open('Update course success !!!', { status: 'success' })
-      .subscribe();
+    this.store.dispatch(
+      CourseActions.update({ idToken: this.idToken, course: $event })
+    );
   }
 }

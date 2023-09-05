@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { UserState } from '../states/user.state';
 import * as UserAction from 'src/app/ngrx/actions/user.actions';
 import { state } from '@angular/animations';
-import { UserInfo } from 'src/app/models/User.model';
+import { UserInfo } from 'src/app/models/user.model';
 
 export const initualState: UserState = {
   user: <UserInfo>{},
