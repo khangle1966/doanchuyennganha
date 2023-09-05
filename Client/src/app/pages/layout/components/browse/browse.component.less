@@ -1,146 +1,171 @@
 @import '@taiga-ui/core/styles/taiga-ui-local.less';
 
-#browse-container{
+#browse-container {
+  overflow: hidden;
+
+  #browse-box {
     overflow: hidden;
-    #browse-box{
+    height: 100%;
+
+    @mixin white-gradient() {
+      background: linear-gradient(to right,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0) 100%);
+    }
+
+    //   $animationSpeed: 40s;
+    @taiga-animation-speed: 40s;
+
+    // Animation
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(calc(-250px * 7));
+      }
+    }
+
+    // Styling
+    .browse-slider {
+      background: white;
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
+      height: 100px;
+      margin: auto;
       overflow: hidden;
-      height: 100%;
-        @mixin white-gradient() {
-            background: linear-gradient(
-              to right,
-              rgba(255, 255, 255, 1) 0%,
-              rgba(255, 255, 255, 0) 100%
-            );
-          }
-          
-        //   $animationSpeed: 40s;
-        @taiga-animation-speed: 40s;
-          // Animation
-          @keyframes scroll {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(calc(-250px * 7));
-            }
-          }
-          
-          // Styling
-          .browse-slider {
-            background: white;
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
-            height: 100px;
-            margin: auto;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-          
-            &::before,
-            &::after {
-              @include white-gradient;
-              content: "";
-              height: 100px;
-              position: absolute;
-              width: 200px;
-              z-index: 2;
-            }
-          
-            &::after {
-              right: 0;
-              top: 0;
-              transform: rotateZ(180deg);
-            }
-          
-            &::before {
-              left: 0;
-              top: 0;
-            }
-          
-            .slide-track {
-              animation: scroll @taiga-animation-speed linear infinite;
-              display: flex;
-              width: calc(250px * 14);
-            }
-          
-            .slide {
-              height: 100px;
-              width: 250px;
-              display: flex;
-              align-items: center;
-              font-size: 18px;
+      position: relative;
+      width: 100%;
+
+      &::before,
+      &::after {
+        @include white-gradient;
+        content: "";
+        height: 100px;
+        position: absolute;
+        width: 200px;
+        z-index: 2;
+      }
+
+      &::after {
+        right: 0;
+        top: 0;
+        transform: rotateZ(180deg);
+      }
+
+      &::before {
+        left: 0;
+        top: 0;
+      }
+
+      .slide-track {
+        animation: scroll @taiga-animation-speed linear infinite;
+        display: flex;
+        width: calc(250px * 14);
+      }
+
+      .slide {
+        height: 100px;
+        width: 250px;
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+
+    .browse-nav {
+      height: 20%;
+      margin: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      // margin-bottom: 1rem;
+      .nav-left {
+        display: flex;
+        justify-content: row;
+        align-items: center;
+        color: var(--tui-primary);
+
+        .nav-home {
+          cursor: pointer;
+        }
+      }
+
+      .nav-right {
+        width: 30%;
+      }
+    }
+
+    .browse-header {
+      width: 100%;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+
+      #btn {
+        background-color: white
+      }
+    }
+
+    #browse-course {
+      // :host {
+      //     display: block;
+      // }
+      height: 40%;
+      overflow: hidden;
+
+      .main-rol {
+        height: 43.31rem;
+        width: auto;
+        // overflow: visible;
+      }
+
+      .main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-height: 100%;
+        display: flex;
+
+        .course {
+          margin-right: 2rem;
+          margin-bottom: 1rem;
+
+          .cate-price {
+            margin-top: .25rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .price {
               font-weight: bold;
             }
           }
-        .browse-nav{
-          height: 20%;
-            margin: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            // margin-bottom: 1rem;
-            .nav-left{
-                display: flex;
-                justify-content: row;
-                align-items: center;
-                color: var(--tui-primary);
-                .nav-home{
-                  cursor: pointer;
-                }
-            }
-            .nav-right{
-                width: 30%;
-            }
         }
-        .browse-header{
-            width: 100%;
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: row;
-        #btn{
-            background-color: white
-         }  
+
+        margin-left: 4rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        // justify-content: space-evenly;
+        ::ng-deep .t-heading {
+          margin: 0;
         }
-        
-        #browse-course{
-            // :host {
-            //     display: block;
-            // }
-            height: 40%;
-            overflow: hidden;
-            .main-rol{
-                height: 43.31rem;
-                width: auto;
-                // overflow: visible;
-            }
-            .main {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              max-height: 100%;
-              display: flex;
-              
-                .course{
-                    margin-right: 2rem;
-                    margin-bottom: 1rem;
-                }
-                margin-left: 4rem;
-                display: flex;     
-                flex-direction: row;
-                flex-wrap: wrap;
-                // justify-content: space-evenly;
-                ::ng-deep .t-heading{
-                    margin: 0;
-                }
-                ::ng-deep .t-top{
-                    height: 0;
-                }
-                .btn-course{
-                    display: flex;
-                    justify-content: space-between;
-                }
-            }
+
+        ::ng-deep .t-top {
+          height: 0;
         }
+
+        .btn-course {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
     }
+  }
 }
