@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { TuiBooleanHandler } from '@taiga-ui/cdk';
 import { Observable, Subscription, combineLatest } from 'rxjs';
@@ -16,6 +16,7 @@ import * as ProfileActions from 'src/app/ngrx/actions/profile.actions';
 import { UserState } from 'src/app/ngrx/states/user.state';
 import { Profile } from 'src/app/models/Profile.model';
 import { UserInfo } from 'src/app/models/User.model';
+import { Course } from 'src/app/models/Course.model';
 
 @Component({
   selector: 'app-home',
@@ -41,27 +42,6 @@ export class HomeComponent implements OnDestroy, OnInit {
     this.open = active && this.open;
   }
 
-  course = [
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-    {
-      id: '',
-      name: 'Phát triển Web',
-      category: 'Web Development',
-      imgURL: '../../.././../../assets/images/Picture.png',
-    },
-  ];
-
   readonly testForm = new FormGroup({
     testValue: new FormControl('Đang học'),
   });
@@ -71,10 +51,11 @@ export class HomeComponent implements OnDestroy, OnInit {
   profile$: Observable<Profile> = this.store.select('profile', 'profile');
   user$: Observable<UserInfo> = this.store.select('user', 'user');
 
+  state: string | undefined;
   subscriptions: Subscription[] = [];
-  courses: string[] = [];
-  ongoingCourses: string[] = [];
-  completedCourses: string[] = [];
+  courses: Course[] = [];
+  ongoingCourses: Course[] = [];
+  completedCourses: Course[] = [];
 
   homeForm = new FormGroup({
     id: new FormControl('', Validators.required),
@@ -82,9 +63,9 @@ export class HomeComponent implements OnDestroy, OnInit {
     email: new FormControl('', Validators.required),
     displayName: new FormControl('', Validators.required),
     userName: new FormControl('', Validators.required),
-    courses: new FormControl('', Validators.required),
-    ongoingCourse: new FormControl('', Validators.required),
-    completedCourse: new FormControl('', Validators.required),
+    courses: new FormArray([], Validators.required),
+    ongoingCourses: new FormArray([], Validators.required),
+    completedCourses: new FormArray([], Validators.required),
   });
 
   constructor(
@@ -120,9 +101,6 @@ export class HomeComponent implements OnDestroy, OnInit {
           this.ongoingCourses = profile.ongoingCourses || [];
           this.completedCourses = profile.completedCourses || [];
           console.log(profile);
-          console.log('Courses:', this.courses);
-          console.log('Ongoing Courses:', this.ongoingCourses);
-          console.log('Completed Courses:', this.completedCourses);
         }
       }),
 
@@ -153,5 +131,9 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   toBuy() {
     this.router.navigate(['base/browse']);
+  }
+
+  toCourse(course: Course) {
+    this.router.navigate(['base/course', course._id]);
   }
 }

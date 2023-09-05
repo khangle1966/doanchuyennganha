@@ -11,7 +11,7 @@ import { TuiAlertService } from '@taiga-ui/core';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.less'],
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartComponent implements OnInit {
   cartList$ = this.store.select((state) => state.cart.cartList);
   cartList: Course[] = [];
   total$ = this.store.select((state) => state.cart.total);
@@ -24,9 +24,7 @@ export class CartComponent implements OnInit, OnDestroy {
     console.log('chay chua');
     console.log(this.cartList$);
   }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+
   ngOnInit(): void {
     this.cartList$.subscribe((cartList) => {
       if (cartList != undefined) {

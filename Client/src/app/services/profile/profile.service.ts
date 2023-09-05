@@ -34,7 +34,7 @@ export class ProfileService {
     );
   }
 
-  get(id: string, idToken: string) {
+  getById(id: string, idToken: string) {
     return this.httpClient.get<Profile>(
       `http://localhost:3000/v1/profile/${id}`,
       {

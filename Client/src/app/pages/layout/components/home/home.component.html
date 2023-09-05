@@ -30,12 +30,13 @@
         </div>
         <tui-scrollbar class="box">
           <div class="list_course">
-            <tui-push class="cart_course" *ngFor="let item of course" heading="{{ item.name }}">
-              <img src="{{ item.imgURL }}" alt="" />
-              {{ item.category }}
+            <tui-push class="cart_course" *ngFor="let course of courses" heading="{{course.name}}">
+
+              <img src="{{ course.img }}" alt="" />
+              {{ course.category }}
 
               <div class="btn_course">
-                <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3">
+                <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" (click)="toCourse(course)">
                   Start
                 </button>
 
