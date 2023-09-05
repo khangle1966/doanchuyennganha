@@ -13,14 +13,14 @@ export class Review {
     @Prop({ required: true })
     userId: string;
 
-    @Prop({ required: true })
+    @Prop()
     score: number;
 
     @Prop()
     answer: string[];
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank', required: true })
-    quizBank: string;
+    quizBankId: string[];
 
 }
 

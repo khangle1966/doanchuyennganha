@@ -5,6 +5,6 @@ export class CreateReviewDto {
         public userId: string,
         public score: number,
         public answer: string[],
-        public quizBank: string,
+        public quizBank: object,
     ) { }
 }

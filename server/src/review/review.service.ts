@@ -15,21 +15,30 @@ export class ReviewService {
     @InjectModel(Quiz.name) private quizModel: Model<Quiz>,
   ) { }
 
-  // compare answer with correct answer in quiz-bank and return score
+
   async compareAnswer(data: any) {
-
-    const quizBank = await this.quizBankModel.findById(data.quizBankId);
-    console.log(quizBank.answerList);
-    const review = await this.reviewModel.findById(data.reviewId);
-
-    let score = 0;
-    for (let i = 0; i < quizBank.answerList.length; i++) {
-      if (quizBank.answerList[i] === review.answer[i]) {
-        console.log(quizBank.answerList[i], review.answer[i]);
-        score++;
+    try {
+      const quizBank = await this.quizBankModel.findById(data.quizBankId);
+      console.log(quizBank);
+      let score = 0;
+      for (let i = 0; i < data.answer.length; i++) {
+        if (data.answer[i] === quizBank.answerList[i]) {
+          score += 10;
+        }
       }
+      // return score;
+      const review = new this.reviewModel({
+        ...data,
+        score,
+        quizBank,
+        // quiz,
+      });
+      return review;
+
+
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
     }
-    return score;
   }
 
 
