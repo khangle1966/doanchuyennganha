@@ -48,7 +48,7 @@ export class ProfileService {
   async update(id: string, updateProfileDto: UpdateProfileDto) {
     try {
       const updatedProfile = await this.profileModel.findOneAndUpdate(
-        { _id: id },
+        { id: id },
         { ...updateProfileDto },
         { new: true },
       );
