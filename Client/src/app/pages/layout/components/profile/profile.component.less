@@ -1,48 +1,151 @@
 @import "@taiga-ui/core/styles/taiga-ui-local.less";
 
-#title {
-  color: var(--tui-primary);
-}
-.success {
-  position: relative;
-  color: var(--tui-success-fill);
-}
-
-.col-form {
+#profile_container{
+  width: 100%;
   height: 100%;
-  //   display: flex;
-  //   flex-direction: column;
-  width: 93%;
-
-  .account {
+  #profile_nav{
+    height: 6%;
+    margin: 0 2rem;
     display: flex;
-    flex: 1;
     justify-content: space-between;
+    border-bottom: 1px solid black;
+    .nav_left{
+      display: flex;
+      align-items: center;
+      p{
+        font: var(--tui-font-heading-4);
+        margin: 0;
+      }
+    }
+    .nav_right{
+      display: flex;
+      align-items: center;
+      .tui-space_bottom-3{
+       margin: 0;
+      }
+    }
   }
 
-  .ticks-labels {
-    color: var(--tui-text-02);
-    margin-top: 0.25rem;
-  }
+  // .nav_content {
+  //   border: 1px solid var(--tui-base-05);
+  //   margin: 0 2rem;
+  // }
 
-  #header-2 {
+  #profile_main{
+    height: 94%;
+    //background-color: chartreuse;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
+    margin: 0 2rem;
+    .line{
+      border: 1px solid #C3C8BB;
+      height: 95%;
+      margin: 1rem 0;
+    }
 
-  #action-buts {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: space-between;
+    .avatar_box{
+      width: 20%;
+      height: 97%;
+      //background-color: red;
+      padding: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      .avatar_userName{
+        font: var(--tui-font-heading-6);
+      }
+      .avatar_email{
+        font: var(--tui-font-text-xl);
+        font-weight: bold;
+        color: var(--tui-text-02);
+        margin: 0;
+      }
+    }
+    .profile_box{
+      width: 40%;
+      height: 97%;
+      //background-color: aqua;
+      padding: 1rem ;
+      .title{
+        font: var(--tui-font-heading-6);
+        margin: 0;
+      }
+
+      .col-form{
+        margin-top: 3rem;
+        p{
+          font: var(--tui-font-text-l);
+          font-weight: bold;
+          margin: 0 ;
+        }
+        .tui-form__row{
+          margin: 0 0 1.25rem 0;
+        }
+      }
+
+      .btn_update{
+        margin-top: 2rem;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+    }
+    .courses_box{
+      width: 40%;
+      height: 97%;
+      padding: 1rem;
+      .title{
+        font: var(--tui-font-heading-6);
+        margin: 0;
+      }
+    }
   }
 }
 
-.top-header {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
+
+
+
+
+
+
+
+
+// .col-form {
+//   height: 100%;
+//   //   display: flex;
+//   //   flex-direction: column;
+//   width: 93%;
+
+//   .account {
+//     display: flex;
+//     flex: 1;
+//     justify-content: space-between;
+//   }
+
+//   .ticks-labels {
+//     color: var(--tui-text-02);
+//     margin-top: 0.25rem;
+//   }
+
+//   #header-2 {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//     align-items: center;
+//   }
+
+//   #action-buts {
+//     margin-top: 2rem;
+//     display: flex;
+//     justify-content: space-between;
+//   }
+// }
+
+// .top-header {
+//   width: 100%;
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   align-items: center;
+// }

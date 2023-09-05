@@ -17,6 +17,23 @@ export class ProfileComponent {
   @Input('course') course: Course | null = null;
   @Input('profile') profile: Profile | null = null;
 
+  readonly genders = ['Male', 'Female'];
+  readonly countries = [
+    'VietNam',
+    'Japan',
+    'Korea',
+    'China',
+    'USA',
+    'UK',
+    'Germany',
+    'Italian',
+    'France',
+    'Spain',
+    'Portugal',
+    'Brazil',
+    'Holland',
+  ];
+
   courseForm: FormGroup = new FormGroup({
     _id: new FormControl({ value: '', disabled: true }, Validators.required),
     name: new FormControl('', Validators.required),
@@ -24,6 +41,9 @@ export class ProfileComponent {
     description: new FormControl('', Validators.required),
     price: new FormControl(null, Validators.required),
     image: new FormControl('', Validators.required),
+    gender: new FormControl('', Validators.required),
+    country: new FormControl('', Validators.required),
+    bio: new FormControl('', Validators.required),
   });
 
   ngOnInit(): void {

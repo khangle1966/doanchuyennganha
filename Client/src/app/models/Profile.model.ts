@@ -1,3 +1,5 @@
+import { Course } from './course.model';
+
 export interface Profile {
   id: string;
   userName: string;
@@ -8,8 +10,8 @@ export interface Profile {
   gender: string;
   bio: string;
   notifications: string[];
-  courses: string[];
-  ongoingCourses: string[];
-  completedCourses: string[];
+  courses: Course[];
+  ongoingCourses: Course[];
+  completedCourses: Course[];
   role: string;
 }
