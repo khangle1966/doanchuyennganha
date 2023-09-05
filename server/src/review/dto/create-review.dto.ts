@@ -2,9 +2,13 @@ export class CreateReviewDto {
 
     constructor(
         public quizId: string,
-        public userId: string,
+        public profileId: string,
         public score: number,
-        public answer: string[],
-        public quizBank: object,
+        public test: [
+            {
+                answer: string[],
+                quizBankId: string,
+            }
+        ]
     ) { }
 }

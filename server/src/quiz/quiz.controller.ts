@@ -16,12 +16,23 @@ import { Quiz } from './entities/quiz.entity';
 
 @Controller('v1/quiz')
 export class QuizController {
-  constructor(private readonly quizService: QuizService) {}
+  constructor(private readonly quizService: QuizService) { }
 
   @Get(':id')
   async getById(@Param('id') id: string) {
     try {
       const quiz = await this.quizService.getQuizById(id);
+      // console.log(quiz);
+      return quiz;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Get(':id/quiz')
+  async getQuizById(@Param('id') id: string) {
+    try {
+      const quiz = await this.quizService.getById(id);
       // console.log(quiz);
       return quiz;
     } catch (error) {

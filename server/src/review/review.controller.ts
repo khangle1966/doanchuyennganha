@@ -26,6 +26,19 @@ export class ReviewController {
       throw new HttpException(error.message, error.status);
     }
   }
+  @Put('redo/:id')
+  async redoReview(@Param('id') id: string, @Body() data: UpdateReviewDto) {
+    try {
+
+      const redo = await this.reviewService.redoReview(id, data);
+
+      return redo;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+
 
   @Get()
   async findAll() {

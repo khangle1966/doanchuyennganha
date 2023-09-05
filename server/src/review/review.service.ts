@@ -16,31 +16,78 @@ export class ReviewService {
   ) { }
 
 
-  async compareAnswer(data: any) {
+  async compareAnswer(data: CreateReviewDto) {
+
     try {
-      const quizBank = await this.quizBankModel.findById(data.quizBankId);
+      const { quizId, profileId, test } = data;
+      const quiz = await this.quizModel.findById({ _id: quizId });
+      const total = quiz.total;
       let score = 0;
-      for (let i = 0; i < data.quizBankId.length; i++) {
-        for (let i = 0; i < data.answer.length; i++) {
-          if (data.answer[i] === quizBank.answerList[i]) {
-            console.log(data.answer[i], quizBank.answerList[i]);
-            score += 10;
+      for (let i = 0; i < test.length; i++) {
+        const element = test[i];
+        const quizBankId = element.quizBankId;
+        const answer = element.answer;
+        const quizBankData = await this.quizBankModel.findById({ _id: quizBankId });
+        const correctAnswer = quizBankData.answerList;
+        let countCorrect = 0;
+        for (let j = 0; j < correctAnswer.length; j++) {
+          if (answer.includes(correctAnswer[j])) {
+            countCorrect++;
           }
         }
+        if (countCorrect === correctAnswer.length) {
+          //calculate score here know score = total / test.length
+          score += Math.round(total / test.length);
+        }
       }
-      const review = new this.reviewModel({
-        ...data,
+      const createReview = new this.reviewModel({
+        quizId,
+        profileId,
         score,
-        quizBank,
-        // quiz,
+        test
       });
-      return review.save();
-
-
+      await createReview.save();
+      return createReview;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
   }
+  async redoReview(id: string, data: UpdateReviewDto) {
+    try {
+      const { quizId, profileId, test } = data;
+      const quiz = await this.quizModel.findById({ _id: quizId });
+      const total = quiz.total;
+      let score = 0;
+      for (let i = 0; i < test.length; i++) {
+        const element = test[i];
+        const quizBankId = element.quizBankId;
+        const answer = element.answer;
+        const quizBankData = await this.quizBankModel.findById({ _id: quizBankId });
+        const correctAnswer = quizBankData.answerList;
+        let countCorrect = 0;
+        for (let j = 0; j < correctAnswer.length; j++) {
+          if (answer.includes(correctAnswer[j])) {
+            countCorrect++;
+          }
+        }
+        if (countCorrect === correctAnswer.length) {
+          //calculate score here know score = total / test.length
+          score += Math.round(total / test.length);
+        }
+      }
+      const redoReview = await this.reviewModel.findOneAndUpdate(
+        { _id: id },
+        { ...data, score },
+        { new: true },
+      );
+      return redoReview;
+    }
+    catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+
   async create(createReviewDto: CreateReviewDto): Promise<Review> {
     try {
       const review = new this.reviewModel(createReviewDto);

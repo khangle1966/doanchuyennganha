@@ -11,16 +11,24 @@ export class Review {
     quizId: string;
 
     @Prop({ required: true })
-    userId: string;
+    profileId: string;
 
     @Prop()
     score: number;
 
-    @Prop()
-    answer: string[];
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank' })
-    quizBankId: string;
+    @Prop(
+        {
+            type: [{
+                answer: [String],
+                quizBankId: { type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank' },
+            }]
+        }
+    )
+    test: {
+        answer: string[],
+        quizBankId: string,
+    }
 
 }
 
