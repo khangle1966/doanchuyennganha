@@ -8,7 +8,6 @@ import * as CourseAction from 'src/app/ngrx/actions/course.actions';
 import * as CartAction from 'src/app/ngrx/actions/cart.actions';
 import { CartState } from 'src/app/ngrx/states/cart.state';
 import { TuiAlertService } from '@taiga-ui/core';
-import { Cart } from 'src/app/models/Cart.model';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 
 @Component({
