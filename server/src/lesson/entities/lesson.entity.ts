@@ -21,6 +21,7 @@ export class Lesson {
 
   @Prop()
   description: string;
+
 }
 
 export const LessonSchema = SchemaFactory.createForClass(Lesson);

@@ -16,7 +16,7 @@ import { Observable, Subscription } from 'rxjs';
 import { QuestionService } from 'src/app/services/question/question.service';
 import * as QuestionActions from 'src/app/ngrx/actions/question.actions';
 import { QuestionState } from 'src/app/ngrx/states/question.state';
-import { QuizBank } from 'src/app/models/quizBank.model';
+// import { QuizBank } from 'src/app/models/quizBank.model';
 
 @Component({
   selector: 'app-quiz-editor',

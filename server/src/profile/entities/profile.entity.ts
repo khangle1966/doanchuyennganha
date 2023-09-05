@@ -38,6 +38,7 @@ export class Profile {
   @Prop()
   notifications: string[];
 
+
   @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId }],
     ref: 'Course',

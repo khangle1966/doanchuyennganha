@@ -6,7 +6,9 @@ export type QuizBankDocument = HydratedDocument<QuizBank>;
 
 @Schema({ timestamps: true })
 export class QuizBank {
-  @Prop({ required: true })
+
+
+  @Prop()
   question: string;
 
   @Prop()
@@ -17,6 +19,7 @@ export class QuizBank {
 
   @Prop()
   answerList: string[];
+
 }
 
 export const QuizBankSchema = SchemaFactory.createForClass(QuizBank);

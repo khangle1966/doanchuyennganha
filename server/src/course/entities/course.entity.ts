@@ -35,6 +35,7 @@ export class Course {
 
   // @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }])
   // students: string[];
+
   @Prop()
   author: string;
 }
