@@ -69,4 +69,5 @@ export const questionReducer = createReducer(
       createMessError: action.error,
     };
   })
+  //làm thêm delete
 );

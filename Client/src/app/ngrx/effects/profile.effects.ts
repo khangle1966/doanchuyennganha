@@ -3,14 +3,17 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import { catchError, map, of, switchMap } from 'rxjs';
+import { CourseService } from 'src/app/services/course/course.service';
 
 import * as ProfileActions from 'src/app/ngrx/actions/profile.actions';
+import * as CartActions from 'src/app/ngrx/actions/cart.actions';
 
 @Injectable()
 export class ProfileEffects {
   constructor(
     private action$: Actions,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private courseService: CourseService
   ) {}
 
   create$ = createEffect(() =>
@@ -36,7 +39,7 @@ export class ProfileEffects {
     this.action$.pipe(
       ofType(ProfileActions.get),
       switchMap((action) => {
-        return this.profileService.get(action.id, action.idToken);
+        return this.profileService.getById(action.id, action.idToken);
       }),
       map((profile) => {
         return ProfileActions.getSuccess({ profile });
@@ -53,15 +56,42 @@ export class ProfileEffects {
       switchMap((action) => {
         return this.profileService.updateProfile(
           action.idToken,
-          action.profile,
-          action.id
+          action.profile
         );
       }),
-      map(() => {
-        return ProfileActions.updateProfileSuccess();
+      map((profile) => {
+        if (profile == null) {
+          return ProfileActions.updateProfileFailure({
+            errorMessage: 'Update profile failed',
+          });
+        } else {
+          console.log(profile);
+          return ProfileActions.updateProfileSuccess({ profile });
+        }
+        // console.log(profile);
+        // return ProfileActions.updateProfileSuccess({ profile });
       }),
       catchError((error) => {
         return of(ProfileActions.updateProfileFailure({ errorMessage: error }));
+      })
+    )
+  );
+
+  buyCourse$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CartActions.buyCourse),
+      switchMap((action) => {
+        return this.courseService.buyCoure(
+          action.idToken,
+          action.courseId,
+          action.userId
+        );
+      }),
+      map((profile) => {
+        return CartActions.buyCourseSuccess({ profile });
+      }),
+      catchError((error) => {
+        return of(CartActions.buyCourseFailure({ buyErrorMessage: error }));
       })
     )
   );

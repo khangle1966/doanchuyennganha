@@ -31,7 +31,14 @@ export class ProfileService {
 
   async findOne(id: string): Promise<Profile> {
     try {
-      const profile = await this.profileModel.findOne({ id: id });
+      const profile = await this.profileModel
+        .findOne({ id: id })
+        .select('-createdAt -updatedAt -__v')
+        .populate(
+          'courses completedCourse ongoingCourse',
+          // 'ongoingCourse',
+          '-createdAt -updatedAt -__v ',
+        );
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
@@ -41,7 +48,7 @@ export class ProfileService {
   async update(id: string, updateProfileDto: UpdateProfileDto) {
     try {
       const updatedProfile = await this.profileModel.findOneAndUpdate(
-        { _id: id },
+        { id: id },
         { ...updateProfileDto },
         { new: true },
       );

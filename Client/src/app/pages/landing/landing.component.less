@@ -16,8 +16,9 @@
     transform: translateX(-50%);
     z-index: 1;
     margin-right: 6rem;
-    width: 658px;
-    height: 600px;
+    width: 41.125rem;
+    height: 37.5rem;
+
     background-image: url("../../../assets/images/avatar.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -38,9 +39,10 @@
 .box_green {
     width: 50%;
     height: 100%;
-    background-color: #2A6C0D;
+    background-color: var(--tui-primary);
     display: flex;
     flex-direction: column;
+    
 }
 .box_white {
     width: 50%;
@@ -52,35 +54,35 @@
     align-items: center;
 }
 
-.title{
-    width: 70%;
-    margin-left: 10%;
-    margin-top: 10%;
-    display: flex;
-    flex-direction: column;
 
-    .sologan{  
-        color: white;
-        font-size: 75px;
-        display: block;
-        width: 80%;
-        height: 50%;
-        line-height:80px;
-        letter-spacing: 4px;
+    .title-text{
         
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 95%;
+        width: 60%;
+        .sologan{
+            margin: 10% 0 0 10%;
+            color: white;
+            font-size: 75px;
+            display: block;
+            line-height:80px;
+            letter-spacing: 4px;
+     
+        }
+        
+        .description {
+            margin: 10% 0 0 10%;
+            font-size: 25px;
+            color: white;
+            line-height:40px;
+           
+        }
     }
-    
-    .description {
-
-        font-size: 25px;
-        width: 75%;
-        color: white;
-        line-height:40px;
-       
-    }
-    
     .btn { 
-        width: 70%;
+        margin-top: 10%;
+
         display: flex;
         justify-content: flex-end;
         transition-duration: 0.4s;
@@ -88,15 +90,16 @@
     .tui-space_bottom-3 {
         background-color: white;
     }     
-}
+
 
 .footer_green {
-    position: absolute;
+    height: 5%;
+    width: 60%;
     bottom: 0;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-end;
-    margin-left: 6rem;
+    align-items: center;
+    margin-left:10%;
     .location {
         display: flex;
         align-items: center;
@@ -144,7 +147,7 @@
 .container_subject {
     width: 60%;
     height: 70%;
-   
+   margin-top: 15%;
     display: flex;
     flex-direction: column;
     align-self: flex-end;
@@ -237,5 +240,25 @@
     }
 
  
+}
+
+@media (max-width: 1390px) {
+    .title-container{
+        .sologan{
+            font-size: 53px;
+        }
+        .description {
+            width: 55%;
+            height: 41%;
+            font-size: 18px;
+        }
+
+    }
+    .image-avatar {
+        width: 32.125rem;
+        height: 28.5rem;
+    }
+    
+
 }
 

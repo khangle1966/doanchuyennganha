@@ -71,17 +71,6 @@ export class CourseService {
       update,
       options,
     );
-
-    // const courseFilter = { _id: courseId };
-    // const courseUpdate = { $addToSet: { students: userId } };
-    // const courseOptions = { new: true, upsert: false };
-
-    // const course = await this.courseModel.findOneAndUpdate(
-    //   courseFilter,
-    //   courseUpdate,
-    //   courseOptions,
-    // );
-
     return profile;
   }
 
