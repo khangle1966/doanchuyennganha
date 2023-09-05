@@ -1,4 +1,4 @@
-import { Lesson } from "src/app/models/Lesson.model";
+import { Lesson } from "src/app/models/lesson.model";
 
 
 export interface LessonState{

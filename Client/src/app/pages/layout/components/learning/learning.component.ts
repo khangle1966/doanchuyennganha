@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Observable, Subscription, combineLatest } from 'rxjs';
-import { Lesson } from 'src/app/models/Lesson.model';
+import { Lesson } from 'src/app/models/lesson.model';
 import { LessonState } from 'src/app/ngrx/states/lessos.state';
 import * as LessonAction from 'src/app/ngrx/actions/lesson.actions';
 import { AuthState } from 'src/app/ngrx/states/auth.state';

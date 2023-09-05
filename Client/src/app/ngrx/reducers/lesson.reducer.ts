@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as LessonAction from '../actions/lesson.actions';
 import { LessonState } from '../states/lessos.state';
-import { Lesson } from 'src/app/models/Lesson.model';
+import { Lesson } from 'src/app/models/lesson.model';
 
 
 

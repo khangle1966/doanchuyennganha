@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Lesson } from '../../models/Lesson.model';
+import { Lesson } from '../../models/lesson.model';
 import { idToken } from '@angular/fire/auth';
 
 

@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { Lesson } from 'src/app/models/Lesson.model';
+import { Lesson } from 'src/app/models/lesson.model';
 import {
   TuiAlertService,
   TuiDialogContext,
