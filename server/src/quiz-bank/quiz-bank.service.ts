@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, Injectable } from '@nestjs/common';
 import { CreateQuizBankDto } from './dto/create-quiz-bank.dto';
 import { UpdateQuizBankDto } from './dto/update-quiz-bank.dto';

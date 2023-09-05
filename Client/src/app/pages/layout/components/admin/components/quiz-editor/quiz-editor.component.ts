@@ -12,7 +12,11 @@ import { Store } from '@ngrx/store';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 import { QuizState } from 'src/app/ngrx/states/quiz.state';
 import * as QuizActions from 'src/app/ngrx/actions/quiz.actions';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { QuestionService } from 'src/app/services/question/question.service';
+import * as QuestionActions from 'src/app/ngrx/actions/question.actions';
+import { QuestionState } from 'src/app/ngrx/states/question.state';
+import { QuizBank } from 'src/app/models/quizBank.model';
 
 @Component({
   selector: 'app-quiz-editor',
@@ -20,6 +24,23 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./quiz-editor.component.less'],
 })
 export class QuizEditorComponent implements OnInit, OnDestroy {
+  constructor(
+    @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
+    private router: Router,
+    private readonly dialogs: TuiDialogService,
+    private questionService: QuestionService,
+    private store: Store<{
+      auth: AuthState;
+      quiz: QuizState;
+      question: QuestionState;
+    }>
+  ) {
+    this.items.push({
+      caption: 'Current',
+      routerLink: this.router.url,
+    });
+  }
+
   //update func
   updateQuestionContent(event: Question) {
     if (this.selectedQuestion != null) {
@@ -80,27 +101,21 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
     this.selectedQuestion = question;
   }
 
+  //addquizbank xong nhét idquizbank vào addquestion
+  // addQuizBank() {}
+
   //add func
   questionList: Question[] = [];
+  // addQuestion(quizBankId: string)
   addQuestion() {
-    this.questionList.push({
-      _id: Date.now().toString(),
-      quizBank: {
-        _id: Date.now().toString() + 1,
-        img: '',
-        question: 'This is a question',
-        answerList: ['Answer 1'],
-        options: [
-          'Answer 1',
-          'Answer 2',
-          'Answer 3',
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut laboreet dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut laboreet dolore magna aliqua.',
-        ],
-      },
+    const newQuestion: any = {
       quizId: this.router.url.split('/')[4],
       ordinalNum: this.questionList.length,
-    });
-    console.log('questList: ', this.questionList);
+    };
+    this.questionList.push(newQuestion);
+    this.store.dispatch(
+      QuestionActions.create({ question: newQuestion, idToken: this.idToken })
+    );
   }
 
   order = new Map();
@@ -118,18 +133,12 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
   }
 
   deleteQuestion(i: number) {
-    this.questionList = this.questionList.filter((val, index) => {
-      if (index != i) {
-        return val;
-      } else {
-        if (this.selectedQuestion != null) {
-          if (val._id == this.selectedQuestion._id) {
-            this.selectedQuestion = null;
-          }
-        }
-        return;
-      }
-    });
+    this.store.dispatch(
+      QuestionActions.remove({
+        idToken: this.idToken,
+        questionId: this.questionList[i]._id,
+      })
+    );
     this.alerts
       .open('Delete question success !!!', { status: 'success' })
       .subscribe();
@@ -149,19 +158,8 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(
-    @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
-    private router: Router,
-    @Inject(TuiDialogService)
-    private readonly dialogs: TuiDialogService,
-    private store: Store<{ auth: AuthState; quiz: QuizState }>
-  ) {
-    this.items.push({
-      caption: 'Current',
-      routerLink: this.router.url,
-    });
-  }
   ngOnInit(): void {
+    // chỉnh cái trên xíu
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((idToken) => {
         if (idToken != '' && idToken != null && idToken != undefined) {
@@ -177,6 +175,12 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
       this.store.select('quiz', 'quiz').subscribe((quiz) => {
         if (quiz != null && quiz != undefined) {
           this.quiz = quiz;
+          this.store.dispatch(
+            QuestionActions.getAllByQuizId({
+              idToken: this.idToken,
+              quizId: quiz._id,
+            })
+          );
         }
       }),
       this.store.select('quiz', 'isGetLoading').subscribe((isGetLoading) => {
@@ -256,7 +260,20 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
           if (updateMessError != '') {
             this.alerts.open(updateMessError, { status: 'error' }).subscribe();
           }
-        })
+        }),
+      this.store.select('question', 'isGetSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('List questons success !!!!', { status: 'success' })
+            .subscribe();
+        }
+      }),
+      this.store.select('question', 'questions').subscribe((val) => {
+        if (val != null && val != undefined) {
+          this.questionList = val;
+          console.log('questionList: ', this.questionList);
+        }
+      })
     );
   }
   ngOnDestroy(): void {

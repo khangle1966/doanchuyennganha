@@ -1,13 +1,12 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpException,
-  HttpStatus,
   Put,
 } from '@nestjs/common';
 import { QuestionService } from './question.service';

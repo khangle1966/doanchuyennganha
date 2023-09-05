@@ -32,6 +32,8 @@ import { CartReducer } from './ngrx/reducers/cart.reducer';
 import { CourseEffect } from './ngrx/effects/course.effects';
 import { quizReducer } from './ngrx/reducers/quiz.reducer';
 import { QuizEffects } from './ngrx/effects/quiz.effects';
+import { questionReducer } from './ngrx/reducers/question.reducer';
+import { QuestionEffects } from './ngrx/effects/question.effects';
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   imports: [
@@ -46,6 +48,7 @@ import { QuizEffects } from './ngrx/effects/quiz.effects';
         course: CourseReducer,
         cart: CartReducer,
         quiz: quizReducer,
+        question: questionReducer,
       },
       {}
     ),
@@ -55,6 +58,7 @@ import { QuizEffects } from './ngrx/effects/quiz.effects';
       ProfileEffects,
       CourseEffect,
       QuizEffects,
+      QuestionEffects,
     ]),
     BrowserAnimationsModule,
     HttpClientModule,
