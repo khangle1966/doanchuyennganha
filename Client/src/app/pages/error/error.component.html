@@ -1,25 +1,18 @@
 <div id="error-container">
-  <div class="text-container">
-    <img
-      src="../../../assets/images/error.png"
-      style="width: 400px; height: 400px"
-    />
-    <div class="text">
-      <p style="font-size: 50px; margin: 0 0 2rem">404</p>
-      <p>Page not found</p>
-      <p style="font-size: small; font-weight: 100">
+  <div class="main">
+    <div class="img-container">
+      <img src="../../../assets/images/error.png" />
+    </div>
+    <div class="text-container">
+      <p class="number">404</p>
+      <p class="number">Page not found</p>
+      <p class=" description">
         The page you are looking for might have been removed, had its name
         changed, or is temporarily unavailable
       </p>
       <div class="btn">
-        <button
-          (click)="returnToPreviousPage()"
-          tuiButton
-          type="button"
-          appearance="outline"
-          class="tui-space_right-3 tui-space_bottom-3"
-          [size]="'l'"
-        >
+        <button (click)="returnToPreviousPage()" tuiButton type="button" appearance="outline"
+          class="tui-space_right-3 tui-space_bottom-3" [size]="'l'">
           <tui-svg src="tuiIconCornerUpLeft" style="color: white"></tui-svg>
           <span style="color: white">Return</span>
         </button>

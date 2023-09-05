@@ -31,10 +31,6 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
-        path: 'learning',
-        component: LearningComponent,
-      },
-      {
         path: 'browse',
         component: BrowseComponent,
       },
@@ -77,6 +73,10 @@ const routes: Routes = [
         path: 'home/course',
         component: CourseComponent,
       },
+      {
+        path:'learning/:id',
+        component: LearningComponent,
+      }
     ],
   },
 ];
