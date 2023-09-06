@@ -5,7 +5,10 @@ export interface QuestionState {
   isGetLoading: boolean;
   isGetSuccess: boolean;
   getMessError: string;
-  isCreateLoading: boolean;
-  isCreateSuccess: boolean;
+  isCreating: boolean;
+  isCreatedSuccess: boolean;
   createMessError: string;
+  isDeleting: boolean;
+  isDeleteSuccess: boolean;
+  deleteMessError: string;
 }

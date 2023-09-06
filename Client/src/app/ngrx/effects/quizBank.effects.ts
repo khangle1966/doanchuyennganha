@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, exhaustMap, map, of, switchMap } from 'rxjs';
 import * as QuizBankActions from '../actions/quizBank.actions';
 import { QuizBankService } from 'src/app/services/quizBank/quiz-bank.service';
 
@@ -11,37 +11,54 @@ export class QuizBankEffects {
     private action$: Actions
   ) {}
 
-  getQuizBanks$ = createEffect(() =>
+  add$ = createEffect(() =>
     this.action$.pipe(
-      ofType(QuizBankActions.getquizBankId),
-      exhaustMap((action) =>
-        this.quizBankService.getquizBankId(action.idToken, action.id).pipe(
-          map((quizBank) => QuizBankActions.getquizBankIdSuccess({ quizBank })),
-          catchError((error) =>
-            of(QuizBankActions.getquizBankIdFailure({ error }))
-          )
+      ofType(QuizBankActions.add),
+      switchMap((action) =>
+        this.quizBankService.add(action.idToken, action.quizBank).pipe(
+          map((newQuizBank) => {
+            if (newQuizBank != undefined && newQuizBank != null) {
+              console.log(newQuizBank);
+
+              if (newQuizBank.message) {
+                return QuizBankActions.addFailure({
+                  error: newQuizBank.message,
+                });
+              }
+              return QuizBankActions.addSuccess({ newQuizBank });
+            } else {
+              return QuizBankActions.addFailure({
+                error: 'add failure',
+              });
+            }
+          }),
+          catchError((error) => of(QuizBankActions.addFailure({ error })))
         )
       )
     )
   );
 
-  addQuizBank$ = createEffect(() =>
+  update$ = createEffect(() =>
     this.action$.pipe(
-      ofType(QuizBankActions.addquizBank),
+      ofType(QuizBankActions.update),
       exhaustMap((action) =>
-        this.quizBankService.addquizBank(action.idToken, action.quizBank).pipe(
+        this.quizBankService.update(action.idToken, action.quizBank).pipe(
           map((quizBank) => {
             if (quizBank != undefined && quizBank != null) {
-              return QuizBankActions.addquizBankSuccess();
+              if (quizBank.message) {
+                return QuizBankActions.updateFailure({
+                  error: quizBank.message,
+                });
+              }
+              console.log(quizBank);
+              return QuizBankActions.updateSuccess({ quizBank });
             } else {
-              return QuizBankActions.addquizBankFailure({
-                error: 'create failure',
+              return QuizBankActions.updateFailure({
+                error: 'update failure',
               });
             }
           }),
-          catchError((error) =>
-            of(QuizBankActions.addquizBankFailure({ error }))
-          )
+          catchError((error) => of(QuizBankActions.updateFailure({ error })))
         )
       )
     )

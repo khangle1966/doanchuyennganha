@@ -23,7 +23,7 @@ import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 export class QuestionEditorComponent implements OnInit {
   checkBoxList: Array<FormControl> = [];
   optionList: Array<FormControl> = [];
-  questionForm: FormGroup = new FormGroup({
+  quizBankForm: FormGroup = new FormGroup({
     _id: new FormControl({ value: '', disabled: true }, Validators.required),
     img: new FormControl('', Validators.required),
     question: new FormControl(''),
@@ -44,7 +44,7 @@ export class QuestionEditorComponent implements OnInit {
         }
         this.optionList.push(new FormControl(opt, Validators.required));
       });
-      this.questionForm = new FormGroup({
+      this.quizBankForm = new FormGroup({
         _id: new FormControl(
           { value: this.quest?.quizBank._id, disabled: true },
           Validators.required
@@ -67,7 +67,7 @@ export class QuestionEditorComponent implements OnInit {
     if (isSave) {
       let isValid = true;
       let ansCount = 0;
-      if (this.questionForm.invalid) {
+      if (this.quizBankForm.invalid) {
         this.dangerNotification(`Please correct this question form !!!`);
         isValid = false;
       }
@@ -110,7 +110,8 @@ export class QuestionEditorComponent implements OnInit {
           let newQuestion: Question = {
             ...this.quest,
             quizBank: {
-              ...this.questionForm.value,
+              ...this.quizBankForm.value,
+              _id: this.quest.quizBank._id,
               options: optList,
               answerList: ansList,
             },

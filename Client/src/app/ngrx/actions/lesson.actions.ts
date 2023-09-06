@@ -53,3 +53,4 @@ export const deleteFailure = createAction(
   '[Lesson] delete failure',
   props<{ error: string }>()
 );
+export const clearState = createAction('[Lesson] Clear State');

@@ -22,7 +22,7 @@ export const initualState: CourseState = {
   isGetSuccess: false,
   getErrMess: '',
 };
-export const CourseReducer = createReducer(
+export const courseReducer = createReducer(
   initualState,
   on(CourseActions.get, (state, action) => {
     console.log(action.type);
@@ -208,6 +208,30 @@ export const CourseReducer = createReducer(
       isGetLoading: false,
       isGetSuccess: false,
       getErrMess: action.getErrMess,
+    };
+    return newState;
+  }),
+  on(CourseActions.clearState, (state, action) => {
+    console.log(action.type);
+    let newState: CourseState = {
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrMess: '',
+      isLoading: false,
+      isSuccess: false,
+      isDelLoading: false,
+      isDelSuccess: false,
+      delErrMess: '',
+      isAddSuccess: false,
+      isAddLoading: false,
+      addErrMess: '',
+      isUpSuccess: false,
+      isUpLoading: false,
+      updateErrMess: '',
+      courseList: [],
+      courseDetail: <Course>{},
+      error: '',
     };
     return newState;
   })

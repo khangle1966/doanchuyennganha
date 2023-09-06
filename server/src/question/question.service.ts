@@ -28,7 +28,6 @@ export class QuestionService {
         .find()
         .select('-createdAt -updatedAt -__v')
         .populate('quizBank', '-createdAt -updatedAt -__v')
-        .populate('quizId', '-createdAt -updatedAt -__v')
         .exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);

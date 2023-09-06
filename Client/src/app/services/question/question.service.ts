@@ -26,17 +26,7 @@ export class QuestionService {
       }
     );
   }
-  update(idToken: string, question: Question) {
-    return this.httpClient.put<Question>(
-      environment.local_url + `question/${question._id}`,
-      question,
-      {
-        headers: new HttpHeaders({
-          Authorization: `Bearer ${idToken}`,
-        }),
-      }
-    );
-  }
+
   remove(idToken: string, id: string) {
     return this.httpClient.delete<Question>(
       environment.local_url + `question/${id}`,

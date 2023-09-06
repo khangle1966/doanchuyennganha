@@ -5,7 +5,7 @@ import { CourseService } from 'src/app/services/course/course.service';
 import * as CourseAction from '../actions/course.actions';
 
 @Injectable()
-export class CourseEffect {
+export class CourseEffects {
   constructor(private courseService: CourseService, private action$: Actions) {}
   get$ = createEffect(() =>
     this.action$.pipe(

@@ -79,3 +79,5 @@ export const getByUserFailure = createAction(
   '[Course] get by user failure',
   props<{ getErrMess: string }>()
 );
+
+export const clearState = createAction('[Course] Clear State');

@@ -3,123 +3,86 @@ import { createReducer, on } from '@ngrx/store';
 import { quizBankState } from '../states/quizBank.state';
 
 export const initialState: quizBankState = {
-  quizBank: [],
+  newQuizBank: null,
   isGetLoading: false,
   isGetSuccess: false,
   getMessError: '',
   isCreateLoading: false,
   isCreateSuccess: false,
   createMessError: '',
-  //   isUpdateLoading: false,
-  //   isUpdateSuccess: false,
-  //   updateMessError: '',
-  //   isDeleteLoading: false,
-  //   isDeleteSuccess: false,
-  //   deleteMessError: '',
+  isUpdateLoading: false,
+  isUpdateSuccess: false,
+  updateMessError: '',
 };
 
 export const quizBankReducer = createReducer(
   initialState,
-  on(QuizBankActions.getquizBankId, (state) => {
-    return {
-      ...state,
-      isGetLoading: true,
-      isGetSuccess: false,
-      getMessError: '',
-      quizBank: [],
-    };
-  }),
-  on(QuizBankActions.getquizBankIdSuccess, (state, action) => {
-    return {
-      ...state,
-      quizBank: action.quizBank,
-      isGetLoading: false,
-      isGetSuccess: true,
-    };
-  }),
-  on(QuizBankActions.getquizBankIdFailure, (state, action) => {
-    return {
-      ...state,
-      isGetLoading: false,
-      isGetSuccess: false,
-      getMessError: action.error,
-    };
-  }),
-
-  on(QuizBankActions.addquizBank, (state) => {
+  on(QuizBankActions.add, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
       isCreateLoading: true,
       isCreateSuccess: false,
       createMessError: '',
+      newQuizBank: null,
     };
   }),
-  on(QuizBankActions.addquizBankSuccess, (state) => {
+  on(QuizBankActions.addSuccess, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
       isCreateLoading: false,
       isCreateSuccess: true,
+      newQuizBank: action.newQuizBank,
     };
   }),
-  on(QuizBankActions.addquizBankFailure, (state, action) => {
+  on(QuizBankActions.addFailure, (state, action) => {
+    console.log(action.type);
     return {
       ...state,
       isCreateLoading: false,
       isCreateSuccess: false,
       createMessError: action.error,
     };
+  }),
+
+  on(QuizBankActions.update, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdateLoading: true,
+      isUpdateSuccess: false,
+      updateMessError: '',
+    };
+  }),
+  on(QuizBankActions.updateSuccess, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdateLoading: false,
+      isUpdateSuccess: true,
+    };
+  }),
+  on(QuizBankActions.updateFailure, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdateLoading: false,
+      isUpdateSuccess: false,
+      updateMessError: action.error,
+    };
+  }),
+  on(QuizBankActions.clearState, (state, action) => {
+    console.log(action.type);
+    return <quizBankState>{
+      ...state,
+      isCreateLoading: false,
+      isCreateSuccess: false,
+      createMessError: '',
+      isUpdateLoading: false,
+      isUpdateSuccess: false,
+      updateMessError: '',
+      newQuizBank: null,
+    };
   })
-
-  //   on(QuizBankActions.updateQuizBank, (state) => {
-  //     return {
-  //       ...state,
-  //       isUpdateLoading: true,
-  //       isUpdateSuccess: false,
-  //       updateMessError: '',
-  //     };
-  //   }),
-  //   on(QuizBankActions.updateQuizBankSuccess, (state) => {
-  //     return {
-  //       ...state,
-  //       isUpdateLoading: false,
-  //       isUpdateSuccess: true,
-  //     };
-  //   }),
-  //   on(QuizBankActions.updateQuizBankFailure, (state, action) => {
-  //     return {
-  //       ...state,
-  //       isUpdateLoading: false,
-  //       isUpdateSuccess: false,
-  //       updateMessError: action.error,
-  //     };
-  //   }),
-
-  //   on(QuizBankActions.deleteQuizBank, (state) => {
-  //     return {
-  //       ...state,
-  //       isDeleteLoading: true,
-  //       isDeleteSuccess: false,
-  //       deleteMessError: '',
-  //     };
-  //   }),
-  //   on(QuizBankActions.deleteQuizBankSuccess, (state, action) => {
-  //     const quizBankId = action.deletedQuizBank._id;
-  //     const updatedQuizBanks = state.quizBank.filter(
-  //       (quizBank) => quizBank._id !== quizBankId
-  //     );
-  //     return {
-  //       ...state,
-  //       quizBanks: updatedQuizBanks,
-  //       isDeleteLoading: false,
-  //       isDeleteSuccess: true,
-  //     };
-  //   }),
-  //   on(QuizBankActions.deleteQuizBankFailure, (state, action) => {
-  //     return {
-  //       ...state,
-  //       isDeleteLoading: false,
-  //       isDeleteSuccess: false,
-  //       deleteMessError: action.error,
-  //     };
-  //   })
 );

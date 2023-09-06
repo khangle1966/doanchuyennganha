@@ -11,14 +11,13 @@ import { Store } from '@ngrx/store';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 import { QuizState } from 'src/app/ngrx/states/quiz.state';
 import * as QuizActions from 'src/app/ngrx/actions/quiz.actions';
-import { Observable, Subscription } from 'rxjs';
-import { QuestionService } from 'src/app/services/question/question.service';
+import { Subscription } from 'rxjs';
 import * as QuestionActions from 'src/app/ngrx/actions/question.actions';
 import { QuestionState } from 'src/app/ngrx/states/question.state';
 import { quizBank } from 'src/app/models/quizBank.model';
 import { quizBankState } from 'src/app/ngrx/states/quizBank.state';
-// import { QuizBank } from 'src/app/models/quizBank.model';
 import * as quizBankActions from 'src/app/ngrx/actions/quizBank.actions';
+import { Question } from 'src/app/models/question.model';
 
 @Component({
   selector: 'app-quiz-editor',
@@ -26,12 +25,10 @@ import * as quizBankActions from 'src/app/ngrx/actions/quizBank.actions';
   styleUrls: ['./quiz-editor.component.less'],
 })
 export class QuizEditorComponent implements OnInit, OnDestroy {
-  quizBank!: quizBank;
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private router: Router,
     private readonly dialogs: TuiDialogService,
-    private questionService: QuestionService,
     private store: Store<{
       auth: AuthState;
       quiz: QuizState;
@@ -46,23 +43,14 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
   }
 
   //update func
-  updateQuestionContent(event: Question) {
+  updateQuizBankContent(event: Question) {
     if (this.selectedQuestion != null) {
-      this.questionList = this.questionList.map((quest) => {
-        if (quest._id === this.selectedQuestion?._id) {
-          return {
-            ...quest,
-            quizBank: event.quizBank,
-            ordinalNum: quest.ordinalNum,
-          };
-        } else {
-          return quest;
-        }
-      });
-      this.alerts
-        .open('Question updated success !!!', { status: 'success' })
-        .subscribe();
-      console.log('lesonList: ', this.questionList);
+      this.store.dispatch(
+        quizBankActions.update({
+          idToken: this.idToken,
+          quizBank: event.quizBank,
+        })
+      );
     }
   }
 
@@ -105,46 +93,31 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
     this.selectedQuestion = question;
   }
 
-  //addquizbank xong nhét idquizbank vào addquestion
-  // addquizBank() {}
-
-  // addQuestion(quizBankId: string)
-  // addQuestion() {
-  //   const newQuestion: any = {
-  //     quizId: this.router.url.split('/')[4],
-  //     ordinalNum: this.questionList.length,
-  //   };
-  //   this.questionList.push(newQuestion);
-  //   this.store.dispatch(
-  //     QuestionActions.create({ question: newQuestion, idToken: this.idToken })
-  //   );
-  // }
-  addquizBank() {
+  //add xong nhét idquizbank vào addquestion
+  add() {
     const newQuizBank: any = {
       question: 'Your question here',
-      options: ['Option 1', 'Option 2'],
-      answerList: ['0'],
+      options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+      answerList: ['Option 1'],
       img: '',
     };
     this.store.dispatch(
-      quizBankActions.addquizBank({
+      quizBankActions.add({
         quizBank: newQuizBank,
         idToken: this.idToken,
       })
     );
-    this.addQuestion(newQuizBank);
   }
 
   //add func
   questionList: Question[] = [];
 
   addQuestion(quizBank: quizBank) {
-    const newQuestion: Question = {
+    const newQuestion: any = {
       questionText: 'Your question here',
       correctOption: 0,
-      quizBank: quizBank,
-      _id: '',
-      ordinalNum: 0,
+      quizBank: quizBank._id,
+      ordinalNum: this.questionList.length + 1,
       quizId: this.router.url.split('/')[4],
     };
     this.store.dispatch(
@@ -153,15 +126,6 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
         idToken: this.idToken,
       })
     );
-  }
-
-  order = new Map();
-  updateOrdinalList() {
-    // console.log('order change: ', this.order);
-    this.order.forEach((val, i) => {
-      this.questionList[i].ordinalNum = val;
-    });
-    console.log(this.questionList);
   }
 
   //del func
@@ -176,10 +140,6 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
         questionId: this.questionList[i]._id,
       })
     );
-    this.alerts
-      .open('Delete question success !!!', { status: 'success' })
-      .subscribe();
-    console.log(this.questionList);
   }
 
   isPreview: boolean = true;
@@ -187,6 +147,7 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
   idToken = '';
   subscriptions: Subscription[] = [];
   isGetLoading: boolean = false;
+  isGettingQuestions: boolean = false;
 
   items = [
     {
@@ -196,7 +157,6 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
-    // chỉnh cái trên xíu
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((idToken) => {
         if (idToken != '' && idToken != null && idToken != undefined) {
@@ -233,22 +193,6 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
       this.store.select('quiz', 'getMessError').subscribe((getMessError) => {
         if (getMessError != '') {
           this.alerts.open(getMessError, { status: 'error' }).subscribe();
-          if (getMessError == 'Quiz is undefined or null') {
-            let newQuiz = {
-              content: `Bài quiz tổng hợp kiến thức đã học của course !!!`,
-              courseId: this.router.url.split('/')[4],
-              duration: 20,
-              total: 100,
-              title: 'This is a quiz content !!!!',
-              passCond: 80,
-            };
-            this.store.dispatch(
-              QuizActions.create({
-                idToken: this.idToken,
-                quiz: newQuiz as Quiz,
-              })
-            );
-          }
         }
       }),
       this.store
@@ -298,22 +242,74 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
             this.alerts.open(updateMessError, { status: 'error' }).subscribe();
           }
         }),
-      this.store.select('quizBank', 'quizBank').subscribe((quizBank) => {
-        if (quizBank != null && quizBank != undefined) {
-          quizBank = quizBank;
-          this.handleQuizBankLoadSuccess();
+      this.store.select('question', 'isDeleting').subscribe((val) => {
+        if (val) {
+          this.alerts
+
+            .open('Delete question success !!!', { status: 'success' })
+            .subscribe();
+          this.store.dispatch(
+            QuestionActions.getAllByQuizId({
+              idToken: this.idToken,
+              quizId: this.quiz._id,
+            })
+          );
         }
       }),
-      this.store
-        .select('quizBank', 'isCreateSuccess')
-        .subscribe((isCreateSuccess) => {
-          if (isCreateSuccess) {
-            this.alerts
-              .open('Create quizBank success !!!', { status: 'success' })
-              .subscribe();
-            this.handleQuizBankCreateSuccess();
-          }
-        }),
+      this.store.select('question', 'isCreatedSuccess').subscribe((val) => {
+        if (val) {
+          console.log('alo');
+          this.alerts
+            .open('Create question success !!!', { status: 'success' })
+            .subscribe();
+          this.store.dispatch(
+            QuestionActions.getAllByQuizId({
+              idToken: this.idToken,
+              quizId: this.quiz._id,
+            })
+          );
+        }
+      }),
+      this.store.select('question', 'isGetLoading').subscribe((val) => {
+        this.isGettingQuestions = val;
+      }),
+      this.store.select('question', 'isGetSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('List questons success !!!!', { status: 'success' })
+            .subscribe();
+        }
+      }),
+      this.store.select('question', 'questions').subscribe((val) => {
+        if (val != null && val != undefined) {
+          this.questionList = [...val];
+          console.log('questionList: ', this.questionList);
+        }
+      }),
+      this.store.select('quizBank', 'newQuizBank').subscribe((newQuizBank) => {
+        if (newQuizBank != null) {
+          this.alerts.open('Add question success !!!', { status: 'success' });
+          this.addQuestion(newQuizBank);
+        }
+      }),
+      this.store.select('quizBank', 'isUpdateSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Update question success !!!', { status: 'success' })
+            .subscribe();
+          this.store.dispatch(
+            QuestionActions.getAllByQuizId({
+              idToken: this.idToken,
+              quizId: this.quiz._id,
+            })
+          );
+        }
+      }),
+      this.store.select('quizBank', 'updateMessError').subscribe((err) => {
+        if (err != null && err != undefined && err != '') {
+          this.alerts.open(err, { status: 'error' }).subscribe();
+        }
+      }),
       this.store
         .select('quizBank', 'createMessError')
         .subscribe((createMessError) => {
@@ -322,25 +318,12 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
           }
         })
     );
-
-    this.store.select('question', 'isGetSuccess').subscribe((val) => {
-      if (val) {
-        this.alerts
-          .open('List questons success !!!!', { status: 'success' })
-          .subscribe();
-      }
-    }),
-      this.store.select('question', 'questions').subscribe((val) => {
-        if (val != null && val != undefined) {
-          this.questionList = val;
-          console.log('questionList: ', this.questionList);
-        }
-      });
   }
-  private handleQuizBankLoadSuccess() {}
-  private handleQuizBankCreateSuccess() {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.store.dispatch(quizBankActions.clearState());
+    this.store.dispatch(QuizActions.clearState());
+    this.store.dispatch(QuestionActions.clearState());
   }
 }

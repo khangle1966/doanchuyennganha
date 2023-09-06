@@ -62,7 +62,10 @@ export class LessonComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    console.log('destroy');
+    this.subscriptions.forEach((val) => {
+      val.unsubscribe();
+    });
+    this.store.dispatch(LessonActions.clearState());
   }
   ngOnInit(): void {
     this.subscriptions.push(
@@ -216,7 +219,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       courseId: this.router.url.split('/')[4],
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      ordinalNum: this.lessonList.length,
+      ordinalNum: this.lessonList.length + 1,
     };
     this.store.dispatch(
       LessonActions.create({

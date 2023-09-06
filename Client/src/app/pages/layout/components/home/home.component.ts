@@ -61,7 +61,6 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   constructor(
     private router: Router,
-    private profileService: ProfileService,
     private store: Store<{
       profile: ProfileState;
       auth: AuthState;
@@ -91,7 +90,7 @@ export class HomeComponent implements OnDestroy, OnInit {
           this.courses = profile.courses || [];
           this.ongoingCourses = profile.ongoingCourses || [];
           this.completedCourses = profile.completedCourses || [];
-          console.log(profile);
+          console.log('profile: ', profile);
         }
       }),
 

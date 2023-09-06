@@ -1,87 +1,156 @@
 <div id="quiz-editor-container">
-  <div id="left-side">
-    <tui-breadcrumbs size="l" class="breadcrumbs">
-      <ng-container *ngFor="let item of items">
-        <a *tuiItem tuiLink [routerLink]="item.routerLink">
-          {{ item.caption }}
-        </a>
-      </ng-container>
-    </tui-breadcrumbs>
-    <div class="top">
-      <div class="tui-text_h6 title">Question List</div>
-      <div class="btn-grp">
-        <button size="m" tuiButton type="button" (click)="editQuiz()">
-          Edit Quiz Info
-        </button>
-        <button size="m" tuiIconButton type="button" icon="tuiIconPlusLarge" (click)="addquizBank()" [tuiHint]="tooltip"
-          tuiHintAppearance="onDark" tuiHintDirection="right"></button>
-        <ng-template #tooltip>
-          <div>Add new question</div>
-        </ng-template>
+  <tui-loader
+    id="left-loader"
+    [inheritColor]="true"
+    [overlay]="true"
+    [showLoader]="isGettingQuestions"
+  >
+    <div id="left-side">
+      <tui-breadcrumbs size="l" class="breadcrumbs">
+        <ng-container *ngFor="let item of items">
+          <a *tuiItem tuiLink [routerLink]="item.routerLink">
+            {{ item.caption }}
+          </a>
+        </ng-container>
+      </tui-breadcrumbs>
+      <div class="top">
+        <div class="tui-text_h6 title">Question List</div>
+        <div class="btn-grp">
+          <button size="m" tuiButton type="button" (click)="editQuiz()">
+            Edit Quiz Info
+          </button>
+          <button
+            size="m"
+            tuiIconButton
+            type="button"
+            icon="tuiIconPlusLarge"
+            (click)="add()"
+            [tuiHint]="tooltip"
+            tuiHintAppearance="onDark"
+            tuiHintDirection="right"
+          ></button>
+          <ng-template #tooltip>
+            <div>Add new question</div>
+          </ng-template>
+        </div>
       </div>
-    </div>
-    <div id="question-list">
-      <tui-scrollbar class="scrollbar">
-        <tui-tiles class="tiles" [(order)]="order" (orderChange)="updateOrdinalList()">
-          <tui-tile *ngFor="let question of questionList; let index = index" class="tile"
-            [style.order]="order.get(index)">
-            <tui-island [hoverable]="true" [ngClass]="[
-                selectedQuestion?._id === question?._id ? 'selected' : ''
-              ]">
-              <div class="tui-island__content" (click)="selectQuestion(question)">
-                <figure class="tui-island__figure">
-                  <div class="some-figure">
-                    <tui-svg src="tuiIconDragLarge" tuiTileHandle></tui-svg>
-                  </div>
-                </figure>
-                <h3 class="tui-island__title">
-                  {{ "Question No." + (index + 1) }}
-                </h3>
-              </div>
-              <button appearance="none" size="m" tuiButton type="button" class="tui-island__footer-button"
-                (click)="showWarningDialog(template)">
-                Delete
-              </button>
-            </tui-island>
+      <div id="question-list">
+        <tui-scrollbar
+          class="scrollbar"
+          *ngIf="this.questionList.length > 0; else emptyContent"
+        >
+          <tui-island
+            *ngFor="let question of questionList; let index = index"
+            [hoverable]="true"
+            [ngClass]="[
+              selectedQuestion?._id === question?._id ? 'selected' : ''
+            ]"
+          >
+            <div class="tui-island__content" (click)="selectQuestion(question)">
+              <figure class="tui-island__figure">
+                <div class="some-figure">
+                  <tui-svg src="tuiIconDragLarge"></tui-svg>
+                </div>
+              </figure>
+              <h3 class="tui-island__title">
+                {{ "Question No." + (index + 1) }}
+              </h3>
+            </div>
+            <button
+              appearance="none"
+              size="m"
+              tuiButton
+              type="button"
+              class="tui-island__footer-button"
+              (click)="showWarningDialog(template)"
+            >
+              Delete
+            </button>
             <ng-template #template let-observer>
               <p>Are you sure to this delete this question ?</p>
 
-              <button size="m" tuiButton type="button" class="tui-space_right-3" appearance="secondary-destructive"
-                (click)="observer.complete()">
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                class="tui-space_right-3"
+                appearance="secondary-destructive"
+                (click)="observer.complete()"
+              >
                 Cancel
               </button>
-              <button size="m" tuiButton type="button" appearance="secondary"
-                (click)="deleteQuestion(index); observer.complete()">
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                appearance="secondary"
+                (click)="deleteQuestion(index); observer.complete()"
+              >
                 Confirm
               </button>
             </ng-template>
-          </tui-tile>
-        </tui-tiles>
-      </tui-scrollbar>
+          </tui-island>
+        </tui-scrollbar>
+        <ng-template #emptyContent>
+          <div class="empty-content tui-text_body-xl">
+            Click (+) button to add new lesson
+          </div>
+        </ng-template>
+      </div>
     </div>
-  </div>
-  <tui-loader id="right-loader" [inheritColor]="true" [overlay]="true" [showLoader]="isGetLoading">
-    <div id="right-side" *ngIf="this.selectedQuestion == null; else questionContent">
+  </tui-loader>
+  <tui-loader
+    id="right-loader"
+    [inheritColor]="true"
+    [overlay]="true"
+    [showLoader]="isGetLoading"
+  >
+    <div
+      id="right-side"
+      *ngIf="this.selectedQuestion == null; else questionContent"
+    >
       <div class="top">
         <div class="tui-text_h6 title">Quiz Content</div>
         <div class="btn-grp">
-          <button size="m" tuiButton type="button" appearance="secondary" (click)="isPreview = !isPreview"
-            *ngIf="isPreview; else previewBtn">
+          <button
+            size="m"
+            tuiButton
+            type="button"
+            appearance="secondary"
+            (click)="isPreview = !isPreview"
+            *ngIf="isPreview; else previewBtn"
+          >
             Editor
           </button>
           <ng-template #previewBtn>
-            <button size="m" tuiButton type="button" (click)="isPreview = !isPreview" appearance="secondary">
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              (click)="isPreview = !isPreview"
+              appearance="secondary"
+            >
               Preview
             </button>
           </ng-template>
-          <button size="m" tuiButton type="button" (click)="save()" [disabled]="isSave">
+          <button
+            size="m"
+            tuiButton
+            type="button"
+            (click)="save()"
+            [disabled]="isSave"
+          >
             Save
           </button>
         </div>
       </div>
       <div id="quiz-form">
-        <app-quiz-form [quiz]="this.quiz" [isPreview]="this.isPreview" [isSave]="this.isSave"
-          (save)="updateQuizContent($event)"></app-quiz-form>
+        <app-quiz-form
+          [quiz]="this.quiz"
+          [isPreview]="this.isPreview"
+          [isSave]="this.isSave"
+          (save)="updateQuizContent($event)"
+        ></app-quiz-form>
       </div>
     </div>
     <ng-template #questionContent>
@@ -89,23 +158,45 @@
         <div class="top">
           <div class="tui-text_h6 title">Question Content</div>
           <div class="btn-grp">
-            <button size="m" tuiButton type="button" appearance="secondary" (click)="isPreview = !isPreview"
-              *ngIf="isPreview; else previewBtn">
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              appearance="secondary"
+              (click)="isPreview = !isPreview"
+              *ngIf="isPreview; else previewBtn"
+            >
               Editor
             </button>
             <ng-template #previewBtn>
-              <button size="m" tuiButton type="button" (click)="isPreview = !isPreview" appearance="secondary">
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                (click)="isPreview = !isPreview"
+                appearance="secondary"
+              >
                 Preview
               </button>
             </ng-template>
-            <button size="m" tuiButton type="button" (click)="save()" [disabled]="isSave">
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              (click)="save()"
+              [disabled]="isSave"
+            >
               Save
             </button>
           </div>
         </div>
         <div id="quest-editor">
-          <app-question-editor [question]="this.selectedQuestion" [isPreview]="isPreview" [isSave]="isSave"
-            (save)="updateQuestionContent($event)"></app-question-editor>
+          <app-question-editor
+            [question]="this.selectedQuestion"
+            [isPreview]="isPreview"
+            [isSave]="isSave"
+            (save)="updateQuizBankContent($event)"
+          ></app-question-editor>
         </div>
       </div>
     </ng-template>
