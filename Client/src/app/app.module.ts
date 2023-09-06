@@ -32,8 +32,10 @@ import { CartReducer } from './ngrx/reducers/cart.reducer';
 import { CourseEffect } from './ngrx/effects/course.effects';
 import { quizReducer } from './ngrx/reducers/quiz.reducer';
 import { QuizEffects } from './ngrx/effects/quiz.effects';
-import { LessonReducer } from './ngrx/reducers/lesson.reducer';
+import { lessonReducer } from './ngrx/reducers/lesson.reducer';
 import { LessonEffects } from './ngrx/effects/lesson.effects';
+import { questionReducer } from './ngrx/reducers/question.reducer';
+import { QuestionEffects } from './ngrx/effects/question.effects';
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   imports: [
@@ -47,8 +49,9 @@ import { LessonEffects } from './ngrx/effects/lesson.effects';
         profile: profileReducer,
         course: CourseReducer,
         cart: CartReducer,
+        lesson: lessonReducer,
         quiz: quizReducer,
-        lesson: LessonReducer,
+        question: questionReducer,
       },
       {}
     ),
@@ -58,6 +61,7 @@ import { LessonEffects } from './ngrx/effects/lesson.effects';
       ProfileEffects,
       CourseEffect,
       QuizEffects,
+      QuestionEffects,
       LessonEffects,
     ]),
     BrowserAnimationsModule,

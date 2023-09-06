@@ -5,7 +5,7 @@ import { Quiz, QuizDocument } from './entities/quiz.entity';
 
 @Injectable()
 export class QuizService {
-  constructor(@InjectModel(Quiz.name) private quizModel: Model<QuizDocument>) {}
+  constructor(@InjectModel(Quiz.name) private quizModel: Model<QuizDocument>) { }
 
   async getQuizById(id: string): Promise<Quiz> {
     try {
@@ -24,6 +24,14 @@ export class QuizService {
     }
   }
 
+  async getById(id: string): Promise<Quiz> {
+    try {
+      const quiz = await this.quizModel.findById(id).exec();
+      return quiz;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
   async createQuiz(quizData: Quiz): Promise<Quiz> {
     try {
       const newQuiz = new this.quizModel(quizData);

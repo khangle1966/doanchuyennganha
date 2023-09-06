@@ -8,18 +8,14 @@ export type QuestionDocument = HydratedDocument<Question>;
 
 @Schema({ timestamps: true })
 export class Question {
-
-
-
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Quiz', required: true })
   quizId: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank', required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'QuizBank' })
   quizBank: string;
 
   @Prop()
   ordinalNum: number;
-
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);

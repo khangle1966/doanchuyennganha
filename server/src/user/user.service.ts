@@ -8,7 +8,7 @@ import { Profile } from 'src/profile/entities/profile.entity';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) { }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
@@ -30,8 +30,7 @@ export class UserService {
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     try {
-      console.log(updateUserDto);
-      console.log(id);
+
       const updatedUser = await this.userModel.findOneAndUpdate(
         { uid: id },
         { ...updateUserDto },

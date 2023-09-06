@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, Injectable } from '@nestjs/common';
 import { CreateQuizBankDto } from './dto/create-quiz-bank.dto';
 import { UpdateQuizBankDto } from './dto/update-quiz-bank.dto';
@@ -9,7 +10,7 @@ import { Model } from 'mongoose';
 export class QuizBankService {
   constructor(
     @InjectModel(QuizBank.name) private quizBankModel: Model<QuizBank>,
-  ) {}
+  ) { }
 
   async create(createQuizBankDto: CreateQuizBankDto): Promise<QuizBank> {
     try {

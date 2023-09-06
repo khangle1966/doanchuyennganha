@@ -18,7 +18,7 @@ export const initualState: LessonState = {
   deleteMessError: '',
 };
 
-export const LessonReducer = createReducer(
+export const lessonReducer = createReducer(
   initualState,
   on(LessonActions.getAllByCourseId, (state, action) => {
     console.log(action.type);

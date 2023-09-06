@@ -6,13 +6,15 @@ import { initualState } from './user.reducer';
 
 export const initialState: ProfileState = {
   profile: <Profile>{},
-  idToken: '',
   isLoading: false,
   isSuccess: false,
   errorMessage: '',
   isGetLoading: false,
   isGetSuccess: false,
   getErrorMessage: '',
+  isUpdating: false,
+  isUpdateSuccess: false,
+  updateErrorMessage: '',
 };
 
 export const profileReducer = createReducer(
@@ -75,6 +77,49 @@ export const profileReducer = createReducer(
       isGetLoading: false,
       isGetSuccess: false,
       getErrorMessage: errorMessage,
+    };
+  }),
+  on(ProfileAction.clearState, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isLoading: false,
+      isSuccess: false,
+      errorMessage: '',
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrorMessage: '',
+      isUpdating: false,
+      isUpdateSuccess: false,
+      updateErrorMessage: '',
+    };
+  }),
+  on(ProfileAction.updateProfile, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdating: true,
+      isUpdateSuccess: false,
+      updateErrorMessage: '',
+    };
+  }),
+
+  on(ProfileAction.updateProfileSuccess, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdating: false,
+      isUpdateSuccess: true,
+    };
+  }),
+
+  on(ProfileAction.updateProfileFailure, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdating: false,
+      isUpdateSuccess: false,
+      updateErrorMessage: action.errorMessage,
     };
   })
 );

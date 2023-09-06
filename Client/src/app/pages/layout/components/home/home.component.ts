@@ -51,7 +51,7 @@ export class HomeComponent implements OnDestroy, OnInit {
   profile$: Observable<Profile> = this.store.select('profile', 'profile');
   user$: Observable<UserInfo> = this.store.select('user', 'user');
 
-  state: string | undefined;
+  state: string | undefined = '';
   subscriptions: Subscription[] = [];
   courses: Course[] = [];
   ongoingCourses: Course[] = [];
