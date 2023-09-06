@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Quiz } from 'src/app/models/quiz.model';
 
 @Component({
@@ -30,5 +31,13 @@ export class QuizContentComponent {
     } else {
       this.quiz = <Quiz>{};
     }
+  }
+  constructor(
+    private router: Router,
+  ) { }
+
+  toDoQuiz() {
+    this.router.navigate([`/base/home/course/${this.quiz.courseId}/quiz/${this.quiz._id}`]);
+    console.log(this.quiz._id);
   }
 }

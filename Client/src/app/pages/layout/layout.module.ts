@@ -29,6 +29,7 @@ import { LearningComponent } from './components/learning/learning.component';
 import { LessonContentComponent } from './components/learning/components/lesson-content/lesson-content.component';
 import { QuizContentComponent } from './components/learning/components/quiz-content/quiz-content.component';
 
+
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -63,4 +64,4 @@ import { QuizContentComponent } from './components/learning/components/quiz-cont
     QuillModule.forRoot(),
   ],
 })
-export class LayoutModule {}
+export class LayoutModule { }
