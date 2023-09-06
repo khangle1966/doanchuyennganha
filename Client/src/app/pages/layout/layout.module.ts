@@ -28,6 +28,7 @@ import { QuizFormComponent } from './components/admin/components/quiz-editor/com
 import { LearningComponent } from './components/learning/learning.component';
 import { QuizTestComponent } from './components/learning/components/quiz-test/quiz-test.component';
 
+
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -53,6 +54,7 @@ import { QuizTestComponent } from './components/learning/components/quiz-test/qu
     QuizFormComponent,
     LearningComponent,
     QuizTestComponent,
+
   ],
   imports: [
     CommonModule,
@@ -61,4 +63,4 @@ import { QuizTestComponent } from './components/learning/components/quiz-test/qu
     QuillModule.forRoot(),
   ],
 })
-export class LayoutModule {}
+export class LayoutModule { }

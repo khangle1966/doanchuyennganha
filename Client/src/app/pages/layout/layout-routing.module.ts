@@ -15,6 +15,7 @@ import { QuizEditorComponent } from './components/admin/components/quiz-editor/q
 import { CourseComponent } from './components/course/course.component';
 import { RoleGuard } from 'src/app/guards/role.guard';
 import { LearningComponent } from './components/learning/learning.component';
+import { ReviewComponent } from './components/review/review.component';
 
 const routes: Routes = [
   {
@@ -74,8 +75,12 @@ const routes: Routes = [
         component: CourseComponent,
       },
       {
-        path:'learning/:id',
+        path: 'learning/:id',
         component: LearningComponent,
+      },
+      {
+        path: 'review',
+        component: ReviewComponent
       }
     ],
   },
@@ -85,4 +90,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }

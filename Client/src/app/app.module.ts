@@ -36,6 +36,8 @@ import { quizReducer } from './ngrx/reducers/quiz.reducer';
 import { QuizEffects } from './ngrx/effects/quiz.effects';
 import { questionReducer } from './ngrx/reducers/question.reducer';
 import { QuestionEffects } from './ngrx/effects/question.effects';
+import { ReviewReducer } from './ngrx/reducers/review.reducer';
+import { ReviewEffect } from './ngrx/effects/review.effects';
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   imports: [
@@ -52,6 +54,7 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
         lesson: LessonReducer,
         quiz: quizReducer,
         question: questionReducer,
+        review: ReviewReducer,
       },
       {}
     ),
@@ -63,6 +66,7 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
       LessonEffect,
       QuizEffects,
       QuestionEffects,
+      ReviewEffect,
     ]),
     BrowserAnimationsModule,
     HttpClientModule,
@@ -78,4 +82,4 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
