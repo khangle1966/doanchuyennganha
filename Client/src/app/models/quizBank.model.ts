@@ -1,4 +1,4 @@
-export interface QuizBank {
+export interface quizBank {
   _id: string;
   img: string;
   question: string;

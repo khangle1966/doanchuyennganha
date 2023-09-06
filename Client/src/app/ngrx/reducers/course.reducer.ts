@@ -18,12 +18,15 @@ export const initualState: CourseState = {
   courseList: [],
   courseDetail: <Course>{},
   error: '',
+  isGetLoading: false,
+  isGetSuccess: false,
+  getErrMess: '',
 };
-export const CourseReducer = createReducer(
+export const courseReducer = createReducer(
   initualState,
   on(CourseActions.get, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isLoading: true,
       isSuccess: false,
@@ -34,7 +37,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.getSuccess, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isLoading: false,
       isSuccess: true,
@@ -45,7 +48,7 @@ export const CourseReducer = createReducer(
 
   on(CourseActions.getFailure, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isLoading: false,
       isSuccess: false,
@@ -57,7 +60,7 @@ export const CourseReducer = createReducer(
 
   on(CourseActions.getCourseDetail, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isLoading: true,
       isSuccess: false,
@@ -68,7 +71,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.getCourseDetailSuccess, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isLoading: false,
       isSuccess: true,
@@ -78,7 +81,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.getCourseDetailFailure, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isLoading: false,
       isSuccess: false,
@@ -89,7 +92,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.create, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isAddLoading: true,
       isAddSuccess: false,
@@ -99,7 +102,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.createSuccess, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isAddLoading: false,
       isAddSuccess: true,
@@ -108,7 +111,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.createFailure, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isAddLoading: false,
       isAddSuccess: false,
@@ -118,7 +121,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.update, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isUpLoading: true,
       isUpSuccess: false,
@@ -128,7 +131,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.updateSuccess, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isUpLoading: false,
       isUpSuccess: true,
@@ -137,7 +140,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.updateFailure, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isUpLoading: false,
       isUpSuccess: false,
@@ -147,7 +150,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.remove, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isDelLoading: true,
       isDelSuccess: false,
@@ -157,7 +160,7 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.removeSuccess, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isDelLoading: false,
       isDelSuccess: true,
@@ -166,11 +169,69 @@ export const CourseReducer = createReducer(
   }),
   on(CourseActions.removeFailure, (state, action) => {
     console.log(action.type);
-    let newState = {
+    let newState: CourseState = {
       ...state,
       isDelLoading: false,
       isDelSuccess: false,
       delErrMess: action.error,
+    };
+    return newState;
+  }),
+
+  //get by user
+  on(CourseActions.getByUser, (state, action) => {
+    console.log(action.type);
+    let newState = {
+      ...state,
+      isGetLoading: true,
+      isGetSuccess: false,
+      getErrMess: '',
+    };
+    return newState;
+  }),
+
+  on(CourseActions.getByUserSuccess, (state, action) => {
+    console.log(action.type);
+    let newState = {
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: true,
+      courseList: action.courseList,
+    };
+    return newState;
+  }),
+
+  on(CourseActions.getByUserFailure, (state, action) => {
+    console.log(action.type);
+    let newState = {
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrMess: action.getErrMess,
+    };
+    return newState;
+  }),
+  on(CourseActions.clearState, (state, action) => {
+    console.log(action.type);
+    let newState: CourseState = {
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: false,
+      getErrMess: '',
+      isLoading: false,
+      isSuccess: false,
+      isDelLoading: false,
+      isDelSuccess: false,
+      delErrMess: '',
+      isAddSuccess: false,
+      isAddLoading: false,
+      addErrMess: '',
+      isUpSuccess: false,
+      isUpLoading: false,
+      updateErrMess: '',
+      courseList: [],
+      courseDetail: <Course>{},
+      error: '',
     };
     return newState;
   })

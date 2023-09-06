@@ -38,6 +38,7 @@ export class QuestionEffects {
         this.questionService.create(action.idToken, action.question).pipe(
           map((item) => {
             if (item != undefined && item != null) {
+              console.log(item);
               if ((item as any).message) {
                 console.log(item);
                 return QuestionAction.createFailure({
@@ -54,23 +55,7 @@ export class QuestionEffects {
       )
     )
   );
-  update$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(QuestionAction.update),
-      exhaustMap((action) =>
-        this.questionService.update(action.idToken, action.question).pipe(
-          map((item) => {
-            if (item != undefined && item != null) {
-              return QuestionAction.updateSuccess({ updatedQuestion: item });
-            } else {
-              return QuestionAction.updateFailure({ error: 'update failure' });
-            }
-          }),
-          catchError((error) => of(QuestionAction.updateFailure({ error })))
-        )
-      )
-    )
-  );
+
   delete$ = createEffect(() =>
     this.action$.pipe(
       ofType(QuestionAction.remove),
@@ -78,6 +63,13 @@ export class QuestionEffects {
         this.questionService.remove(action.idToken, action.questionId).pipe(
           map((item) => {
             if (item != undefined && item != null) {
+              console.log(item);
+
+              if ((item as any).message) {
+                return QuestionAction.removeFailure({
+                  error: (item as any).message,
+                });
+              }
               return QuestionAction.removeSuccess({ removedQuestion: item });
             } else {
               return QuestionAction.removeFailure({ error: 'remove failure' });

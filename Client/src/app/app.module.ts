@@ -27,17 +27,19 @@ import { profileReducer } from './ngrx/reducers/profile.reducer';
 import { UserEffects } from './ngrx/effects/user.effects';
 import { ProfileEffects } from './ngrx/effects/profile.effects';
 import { HttpClientModule } from '@angular/common/http';
-import { CourseReducer } from './ngrx/reducers/course.reducer';
+import { courseReducer } from './ngrx/reducers/course.reducer';
 import { CartReducer } from './ngrx/reducers/cart.reducer';
-import { CourseEffect } from './ngrx/effects/course.effects';
-import { LessonReducer } from './ngrx/reducers/lesson.reducer';
-import { LessonEffect } from './ngrx/effects/lesson.effects';
+import { CourseEffects } from './ngrx/effects/course.effects';
 import { quizReducer } from './ngrx/reducers/quiz.reducer';
 import { QuizEffects } from './ngrx/effects/quiz.effects';
+import { lessonReducer } from './ngrx/reducers/lesson.reducer';
+import { LessonEffects } from './ngrx/effects/lesson.effects';
 import { questionReducer } from './ngrx/reducers/question.reducer';
 import { QuestionEffects } from './ngrx/effects/question.effects';
 import { ReviewReducer } from './ngrx/reducers/review.reducer';
 import { ReviewEffect } from './ngrx/effects/review.effects';
+import { quizBankReducer } from './ngrx/reducers/quizBank.reducer';
+import { QuizBankEffects } from './ngrx/effects/quizBank.effects';
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   imports: [
@@ -49,12 +51,13 @@ import { ReviewEffect } from './ngrx/effects/review.effects';
         auth: authReducer,
         user: userReducer,
         profile: profileReducer,
-        course: CourseReducer,
+        course: courseReducer,
         cart: CartReducer,
-        lesson: LessonReducer,
+        lesson: lessonReducer,
         quiz: quizReducer,
         question: questionReducer,
         review: ReviewReducer,
+        quizBank: quizBankReducer,
       },
       {}
     ),
@@ -62,11 +65,12 @@ import { ReviewEffect } from './ngrx/effects/review.effects';
       AuthEffects,
       UserEffects,
       ProfileEffects,
-      CourseEffect,
-      LessonEffect,
+      CourseEffects,
       QuizEffects,
       QuestionEffects,
       ReviewEffect,
+      QuizBankEffects,
+      LessonEffects,
     ]),
     BrowserAnimationsModule,
     HttpClientModule,

@@ -3,16 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Observable, Subscription, interval, takeWhile } from 'rxjs';
-import { Question } from 'src/app/models/question.model';
+
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 import { QuestionState } from 'src/app/ngrx/states/question.state';
 import { ReviewState } from 'src/app/ngrx/states/review.state';
 import * as QuestionAction from 'src/app/ngrx/actions/question.actions';
 import * as ReviewAction from 'src/app/ngrx/actions/review.actions';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { QuizBank } from 'src/app/models/quizBank';
+import { quizBank } from 'src/app/models/quizBank.model';
 import { Quiz } from 'src/app/models/quiz.model';
 import { Review } from 'src/app/models/Reivew.model';
+import { Question } from 'src/app/models/question.model';
 
 @Component({
   selector: 'app-quiz',
@@ -32,6 +33,7 @@ export class QuizComponent implements OnInit {
   counter: number = 0;
   timerSubscription: Subscription | undefined;
   formattedTime: string = '';
+  options: any;
   // answered: boolean = false;
 
   constructor(
@@ -49,7 +51,7 @@ export class QuizComponent implements OnInit {
 
   ) { }
 
-  quizBank: QuizBank[] = [];
+  quizBank: quizBank[] = [];
   backhome() {
     this.router.navigate(['/base/home']);
 
@@ -60,9 +62,9 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.questionList.forEach(question => {
-      question.selectedOptionIndex = null;
-    });
+    // this.questionList.forEach(question => {
+    //   question.selectedOptionIndex = null;
+    // });
 
 
     const timer$ = interval(1000);
@@ -99,33 +101,32 @@ export class QuizComponent implements OnInit {
 
     })
   }
-
-  //I want to select the option and move to the next question
-
-
-
   selectOption(
     option: any,
   ) {
-    option = option;
-    return option;
+    this.options = option;
   }
-  submit(): void {
+
+
+
+
+  submit() {
 
     const review: Review = {
       _id: '',
       quizId: '64f6239327c8b5a3a16aac14',
-      profileId: '',
-      score: 0,
-      test: this.questionList.map(question => {
+      profileId: '64f4c670157abb0afd8bb2bb',
+      // score: 0,
+      test: this.questionList.map((question) => {
         return {
-          //answer:  answer when i select the option
-
-          answer: this.selectOption(question.option),
-          quizBankId: question._id
+          answer: this.options,
+          quizBankId: question.quizBank._id,
         }
       })
+
+
     };
+
 
 
     this.idToken$.subscribe((value) => {

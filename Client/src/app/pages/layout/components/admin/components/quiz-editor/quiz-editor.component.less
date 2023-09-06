@@ -5,66 +5,72 @@
   height: 100%;
   display: flex;
   flex-direction: row;
-  #left-side {
+  #left-loader {
+    display: flex;
     height: 100%;
     width: 30%;
     min-width: 429px;
-    padding: 0.625rem;
-    .shadow(4);
-    .breadcrumbs {
-      max-height: 40px;
-    }
-    #question-list {
-      overflow: auto;
+    #left-side {
+      height: 100%;
       width: 100%;
-      height: calc(100% - 44px - 0.625rem - 40px);
-      .tiles {
-        gap: 1rem;
-        grid-auto-rows: minmax(120px, auto);
+
+      padding: 0.625rem;
+      .shadow(4);
+      .breadcrumbs {
+        max-height: 40px;
       }
-      tui-island {
-        .transition(box-shadow);
-        margin: 0.625rem;
-        cursor: pointer;
-        tui-tile._dragged & {
-          .shadow(5);
-        }
-        .tui-island__content {
-          .tui-island__figure {
-            .some-figure {
-              border-radius: 50%;
-              width: 3rem;
-              height: 3rem;
-              align-items: center;
-              justify-content: center;
-              display: flex;
+      #question-list {
+        overflow: auto;
+        width: 100%;
+        height: calc(100% - 44px - 0.625rem - 40px);
+        display: flex;
+        flex-direction: column;
+
+        tui-island {
+          .transition(box-shadow);
+          margin: 0.625rem;
+          cursor: pointer;
+          tui-tile._dragged & {
+            .shadow(5);
+          }
+          .tui-island__content {
+            .tui-island__figure {
+              .some-figure {
+                border-radius: 50%;
+                width: 3rem;
+                height: 3rem;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+              }
+              .some-figure:hover {
+                background-color: var(--tui-secondary-active);
+              }
             }
-            .some-figure:hover {
-              background-color: var(--tui-secondary-active);
+            .tui-island__title {
+              margin: auto 0;
             }
           }
-          .tui-island__title {
-            margin: auto 0;
+          .tui-island__footer-button:hover {
+            background-color: var(--tui-error-bg);
           }
         }
-        .tui-island__footer-button:hover {
-          background-color: var(--tui-error-bg);
+        tui-island.selected {
+          .shadow(1);
+          border: 1px solid var(--tui-primary);
         }
-      }
-      tui-island.selected {
-        .shadow(1);
-        border: 1px solid var(--tui-primary);
       }
     }
   }
+
   #right-loader {
     display: flex;
     width: 70%;
-    margin: 1rem 0;
+    height: 100%;
+    min-width: 750px;
     #right-side {
       height: 100%;
       width: 100%;
-      min-width: 750px;
       padding: 0.625rem;
       #quiz-form,
       #quest-editor {

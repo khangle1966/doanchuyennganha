@@ -1,12 +1,12 @@
-import { QuizBank } from "./quizBank";
+import { quizBank } from "./quizBank.model";
 
 export interface Review {
     _id: string,
     quizId: string,
     profileId: string,
-    score: number,
+    // score: number,
     test: Array<{
         answer: string[];
-        quizBankId: QuizBank;
+        quizBankId: string;
     }>;
 }

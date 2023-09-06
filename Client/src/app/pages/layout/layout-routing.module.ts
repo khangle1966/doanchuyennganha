@@ -81,7 +81,12 @@ const routes: Routes = [
       {
         path: 'review',
         component: ReviewComponent
+      },
+      {
+        path: 'home/course/:id',
+        component: LearningComponent,
       }
+
     ],
   },
 ];

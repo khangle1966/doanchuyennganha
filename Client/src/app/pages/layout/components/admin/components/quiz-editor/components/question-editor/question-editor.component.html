@@ -8,8 +8,8 @@
         (You can choose one or more option on this preview as setting answers on
         editor)
       </p>
-      <div class="quest-img" *ngIf="this.questionForm.controls['img'].value">
-        <img src="{{ this.questionForm.controls['img'].value }}" alt="" />
+      <div class="quest-img" *ngIf="this.quizBankForm.controls['img'].value">
+        <img src="{{ this.quizBankForm.controls['img'].value }}" alt="" />
       </div>
       <div class="tui-island__paragraph">
         <ul class="tui-list">
@@ -33,7 +33,7 @@
     <ng-template #icon>
       <tui-svg src="tuiIconPlusLarge"></tui-svg>
     </ng-template>
-    <form [formGroup]="questionForm" class="col-form">
+    <form [formGroup]="quizBankForm" class="col-form">
       <div class="tui-form__row">
         <tui-input tuiTextfieldExampleText="Enter ID" formControlName="_id">
           <span class="tui-required">ID</span>

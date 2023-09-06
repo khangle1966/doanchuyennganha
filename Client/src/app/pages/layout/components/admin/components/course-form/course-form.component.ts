@@ -39,7 +39,7 @@ export class CourseFormComponent {
 
   ngOnInit(): void {
     if (this.isEdit) {
-      console.log(this.course?._id);
+      console.log('course form id:', this.course?._id);
       if (this.course != null) {
         this.courseForm = new FormGroup({
           _id: new FormControl(
@@ -140,7 +140,7 @@ export class CourseFormComponent {
   //upload image func
   async uploadImageToCloud() {
     if (this.control.value != null) {
-      let result = await this.cloudService.upLoadImage(
+      let result = await this.cloudService.upLoadCourseImage(
         this.control.value,
         this.course != null ? this.course._id : ''
       );

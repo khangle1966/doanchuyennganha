@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Question } from 'src/app/models/question.model';
+import { quizBank } from 'src/app/models/quizBank.model';
 
 export const getAllByQuizId = createAction(
   '[Question] get all question by quiz id',
@@ -27,20 +28,6 @@ export const createFailure = createAction(
   '[Question] create failure',
   props<{ error: string }>()
 );
-
-export const update = createAction(
-  '[Question] update ',
-  props<{ idToken: string; question: Question }>()
-);
-export const updateSuccess = createAction(
-  '[Question] update success',
-  props<{ updatedQuestion: Question }>()
-);
-export const updateFailure = createAction(
-  '[Question] update failure',
-  props<{ error: string }>()
-);
-
 export const remove = createAction(
   '[Question] remove ',
   props<{ idToken: string; questionId: string }>()
@@ -55,3 +42,4 @@ export const removeFailure = createAction(
   '[Question] remove failure',
   props<{ error: string }>()
 );
+export const clearState = createAction('[Question] Clear State');

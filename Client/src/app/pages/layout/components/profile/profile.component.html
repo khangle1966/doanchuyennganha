@@ -15,23 +15,23 @@
 
   <div id="profile_main">
     <div class="avatar_box">
-      <tui-avatar size="l" text="dmitriy demenskiy" class="tui-space_top-1" [rounded]="true"
-        [size]="'xxl'"></tui-avatar>
-      <p class="avatar_userName">UserName</p>
-      <p class="avatar_email">Email</p>
+      <tui-avatar size="l" text="dmitriy demenskiy" class="tui-space_top-1" [rounded]="true" [size]="'xxl'"
+        avatarUrl="{{profileForm.value.avatar}}"></tui-avatar>
+      <p class="avatar_userName">{{oldProfile.userName}}</p>
+      <p class="avatar_email">{{oldProfile.email}}</p>
     </div>
     <div class="line">
     </div>
     <div class="profile_box">
       <p class="title">Edit your Personal Settings</p>
 
-      <form [formGroup]="courseForm" class="col-form">
+      <form [formGroup]="profileForm" class="col-form">
         <p>User Name</p>
         <div class="tui-form__row">
-          <tui-input tuiTextfieldExampleText="Enter Role Name" formControlName="name">
+          <tui-input tuiTextfieldExampleText="Enter Role Name" formControlName="userName" placeholder="Enter Role Name">
             <span class="tui-required"> Name</span>
           </tui-input>
-          <tui-error formControlName="name" [error]="[] | tuiFieldError | async"></tui-error>
+          <tui-error formControlName="userName" [error]="[] | tuiFieldError | async"></tui-error>
         </div>
 
         <p>Gender</p>
@@ -60,7 +60,7 @@
       </form>
 
       <div class="btn_update">
-        <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3">
+        <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" (click)="updateProfile()">
           Update Profile
         </button>
       </div>
@@ -69,6 +69,25 @@
     </div>
     <div class="courses_box">
       <p class="title">Courses</p>
+      <tui-scrollbar class="box">
+        <div class="list_course">
+          <tui-push class="cart_course" *ngFor="let course of courses" heading="{{course.name}}">
+
+            <img src="{{ course.img }}" alt="" />
+            {{ course.category }}
+
+            <div class="btn_course">
+              <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" (click)="toCourse(course)">
+                Start
+              </button>
+
+              <button tuiButton type="button" appearance="flat" class="tui-space_right-3 tui-space_bottom-3">
+                Reset
+              </button>
+            </div>
+          </tui-push>
+        </div>
+      </tui-scrollbar>
     </div>
   </div>
 
