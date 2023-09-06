@@ -68,8 +68,6 @@ export class ProfileEffects {
           console.log(profile);
           return ProfileActions.updateProfileSuccess({ profile });
         }
-        // console.log(profile);
-        // return ProfileActions.updateProfileSuccess({ profile });
       }),
       catchError((error) => {
         return of(ProfileActions.updateProfileFailure({ errorMessage: error }));

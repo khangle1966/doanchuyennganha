@@ -10,10 +10,11 @@ import { environment } from 'src/environments/environment';
 export class ProfileService {
   constructor(private httpClient: HttpClient) {}
 
-  updateProfile(idToken: string, profile: any) {
+  updateProfile(idToken: string, profile: Profile) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${idToken}`,
     });
+    console.log(profile.id);
     return this.httpClient.put<any>(
       environment.local_url + `profile/${profile.id}`,
       profile,

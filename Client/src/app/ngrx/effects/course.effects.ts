@@ -98,4 +98,30 @@ export class CourseEffect {
       )
     )
   );
+
+  getCourseByUser$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CourseAction.getByUser),
+      exhaustMap((action) =>
+        this.courseService
+          .getCourseByUserId(action.idToken, action.userId)
+          .pipe(
+            map((items) => {
+              if (items != undefined || items != null) {
+                return CourseAction.getByUserSuccess({
+                  courseList: items,
+                });
+              } else {
+                return CourseAction.getByUserFailure({
+                  getErrMess: 'Course is undefined or null',
+                });
+              }
+            }),
+            catchError((error) =>
+              of(CourseAction.getByUserFailure({ getErrMess: error }))
+            )
+          )
+      )
+    )
+  );
 }

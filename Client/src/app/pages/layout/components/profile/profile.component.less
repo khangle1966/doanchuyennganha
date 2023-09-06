@@ -47,7 +47,7 @@
       width: 20%;
       height: 97%;
       //background-color: red;
-      padding: 1rem 0;
+      padding: 1rem ;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -56,7 +56,7 @@
         font: var(--tui-font-heading-6);
       }
       .avatar_email{
-        font: var(--tui-font-text-xl);
+        font: var(--tui-font-text-l);
         font-weight: bold;
         color: var(--tui-text-02);
         margin: 0;
@@ -99,53 +99,41 @@
         font: var(--tui-font-heading-6);
         margin: 0;
       }
+      .box {
+        //min-width: 54.5rem;
+        height: 95%;
+        min-height: calc(49.106rem - 3.875rem);
+        margin-top: 3rem;
+      }
+
+      .list_course {
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        ::ng-deep .t-top,
+        ::ng-deep .t-actions {
+          height: 0;
+        }
+        ::ng-deep .t-heading {
+          margin: 0;
+        }
+  
+        ::ng-deep .t-content {
+          margin-top: 5px;
+        }
+  
+        .cart_course {
+          margin-bottom: 20px;
+        }
+  
+        .btn_course {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin: 5px 0;
+        }
+      }
     }
   }
 }
-
-
-
-
-
-
-
-
-
-// .col-form {
-//   height: 100%;
-//   //   display: flex;
-//   //   flex-direction: column;
-//   width: 93%;
-
-//   .account {
-//     display: flex;
-//     flex: 1;
-//     justify-content: space-between;
-//   }
-
-//   .ticks-labels {
-//     color: var(--tui-text-02);
-//     margin-top: 0.25rem;
-//   }
-
-//   #header-2 {
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-between;
-//     align-items: center;
-//   }
-
-//   #action-buts {
-//     margin-top: 2rem;
-//     display: flex;
-//     justify-content: space-between;
-//   }
-// }
-
-// .top-header {
-//   width: 100%;
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-//   align-items: center;
-// }

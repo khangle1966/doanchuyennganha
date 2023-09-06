@@ -13,7 +13,7 @@ export const CartReducer = createReducer(
   on(CartAction.addCourseToCart, (state, action) => {
     console.log(action.type);
     const cartList = [...state.cartList, action.course];
-    console.log(cartList);
+    //console.log(cartList);
     const total = state.total + action.course.price;
     let newState = {
       ...state,
