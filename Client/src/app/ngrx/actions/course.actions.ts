@@ -65,3 +65,17 @@ export const removeFailure = createAction(
   '[Course] remove failure',
   props<{ error: string }>()
 );
+
+//getbyUser
+export const getByUser = createAction(
+  '[Course] get by user',
+  props<{ idToken: string; userId: string }>()
+);
+export const getByUserSuccess = createAction(
+  '[Course] get by user success',
+  props<{ courseList: Course[] }>()
+);
+export const getByUserFailure = createAction(
+  '[Course] get by user failure',
+  props<{ getErrMess: string }>()
+);

@@ -68,6 +68,64 @@ export const questionReducer = createReducer(
       isCreateSuccess: false,
       createMessError: action.error,
     };
-  })
+  }),
   //làm thêm delete
+  on(QuestionActions.remove, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isDeleteLoading: true,
+      isDeleteSuccess: false,
+      deleteMessError: '',
+    };
+  }),
+  on(QuestionActions.removeSuccess, (state, action) => {
+    console.log(action.type);
+    const questionId = action.removedQuestion._id;
+    const updatedQuestions = state.questions.filter(
+      (question) => question._id !== questionId
+    );
+    return {
+      ...state,
+      questions: updatedQuestions,
+      isDeleteLoading: false,
+      isDeleteSuccess: true,
+    };
+  }),
+  on(QuestionActions.removeFailure, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isDeleteLoading: false,
+      isDeleteSuccess: false,
+      deleteMessError: action.error,
+    };
+  }),
+  //làm thêm update
+  on(QuestionActions.update, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdateLoading: true,
+      isUpdateSuccess: false,
+      updateMessError: '',
+    };
+  }),
+  on(QuestionActions.updateSuccess, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdateLoading: false,
+      isUpdateSuccess: true,
+    };
+  }),
+  on(QuestionActions.updateFailure, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUpdateLoading: false,
+      isUpdateSuccess: false,
+      updateMessError: action.error,
+    };
+  })
 );

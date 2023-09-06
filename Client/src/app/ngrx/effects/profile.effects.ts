@@ -75,8 +75,6 @@ export class ProfileEffects {
           console.log(profile);
           return ProfileActions.updateProfileSuccess({ profile });
         }
-        // console.log(profile);
-        // return ProfileActions.updateProfileSuccess({ profile });
       }),
       catchError((error) => {
         console.log(error);
