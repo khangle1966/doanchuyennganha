@@ -96,7 +96,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       }),
       this.store.select('lesson', 'lessons').subscribe((lessons) => {
         if (lessons != null && lessons != undefined) {
-          this.lessonList = lessons;
+          // this.lessonList = lessons;
           console.log(this.lessonList);
         }
       }),
