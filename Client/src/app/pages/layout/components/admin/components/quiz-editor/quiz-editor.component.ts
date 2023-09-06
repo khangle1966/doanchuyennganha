@@ -16,7 +16,10 @@ import { Observable, Subscription } from 'rxjs';
 import { QuestionService } from 'src/app/services/question/question.service';
 import * as QuestionActions from 'src/app/ngrx/actions/question.actions';
 import { QuestionState } from 'src/app/ngrx/states/question.state';
+import { quizBank } from 'src/app/models/quizBank.model';
+import { quizBankState } from 'src/app/ngrx/states/quizBank.state';
 // import { QuizBank } from 'src/app/models/quizBank.model';
+import * as quizBankActions from 'src/app/ngrx/actions/quizBank.actions';
 
 @Component({
   selector: 'app-quiz-editor',
@@ -24,6 +27,7 @@ import { QuestionState } from 'src/app/ngrx/states/question.state';
   styleUrls: ['./quiz-editor.component.less'],
 })
 export class QuizEditorComponent implements OnInit, OnDestroy {
+  quizBank!: quizBank;
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private router: Router,
@@ -33,6 +37,7 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
       auth: AuthState;
       quiz: QuizState;
       question: QuestionState;
+      quizBank: quizBankState;
     }>
   ) {
     this.items.push({
@@ -102,19 +107,52 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
   }
 
   //addquizbank xong nhét idquizbank vào addquestion
-  // addQuizBank() {}
+  // addquizBank() {}
+
+  // addQuestion(quizBankId: string)
+  // addQuestion() {
+  //   const newQuestion: any = {
+  //     quizId: this.router.url.split('/')[4],
+  //     ordinalNum: this.questionList.length,
+  //   };
+  //   this.questionList.push(newQuestion);
+  //   this.store.dispatch(
+  //     QuestionActions.create({ question: newQuestion, idToken: this.idToken })
+  //   );
+  // }
+  addquizBank() {
+    const newQuizBank: any = {
+      question: 'Your question here',
+      options: ['Option 1', 'Option 2'],
+      answerList: ['0'],
+      img: '',
+    };
+    this.store.dispatch(
+      quizBankActions.addquizBank({
+        quizBank: newQuizBank,
+        idToken: this.idToken,
+      })
+    );
+    this.addQuestion(newQuizBank);
+  }
 
   //add func
   questionList: Question[] = [];
-  // addQuestion(quizBankId: string)
-  addQuestion() {
-    const newQuestion: any = {
+
+  addQuestion(quizBank: quizBank) {
+    const newQuestion: Question = {
+      questionText: 'Your question here',
+      correctOption: 0,
+      quizBank: quizBank,
+      _id: '',
+      ordinalNum: 0,
       quizId: this.router.url.split('/')[4],
-      ordinalNum: this.questionList.length,
     };
-    this.questionList.push(newQuestion);
     this.store.dispatch(
-      QuestionActions.create({ question: newQuestion, idToken: this.idToken })
+      QuestionActions.create({
+        question: newQuestion,
+        idToken: this.idToken,
+      })
     );
   }
 
@@ -261,21 +299,48 @@ export class QuizEditorComponent implements OnInit, OnDestroy {
             this.alerts.open(updateMessError, { status: 'error' }).subscribe();
           }
         }),
-      this.store.select('question', 'isGetSuccess').subscribe((val) => {
-        if (val) {
-          this.alerts
-            .open('List questons success !!!!', { status: 'success' })
-            .subscribe();
+      this.store.select('quizBank', 'quizBank').subscribe((quizBank) => {
+        if (quizBank != null && quizBank != undefined) {
+          quizBank = quizBank;
+          this.handleQuizBankLoadSuccess();
         }
       }),
+      this.store
+        .select('quizBank', 'isCreateSuccess')
+        .subscribe((isCreateSuccess) => {
+          if (isCreateSuccess) {
+            this.alerts
+              .open('Create quizBank success !!!', { status: 'success' })
+              .subscribe();
+            this.handleQuizBankCreateSuccess();
+          }
+        }),
+      this.store
+        .select('quizBank', 'createMessError')
+        .subscribe((createMessError) => {
+          if (createMessError != '') {
+            this.alerts.open(createMessError, { status: 'error' }).subscribe();
+          }
+        })
+    );
+
+    this.store.select('question', 'isGetSuccess').subscribe((val) => {
+      if (val) {
+        this.alerts
+          .open('List questons success !!!!', { status: 'success' })
+          .subscribe();
+      }
+    }),
       this.store.select('question', 'questions').subscribe((val) => {
         if (val != null && val != undefined) {
           this.questionList = val;
           console.log('questionList: ', this.questionList);
         }
-      })
-    );
+      });
   }
+  private handleQuizBankLoadSuccess() {}
+  private handleQuizBankCreateSuccess() {}
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
