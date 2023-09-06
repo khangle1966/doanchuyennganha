@@ -5,7 +5,7 @@ import { CourseService } from 'src/app/services/course/course.service';
 import * as CourseAction from '../actions/course.actions';
 
 @Injectable()
-export class CourseEffect {
+export class CourseEffects {
   constructor(private courseService: CourseService, private action$: Actions) {}
   get$ = createEffect(() =>
     this.action$.pipe(
@@ -14,6 +14,9 @@ export class CourseEffect {
         this.courseService.getCourse(action.idToken).pipe(
           map((items) => {
             if (items != undefined || items != null) {
+              if (items.message) {
+                return CourseAction.getFailure({ error: items.message });
+              }
               return CourseAction.getSuccess({ courseList: items });
             } else {
               return CourseAction.getFailure({
@@ -107,6 +110,32 @@ export class CourseEffect {
           }),
           catchError((error) => of(CourseAction.updateFailure({ error })))
         )
+      )
+    )
+  );
+
+  getCourseByUser$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CourseAction.getByUser),
+      exhaustMap((action) =>
+        this.courseService
+          .getCourseByUserId(action.idToken, action.userId)
+          .pipe(
+            map((items) => {
+              if (items != undefined || items != null) {
+                return CourseAction.getByUserSuccess({
+                  courseList: items,
+                });
+              } else {
+                return CourseAction.getByUserFailure({
+                  getErrMess: 'Course is undefined or null',
+                });
+              }
+            }),
+            catchError((error) =>
+              of(CourseAction.getByUserFailure({ getErrMess: error }))
+            )
+          )
       )
     )
   );

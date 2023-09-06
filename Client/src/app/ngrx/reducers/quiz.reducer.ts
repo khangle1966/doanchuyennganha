@@ -97,5 +97,21 @@ export const quizReducer = createReducer(
       isUpdateSuccess: false,
       updateMessError: action.error,
     };
+  }),
+  on(QuizActions.clearState, (state, action) => {
+    console.log(action.type);
+    return <QuizState>{
+      ...state,
+      isGetLoading: false,
+      isGetSuccess: false,
+      getMessError: '',
+      isCreateLoading: false,
+      isCreateSuccess: false,
+      createMessError: '',
+      isUpdateLoading: false,
+      isUpdateSuccess: false,
+      updateMessError: '',
+      quiz: null,
+    };
   })
 );

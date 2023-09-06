@@ -20,14 +20,14 @@ export class LessonService {
     );
   }
   create(idToken: string, lesson: Lesson) {
-    return this.http.post<Lesson>(environment.local_url + 'lesson', lesson, {
+    return this.http.post<any>(environment.local_url + 'lesson', lesson, {
       headers: new HttpHeaders({
         Authorization: `Bearer ${idToken}`,
       }),
     });
   }
   update(idToken: string, lesson: Lesson) {
-    return this.http.put<Lesson>(
+    return this.http.put<any>(
       environment.local_url + `lesson/${lesson._id}`,
       lesson,
       {

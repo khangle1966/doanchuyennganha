@@ -75,17 +75,7 @@ export class ProfileService {
       throw new HttpException(error.message, error.status);
     }
   }
-  //how to getAllCourse
-  // async getAllCourse(id: string): Promise<Profile> {
-  //   try {
-  //     const profile = await this.profileModel.findOne({ _id: id }).populate('completeCourse').exec();
-  //     return profile;
-  //   } catch (error) {
-  //     throw new HttpException(error.message, error.status);
-  //   }
-  // }
 
-  //how to getAllCourseOfProfile
   getAllCourseOfProfile(id: string): Promise<Profile> {
     try {
       const profile = this.profileModel
@@ -96,18 +86,6 @@ export class ProfileService {
           return profile;
         });
       return profile;
-    } catch (error) {
-      throw new HttpException(error.message, error.status);
-    }
-  }
-
-  //Get courses by obejct id course
-  async getCoursesByObjectIdCourse(id: string): Promise<Profile[]> {
-    try {
-      return await this.profileModel
-        .find({ courses: id })
-        .populate('courses')
-        .exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

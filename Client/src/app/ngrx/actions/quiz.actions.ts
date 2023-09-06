@@ -40,3 +40,4 @@ export const updateFailure = createAction(
   '[Quiz] update failure',
   props<{ error: string }>()
 );
+export const clearState = createAction('[Quiz] Clear State');

@@ -28,22 +28,8 @@ export class HomeComponent implements OnDestroy, OnInit {
   search = '';
   open = false;
 
-  onClick(): void {
-    this.open = !this.open;
-  }
-
-  onObscured(obscured: boolean): void {
-    if (obscured) {
-      this.open = false;
-    }
-  }
-
-  onActiveZone(active: boolean): void {
-    this.open = active && this.open;
-  }
-
   readonly testForm = new FormGroup({
-    testValue: new FormControl('Đang học'),
+    testValue: new FormControl(''),
   });
   readonly courses_state = ['Chưa học', 'Đang học', 'Đã học xong'];
 
@@ -52,6 +38,11 @@ export class HomeComponent implements OnDestroy, OnInit {
   user$: Observable<UserInfo> = this.store.select('user', 'user');
 
   state: string | undefined = '';
+  onRadioChange(selectedState: string) {
+    this.state = selectedState;
+    console.log(this.state);
+  }
+
   subscriptions: Subscription[] = [];
   courses: Course[] = [];
   ongoingCourses: Course[] = [];
@@ -70,7 +61,6 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   constructor(
     private router: Router,
-    private profileService: ProfileService,
     private store: Store<{
       profile: ProfileState;
       auth: AuthState;
@@ -100,7 +90,7 @@ export class HomeComponent implements OnDestroy, OnInit {
           this.courses = profile.courses || [];
           this.ongoingCourses = profile.ongoingCourses || [];
           this.completedCourses = profile.completedCourses || [];
-          console.log(profile);
+          console.log('profile: ', profile);
         }
       }),
 

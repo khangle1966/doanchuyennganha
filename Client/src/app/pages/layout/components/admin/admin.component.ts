@@ -138,6 +138,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((val) => {
       val.unsubscribe();
     });
+    this.store.dispatch(CourseActions.clearState());
   }
 
   ngOnInit(): void {
@@ -166,13 +167,6 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.store.select('course', 'isLoading').subscribe((val) => {
         this.isLoading = val;
         // console.log(this.isLoading);
-      }),
-      this.store.select('course', 'isSuccess').subscribe((val) => {
-        if (val) {
-          // this.alerts
-          //   .open('List Course Success !!!', { status: 'success' })
-          //   .subscribe();
-        }
       }),
       this.store.select('course', 'error').subscribe((val) => {
         if (val != '' && val != undefined && val != null) {

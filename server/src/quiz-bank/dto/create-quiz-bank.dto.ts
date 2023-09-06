@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export class CreateQuizBankDto {
   constructor(
     public img: string,

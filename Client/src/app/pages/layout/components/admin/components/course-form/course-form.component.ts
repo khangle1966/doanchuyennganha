@@ -140,7 +140,7 @@ export class CourseFormComponent {
   //upload image func
   async uploadImageToCloud() {
     if (this.control.value != null) {
-      let result = await this.cloudService.upLoadImage(
+      let result = await this.cloudService.upLoadCourseImage(
         this.control.value,
         this.course != null ? this.course._id : ''
       );

@@ -1,8 +1,10 @@
-import { QuizBank } from './quizBank';
+import { quizBank } from './quizBank.model';
 
 export interface Question {
+  questionText: string;
   _id: string;
   quizId: string;
-  quizBank: QuizBank;
+  quizBank: quizBank;
   ordinalNum: number;
+  correctOption: number;
 }

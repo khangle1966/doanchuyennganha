@@ -27,15 +27,17 @@ import { profileReducer } from './ngrx/reducers/profile.reducer';
 import { UserEffects } from './ngrx/effects/user.effects';
 import { ProfileEffects } from './ngrx/effects/profile.effects';
 import { HttpClientModule } from '@angular/common/http';
-import { CourseReducer } from './ngrx/reducers/course.reducer';
+import { courseReducer } from './ngrx/reducers/course.reducer';
 import { CartReducer } from './ngrx/reducers/cart.reducer';
-import { CourseEffect } from './ngrx/effects/course.effects';
+import { CourseEffects } from './ngrx/effects/course.effects';
 import { quizReducer } from './ngrx/reducers/quiz.reducer';
 import { QuizEffects } from './ngrx/effects/quiz.effects';
 import { lessonReducer } from './ngrx/reducers/lesson.reducer';
 import { LessonEffects } from './ngrx/effects/lesson.effects';
 import { questionReducer } from './ngrx/reducers/question.reducer';
 import { QuestionEffects } from './ngrx/effects/question.effects';
+import { quizBankReducer } from './ngrx/reducers/quizBank.reducer';
+import { QuizBankEffects } from './ngrx/effects/quizBank.effects';
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   imports: [
@@ -47,11 +49,12 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
         auth: authReducer,
         user: userReducer,
         profile: profileReducer,
-        course: CourseReducer,
+        course: courseReducer,
         cart: CartReducer,
         lesson: lessonReducer,
         quiz: quizReducer,
         question: questionReducer,
+        quizBank: quizBankReducer,
       },
       {}
     ),
@@ -59,9 +62,10 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
       AuthEffects,
       UserEffects,
       ProfileEffects,
-      CourseEffect,
+      CourseEffects,
       QuizEffects,
       QuestionEffects,
+      QuizBankEffects,
       LessonEffects,
     ]),
     BrowserAnimationsModule,

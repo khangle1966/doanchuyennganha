@@ -140,5 +140,21 @@ export const lessonReducer = createReducer(
       deleteMessError: action.error,
     };
     return newState;
+  }),
+  on(LessonActions.clearState, (state, action) => {
+    console.log(action.type);
+    let newState: LessonState = {
+      ...state,
+      isCreating: false,
+      isCreateSuccess: false,
+      createMessError: '',
+      isUpdating: false,
+      isUpdateSuccess: false,
+      updateMessError: '',
+      isDeleting: false,
+      isDeleteSuccess: false,
+      deleteMessError: '',
+    };
+    return newState;
   })
 );
