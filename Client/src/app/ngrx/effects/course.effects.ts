@@ -33,8 +33,20 @@ export class CourseEffect {
       exhaustMap((action) =>
         this.courseService.getCourseById(action.idToken, action.id).pipe(
           map((items) => {
-            console.log(items);
-            return CourseAction.getCourseDetailSuccess({ courseDetail: items });
+            if (items != undefined && items != null) {
+              if ((items as any).message) {
+                return CourseAction.getCourseDetailFailure({
+                  error: (items as any).message,
+                });
+              }
+              return CourseAction.getCourseDetailSuccess({
+                courseDetail: items,
+              });
+            } else {
+              return CourseAction.getCourseDetailFailure({
+                error: 'Course is undefined or null',
+              });
+            }
           }),
           catchError((error) => {
             return of(CourseAction.getCourseDetailFailure({ error }));

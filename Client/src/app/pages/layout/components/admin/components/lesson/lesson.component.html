@@ -1,172 +1,198 @@
 <div id="lesson-container">
-  <div id="left-side">
-    <tui-breadcrumbs size="l" class="breadcrumbs">
-      <ng-container *ngFor="let item of items">
-        <a *tuiItem tuiLink [routerLink]="item.routerLink">
-          {{ item.caption }}
-        </a>
-      </ng-container>
-    </tui-breadcrumbs>
-    <div class="top">
-      <div class="tui-text_h6 title">Lesson List</div>
-      <button
-        size="m"
-        tuiIconButton
-        type="button"
-        icon="tuiIconPlusLarge"
-        (click)="addLesson()"
-      ></button>
-    </div>
-    <div id="lesson-list">
-      <tui-scrollbar class="scrollbar">
-        <tui-tiles
-          class="tiles"
-          [(order)]="order"
-          (orderChange)="updateOrdinalList()"
-        >
-          <tui-tile
-            *ngFor="let lesson of lessonList; let index = index"
-            class="tile"
-            [style.order]="order.get(index)"
-          >
-            <tui-island
-              [hoverable]="true"
-              [ngClass]="[
-                selectedLesson?._id === lesson?._id ? 'selected' : ''
-              ]"
-            >
-              <div class="tui-island__content" (click)="selectLesson(lesson)">
-                <figure class="tui-island__figure">
-                  <div class="some-figure">
-                    <tui-svg src="tuiIconDragLarge" tuiTileHandle></tui-svg>
-                  </div>
-                </figure>
-                <div>
-                  <h3 class="tui-island__title">
-                    {{ lesson.title }}
-                  </h3>
-                  <p class="tui-island__paragraph">
-                    {{ lesson.description }}
-                  </p>
-                </div>
-              </div>
-              <button
-                appearance="none"
-                size="m"
-                tuiButton
-                type="button"
-                class="tui-island__footer-button"
-                (click)="showWarningDialog(template)"
-              >
-                Delete
-              </button>
-            </tui-island>
-            <ng-template #template let-observer>
-              <p>Are you sure to this delete this question ?</p>
-
-              <button
-                size="m"
-                tuiButton
-                type="button"
-                class="tui-space_right-3"
-                appearance="secondary-destructive"
-                (click)="observer.complete()"
-              >
-                Cancel
-              </button>
-              <button
-                size="m"
-                tuiButton
-                type="button"
-                appearance="secondary"
-                (click)="deleteLesson(index); observer.complete()"
-              >
-                Confirm
-              </button>
-            </ng-template>
-          </tui-tile>
-        </tui-tiles>
-      </tui-scrollbar>
-    </div>
-  </div>
-  <div id="right-side">
-    <div
-      id="course-content"
-      *ngIf="this.selectedLesson == null; else lessonContent"
-    >
-      <div class="tui-text_h3 tui-space_top-3 tui-space_bottom-3">
-        {{ course.name }}
-      </div>
-      <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">
-        {{ course.description }}
-      </div>
-      <img src="{{ course.img }}" class="tui-space_top-3 tui-space_bottom-3" />
-    </div>
-    <ng-template #lessonContent>
+  <tui-loader
+    id="left-loader"
+    [inheritColor]="true"
+    [overlay]="true"
+    [showLoader]="isGettingLessons"
+  >
+    <div id="left-side">
+      <tui-breadcrumbs size="l" class="breadcrumbs">
+        <ng-container *ngFor="let item of items">
+          <a *tuiItem tuiLink [routerLink]="item.routerLink">
+            {{ item.caption }}
+          </a>
+        </ng-container>
+      </tui-breadcrumbs>
       <div class="top">
-        <div class="tui-text_h6 title">Lesson Content</div>
-        <div class="btn-grp">
-          <button
-            size="m"
-            tuiButton
-            type="button"
-            appearance="primary"
-            (click)="openEditSidebar(true)"
-            (tuiActiveZoneChange)="openEditSidebar($event)"
+        <div class="tui-text_h6 title">Lesson List</div>
+        <button
+          size="m"
+          tuiIconButton
+          type="button"
+          icon="tuiIconPlusLarge"
+          (click)="addLesson()"
+        ></button>
+      </div>
+      <div id="lesson-list">
+        <tui-scrollbar
+          class="scrollbar"
+          *ngIf="this.lessonList.length > 0; else emptyContent"
+        >
+          <tui-tiles
+            class="tiles"
+            [(order)]="order"
+            (orderChange)="updateOrdinalList()"
           >
-            Edit Information
-            <tui-scrollbar
-              *tuiSidebar="this.openEdit; direction: 'right'; autoWidth: true"
-              id="right-sidebar"
+            <tui-tile
+              *ngFor="let lesson of lessonList; let index = index"
+              class="tile"
+              [style.order]="order.get(index)"
             >
-              <app-lesson-info-form
-                [lesson]="this.selectedLesson"
-                (toggle)="openEditSidebar($event)"
-                (submit)="updateLessonInfo($event)"
+              <tui-island
+                [hoverable]="true"
+                [ngClass]="[
+                  selectedLesson?._id === lesson?._id ? 'selected' : ''
+                ]"
               >
-              </app-lesson-info-form>
-            </tui-scrollbar>
-          </button>
-          <button
-            size="m"
-            tuiButton
-            type="button"
-            appearance="secondary"
-            (click)="isPreview = !isPreview"
-            *ngIf="isPreview; else previewBtn"
-          >
-            Editor
-          </button>
-          <ng-template #previewBtn>
+                <div class="tui-island__content" (click)="selectLesson(lesson)">
+                  <figure class="tui-island__figure">
+                    <div class="some-figure">
+                      <tui-svg src="tuiIconDragLarge" tuiTileHandle></tui-svg>
+                    </div>
+                  </figure>
+                  <div>
+                    <h3 class="tui-island__title">
+                      {{ lesson.title }}
+                    </h3>
+                    <p class="tui-island__paragraph">
+                      {{ lesson.description }}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  appearance="none"
+                  size="m"
+                  tuiButton
+                  type="button"
+                  class="tui-island__footer-button"
+                  (click)="showWarningDialog(template)"
+                >
+                  Delete
+                </button>
+              </tui-island>
+              <ng-template #template let-observer>
+                <p>Are you sure to this delete this question ?</p>
+
+                <button
+                  size="m"
+                  tuiButton
+                  type="button"
+                  class="tui-space_right-3"
+                  appearance="secondary-destructive"
+                  (click)="observer.complete()"
+                >
+                  Cancel
+                </button>
+                <button
+                  size="m"
+                  tuiButton
+                  type="button"
+                  appearance="secondary"
+                  (click)="deleteLesson(index); observer.complete()"
+                >
+                  Confirm
+                </button>
+              </ng-template>
+            </tui-tile>
+          </tui-tiles>
+        </tui-scrollbar>
+        <ng-template #emptyContent>
+          <div class="empty-content tui-text_h6">
+            Click (+) button to add new lesson
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </tui-loader>
+
+  <tui-loader
+    id="right-loader"
+    [inheritColor]="true"
+    [overlay]="true"
+    [showLoader]="isGettingCourse"
+  >
+    <div id="right-side">
+      <div
+        id="course-content"
+        *ngIf="this.selectedLesson == null; else lessonContent"
+      >
+        <div class="tui-text_h3 tui-space_top-3 tui-space_bottom-3">
+          {{ course.name }}
+        </div>
+        <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">
+          {{ course.description }}
+        </div>
+        <img
+          src="{{ course.img }}"
+          class="tui-space_top-3 tui-space_bottom-3"
+        />
+      </div>
+      <ng-template #lessonContent>
+        <div class="top">
+          <div class="tui-text_h6 title">Lesson Content</div>
+          <div class="btn-grp">
             <button
               size="m"
               tuiButton
               type="button"
-              (click)="isPreview = !isPreview"
-              appearance="secondary"
+              appearance="primary"
+              (click)="openEditSidebar(true)"
+              (tuiActiveZoneChange)="openEditSidebar($event)"
             >
-              Preview
+              Edit Information
+              <tui-scrollbar
+                *tuiSidebar="this.openEdit; direction: 'right'; autoWidth: true"
+                id="right-sidebar"
+              >
+                <app-lesson-info-form
+                  [lesson]="this.selectedLesson"
+                  (toggle)="openEditSidebar($event)"
+                  (submit)="updateLessonInfo($event)"
+                >
+                </app-lesson-info-form>
+              </tui-scrollbar>
             </button>
-          </ng-template>
-          <button
-            size="m"
-            tuiButton
-            type="button"
-            (click)="saveLessonContent()"
-            [disabled]="isSave"
-          >
-            Save
-          </button>
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              appearance="secondary"
+              (click)="isPreview = !isPreview"
+              *ngIf="isPreview; else previewBtn"
+            >
+              Editor
+            </button>
+            <ng-template #previewBtn>
+              <button
+                size="m"
+                tuiButton
+                type="button"
+                (click)="isPreview = !isPreview"
+                appearance="secondary"
+              >
+                Preview
+              </button>
+            </ng-template>
+            <button
+              size="m"
+              tuiButton
+              type="button"
+              (click)="saveLessonContent()"
+              [disabled]="isSave"
+            >
+              Save
+            </button>
+          </div>
         </div>
-      </div>
-      <div id="editor">
-        <app-editor
-          [content]="this.selectedLesson?.content"
-          [isPreview]="isPreview"
-          [isSave]="isSave"
-          (save)="updateLessonContent($event)"
-        ></app-editor>
-      </div>
-    </ng-template>
-  </div>
+        <div id="editor">
+          <app-editor
+            [content]="this.selectedLesson?.content"
+            [isPreview]="isPreview"
+            [isSave]="isSave"
+            (save)="updateLessonContent($event)"
+          ></app-editor>
+        </div>
+      </ng-template>
+    </div>
+  </tui-loader>
 </div>

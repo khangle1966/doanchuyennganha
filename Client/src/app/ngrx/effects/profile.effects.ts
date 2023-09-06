@@ -30,7 +30,10 @@ export class ProfileEffects {
         return ProfileActions.createSuccess();
       }),
       catchError((error) => {
-        return of(ProfileActions.createFailure({ errorMessage: error }));
+        console.log(error);
+        return of(
+          ProfileActions.createFailure({ errorMessage: error.error.message })
+        );
       })
     )
   );
@@ -45,7 +48,11 @@ export class ProfileEffects {
         return ProfileActions.getSuccess({ profile });
       }),
       catchError((error) => {
-        return of(ProfileActions.getFailure({ errorMessage: error }));
+        console.log(error);
+
+        return of(
+          ProfileActions.getFailure({ errorMessage: error.error.message })
+        );
       })
     )
   );
@@ -72,7 +79,13 @@ export class ProfileEffects {
         // return ProfileActions.updateProfileSuccess({ profile });
       }),
       catchError((error) => {
-        return of(ProfileActions.updateProfileFailure({ errorMessage: error }));
+        console.log(error);
+
+        return of(
+          ProfileActions.updateProfileFailure({
+            errorMessage: error.error.message,
+          })
+        );
       })
     )
   );

@@ -8,6 +8,13 @@ import {
 import { Router } from '@angular/router';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { Course } from 'src/app/models/course.model';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AuthState } from 'src/app/ngrx/states/auth.state';
+import { CourseState } from 'src/app/ngrx/states/course.state';
+import { LessonState } from 'src/app/ngrx/states/lesson.state';
+import * as LessonActions from 'src/app/ngrx/actions/lesson.actions';
+import * as CourseActions from 'src/app/ngrx/actions/course.actions';
 
 @Component({
   selector: 'app-lesson',
@@ -17,7 +24,10 @@ import { Course } from 'src/app/models/course.model';
 export class LessonComponent implements OnInit, OnDestroy {
   isPreview: boolean = true;
   isSave: boolean = false;
+  isGettingCourse: boolean = false;
+  isGettingLessons: boolean = false;
 
+  subscriptions: Subscription[] = [];
   items = [
     {
       caption: 'Admin',
@@ -25,26 +35,19 @@ export class LessonComponent implements OnInit, OnDestroy {
     },
   ];
 
-  course: Course = {
-    _id: '1',
-    name: 'Angular',
-    category: 'Frontend Developer',
-    description:
-      'Angular is a platform for building mobile and desktop web applications.',
-    price: 100,
-    author: 'Google',
-    date_Created: '2021-07-01',
-    date_Updated: '2021-07-01',
-    img: 'https://angular.io/assets/images/logos/angular/angular.svg',
-    rating: 4.5,
-    language: 'English',
-  };
+  course: Course = <Course>{};
+  idToken = '';
 
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
     private router: Router,
     @Inject(TuiDialogService)
-    private readonly dialogs: TuiDialogService
+    private readonly dialogs: TuiDialogService,
+    private store: Store<{
+      auth: AuthState;
+      course: CourseState;
+      lesson: LessonState;
+    }>
   ) {
     this.items.push({
       caption: 'Current',
@@ -54,35 +57,71 @@ export class LessonComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     console.log('destroy');
   }
-
-  //noti funcs
-  successNotification(message: string): void {
-    this.alerts
-      .open('', {
-        label: message,
-        status: 'success',
-        autoClose: 4000,
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        if (idToken != '' && idToken != null && idToken != undefined) {
+          this.idToken = idToken;
+          console.log(`lesson's course id: `, this.router.url.split('/')[4]);
+          this.store.dispatch(
+            LessonActions.getAllByCourseId({
+              idToken,
+              courseId: this.router.url.split('/')[4],
+            })
+          );
+          this.store.dispatch(
+            CourseActions.getCourseDetail({
+              idToken,
+              id: this.router.url.split('/')[4],
+            })
+          );
+        }
+      }),
+      this.store.select('course', 'courseDetail').subscribe((course) => {
+        if (course != null && course != undefined) {
+          this.course = course;
+        }
+      }),
+      this.store.select('course', 'isSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Get course detail success !!!', { status: 'success' })
+            .subscribe();
+        }
+      }),
+      this.store.select('course', 'error').subscribe((err) => {
+        if (err != null && err != undefined && err != '') {
+          this.alerts.open(err, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('lesson', 'lessons').subscribe((lessons) => {
+        if (lessons != null && lessons != undefined) {
+          this.lessonList = lessons;
+          console.log(this.lessonList);
+        }
+      }),
+      this.store.select('lesson', 'isGetSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Get lesson success !!!', { status: 'success' })
+            .subscribe();
+        }
+      }),
+      this.store.select('lesson', 'getMessError').subscribe((err) => {
+        if (err != null && err != undefined && err != '') {
+          this.alerts.open(err, { status: 'error' }).subscribe();
+        }
       })
-      .subscribe();
+    );
   }
-
-  warningNotification(message: string): void {
-    this.alerts
-      .open('', {
-        label: message,
-        status: 'warning',
-        autoClose: 4000,
-      })
-      .subscribe();
-  }
-
-  ngOnInit(): void {}
 
   // get func
   selectedLesson: Lesson | null = null;
   selectLesson(lesson: Lesson) {
     if (this.selectedLesson?._id === lesson._id) {
-      this.warningNotification('Lesson already selected !!!');
+      this.alerts
+        .open('Lesson already selected !!!', { status: 'warning' })
+        .subscribe();
       return;
     }
     this.selectedLesson = lesson;
@@ -95,27 +134,20 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   //add func
-  lessonList: Lesson[] = [
-    {
-      _id: '1',
-      title: 'Lesson ' + Date.now().toString(),
-      content: this.generateDummyContent('Lesson ' + Date.now().toString()),
-      courseId: '1',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      ordinalNum: 0,
-    },
-  ];
+  lessonList: Lesson[] = [];
   addLesson() {
-    this.lessonList.push({
-      _id: Date.now().toString(),
-      title: 'Lesson ' + Date.now().toString(),
-      content: this.generateDummyContent('Lesson ' + Date.now().toString()),
-      courseId: '1',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      ordinalNum: this.lessonList.length + 1,
-    });
+    this.lessonList = [
+      ...this.lessonList,
+      {
+        _id: Date.now().toString(),
+        title: 'Lesson ' + Date.now().toString(),
+        content: this.generateDummyContent('Lesson ' + Date.now().toString()),
+        courseId: '1',
+        description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        ordinalNum: this.lessonList.length + 1,
+      },
+    ];
   }
 
   //update func
@@ -134,7 +166,9 @@ export class LessonComponent implements OnInit, OnDestroy {
         return lesson;
       }
     });
-    this.successNotification('Lesson info updated success !!!');
+    this.alerts
+      .open('Lesson info updated success !!!', { status: 'success' })
+      .subscribe();
     console.log('lesonList: ', this.lessonList);
   }
 
@@ -158,7 +192,9 @@ export class LessonComponent implements OnInit, OnDestroy {
           return lesson;
         }
       });
-      this.successNotification('Lesson content updated success !!!');
+      this.alerts
+        .open('Lesson content updated success !!!', { status: 'success' })
+        .subscribe();
       console.log('lesonList: ', this.lessonList);
     }
   }
@@ -181,7 +217,9 @@ export class LessonComponent implements OnInit, OnDestroy {
         return;
       }
     });
-    this.successNotification('Delete question success !!!');
+    this.alerts
+      .open('Delete question success !!!', { status: 'success' })
+      .subscribe();
     console.log(this.lessonList);
   }
 
