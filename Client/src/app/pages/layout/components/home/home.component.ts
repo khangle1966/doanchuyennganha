@@ -124,6 +124,6 @@ export class HomeComponent implements OnDestroy, OnInit {
   }
 
   toCourse(course: Course) {
-    this.router.navigate(['base/course', course._id]);
+    this.router.navigate(['base/home/course', course._id]);
   }
-}
+} 

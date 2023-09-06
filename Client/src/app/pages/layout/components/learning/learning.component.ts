@@ -5,9 +5,13 @@ import { Store } from '@ngrx/store';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 import { Lesson } from 'src/app/models/lesson.model';
-import { LessonState } from 'src/app/ngrx/states/lessos.state';
+import { LessonState } from 'src/app/ngrx/states/lesson.state';
 import * as LessonAction from 'src/app/ngrx/actions/lesson.actions';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
+import { CourseState } from 'src/app/ngrx/states/course.state';
+import * as CourseAction from 'src/app/ngrx/actions/course.actions'
+import { Course } from 'src/app/models/course.model';
+
 
 @Component({
   selector: 'app-learning',
@@ -17,31 +21,22 @@ import { AuthState } from 'src/app/ngrx/states/auth.state';
 export class LearningComponent implements OnInit, OnDestroy {
   isPreview: boolean = true;
 
-  idToken$: Observable<string> = this.store.select('auth', 'idToken');
-  lesson$: Observable<Lesson> = this.store.select('lesson', 'lessons');
-  subscriptions: Subscription[] = [];
 
-  learnForm = new FormGroup({
-    _id: new FormControl('', Validators.required),
-    courseId: new FormControl('', Validators.required),
-    title: new FormControl('', Validators.required),
-    content: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
-    ordinalNum: new FormControl(0, [
-      Validators.required,
-      Validators.pattern(/^[0-9]+$/),
-    ]),
-  });
+  subscriptions: Subscription[] = [];
+  lesson: Lesson[] = <Lesson[]>{};
+  course: Course = <Course>{};
+  idToken = '';
 
   constructor(
     private router: Router,
     private store: Store<{
       lesson: LessonState;
       auth: AuthState;
+      course: CourseState
     }>,
-
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService
   ) {}
+
   warningNotification(message: string): void {
     this.alerts
       .open('', {
@@ -59,44 +54,45 @@ export class LearningComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.subscriptions.push(
-      this.store.select('lesson', 'lessons').subscribe((val) => {
-        if (val != null && val != undefined) {
-          this.learnForm.controls._id.setValue(val._id);
-          this.learnForm.controls.courseId.setValue(val.courseId);
-          this.learnForm.controls.title.setValue(val.title);
-          this.learnForm.controls.content.setValue(val.content);
-          this.learnForm.controls.description.setValue(val.description);
-          this.learnForm.controls.ordinalNum.setValue(val.ordinalNum);
-        }
-      }),
-      this.lesson$.subscribe((lesson) => {
-        if (lesson != null && lesson != undefined) {
-          console.log(lesson);
-        }
-      }),
+    this.store.select('auth', 'idToken').subscribe((idToken) => {
+      if (idToken != '' && idToken != null && idToken != undefined) {
+        this.idToken = idToken;
+        console.log(`lesson's course id: `, this.router.url.split('/')[4]);
+        this.store.dispatch(
+          LessonAction.getAllByCourseId({
+            idToken,
+            courseId: this.router.url.split('/')[4],
+          })
+        );
+        this.store.dispatch(
+          CourseAction.getCourseDetail({
+            idToken,
+            id: this.router.url.split('/')[4],
+          })
+        );
+        this.store.select('lesson', 'lessons').subscribe((lessons) => {
+          if (lessons != null && lessons != undefined) {
+            // this.lessonList = lessons;
+            console.log(this.lesson);
+          }
+        })
 
-      combineLatest({
-        idToken: this.idToken$,
-        lesson: this.lesson$,
-      }).subscribe((res) => {
-        if (
-          res.idToken != undefined &&
-          res.idToken != null &&
-          res.idToken != '' &&
-          res.lesson != null &&
-          res.lesson != undefined
-        ) {
-          console.log(res.idToken);
-          this.store.dispatch(
-            LessonAction.getAllByCourseId({
-              idToken: res.idToken,
-              courseId: res.lesson.courseId,
-            })
-          );
-        }
-      })
-    );
+      }
+    }),
+    ),
+    this.store.select('lesson', 'isGetSuccess').subscribe((val) => {
+      if (val) {
+        this.alerts
+          .open('Get lesson success !!!', { status: 'success' })
+          .subscribe();
+      }
+    }
+    )
+
+
   }
+
+
   selectedLesson: Lesson | null = null;
   selectLesson(lesson: Lesson) {
     if (this.selectedLesson?._id === lesson._id) {

@@ -9,15 +9,15 @@
         <div id="lesson-list">
             <tui-scrollbar class="scrollbar">
                 <tui-tiles class="tiles">
-                    <tui-tile>
+                    <tui-tile *ngFor="let i of lesson">
                         <tui-island [hoverable]="true">
                             <div class="tui-island__content">
                                 <div>
                                     <h3 class="tui-island__title">
-                                        {{learnForm.value.title}}
+                                        a
                                     </h3>
                                     <p class="tui-island__paragraph">
-                                        {{learnForm.value.description}}
+                                        b
                                     </p>
                                 </div>
                             </div>
@@ -30,22 +30,23 @@
         </div>
     </div>
 
-    <div id="right-side" [formGroup]="learnForm">
-        <!-- <div
+    <div id="right-side">
+        <div
         id="course-content"
         *ngIf="this.selectedLesson == null; else lessonContent"
       >
-        <div class="tui-text_h3 tui-space_top-3 tui-space_bottom-3" formControlName="title">
-
+        <div class="tui-text_h3 tui-space_top-3 tui-space_bottom-3" >
+          {{ course.name }}
         </div>
-        <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3" formControlName="description">
-
+        <div class="tui-text_body-xl tui-space_top-3 tui-space_bottom-3">
+            {{ course.description }}
         </div>
         <img src="" class="tui-space_top-3 tui-space_bottom-3" />
-      </div> -->
+      </div>
+
         <ng-template #lessonContent>
             <div class="tui-text_h6 title" formControlName="content">
-                {{learnForm.value.content}}
+                c
             </div>
         </ng-template>
     </div>
