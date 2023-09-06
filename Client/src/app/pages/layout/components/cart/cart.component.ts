@@ -5,6 +5,7 @@ import { Course } from 'src/app/models/course.model';
 import { CartState } from 'src/app/ngrx/states/cart.state';
 import * as CartAction from 'src/app/ngrx/actions/cart.actions';
 import * as ProfileAction from 'src/app/ngrx/actions/profile.actions';
+import * as CourseAction from 'src/app/ngrx/actions/course.actions';
 import { TuiAlertService } from '@taiga-ui/core';
 import { CourseState } from 'src/app/ngrx/states/course.state';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
@@ -45,7 +46,6 @@ export class CartComponent implements OnInit {
       }),
       this.store.select('profile', 'profile').subscribe((profile) => {
         if (profile != null && profile != undefined) {
-          //console.log(profile);
           this.profile = profile;
         }
       }),
@@ -64,9 +64,15 @@ export class CartComponent implements OnInit {
           this.store.dispatch(
             ProfileAction.get({ idToken: this.idToken, id: this.profile.id })
           );
+          this.store.dispatch(
+            CourseAction.getByUser({
+              idToken: this.idToken,
+              userId: this.profile.id,
+            })
+          );
         }
       }),
-      this.store.select('profile', 'isLoading').subscribe((val) => {
+      this.store.select('profile', 'isUpdating').subscribe((val) => {
         if (val) {
           this.alerts
             .open('Buying Course... !!!', { status: 'info' })
@@ -105,18 +111,6 @@ export class CartComponent implements OnInit {
 
   search = '';
 
-  buyButton() {
-    if (this.cartList.length === 0) {
-      this.warningNotification(
-        'There are no courses in the cart for you to purchase.'
-      );
-    } else {
-      this.clearAllCart();
-      this.total = Number(this.total.toFixed(3));
-      this.successNotification('Purchase Success');
-    }
-  }
-
   successNotification(message: string): void {
     this.alerts
       .open('', {
@@ -144,6 +138,7 @@ export class CartComponent implements OnInit {
 
   buyCourse() {
     this.courseId = this.cartList.map((course) => course._id);
+
     let newProfile: Profile = {
       ...this.profile,
       courses: [...this.profile.courses, ...this.courseId],
