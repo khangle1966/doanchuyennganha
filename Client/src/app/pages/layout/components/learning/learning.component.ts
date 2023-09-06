@@ -88,7 +88,7 @@ export class LearningComponent implements OnInit, OnDestroy {
         ) {
           console.log(res.idToken);
           this.store.dispatch(
-            LessonAction.getLesson({
+            LessonAction.getAllByCourseId({
               idToken: res.idToken,
               courseId: res.lesson.courseId,
             })
