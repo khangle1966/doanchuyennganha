@@ -5,7 +5,6 @@ import {
   TuiDialogContext,
   TuiDialogService,
 } from '@taiga-ui/core';
-import { Question } from 'src/app/models/question.model';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { Quiz } from 'src/app/models/quiz.model';
 import { Store } from '@ngrx/store';
@@ -16,6 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 import { QuestionService } from 'src/app/services/question/question.service';
 import * as QuestionActions from 'src/app/ngrx/actions/question.actions';
 import { QuestionState } from 'src/app/ngrx/states/question.state';
+import { Question } from 'src/app/models/question.model';
 // import { QuizBank } from 'src/app/models/quizBank.model';
 
 @Component({

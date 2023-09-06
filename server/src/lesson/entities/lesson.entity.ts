@@ -5,7 +5,7 @@ export type CourseDocument = HydratedDocument<Lesson>;
 @Schema({ timestamps: true })
 export class Lesson {
   @Prop()
-  ordinalnumber: number;
+  ordinalNum: number;
 
   @Prop()
   title: string;
@@ -21,7 +21,6 @@ export class Lesson {
 
   @Prop()
   description: string;
-
 }
 
 export const LessonSchema = SchemaFactory.createForClass(Lesson);

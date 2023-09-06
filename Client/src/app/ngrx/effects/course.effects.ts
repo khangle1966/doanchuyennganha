@@ -14,6 +14,9 @@ export class CourseEffect {
         this.courseService.getCourse(action.idToken).pipe(
           map((items) => {
             if (items != undefined || items != null) {
+              if (items.message) {
+                return CourseAction.getFailure({ error: items.message });
+              }
               return CourseAction.getSuccess({ courseList: items });
             } else {
               return CourseAction.getFailure({

@@ -47,8 +47,12 @@ export class LessonEffects {
       exhaustMap((action) =>
         this.lessonService.create(action.idToken, action.lesson).pipe(
           map((lesson) => {
+            // console.log(lesson);
+
             if (lesson != undefined && lesson != null) {
-              console.log(lesson);
+              if (lesson.message) {
+                return LessonActions.createFailure({ error: lesson.message });
+              }
               return LessonActions.createSuccess({ newLesson: lesson });
             } else {
               return LessonActions.createFailure({ error: 'create failure' });
@@ -68,6 +72,11 @@ export class LessonEffects {
           map((lesson) => {
             if (lesson != undefined && lesson != null) {
               console.log(lesson);
+              if (lesson.message) {
+                return LessonActions.updateFailure({
+                  error: lesson.error.message,
+                });
+              }
               return LessonActions.updateSuccess({ updatedLesson: lesson });
             } else {
               return LessonActions.updateFailure({ error: 'update failure' });

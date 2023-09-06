@@ -9,11 +9,14 @@ import { environment } from 'src/environments/environment';
 export class CourseService {
   constructor(private httpClient: HttpClient) {}
   getCourse(idToken: string) {
-    return this.httpClient.get<Course[]>(environment.local_url + 'course', {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${idToken}`,
-      }),
-    });
+    return this.httpClient.get<Course[] | any>(
+      environment.local_url + 'course',
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${idToken}`,
+        }),
+      }
+    );
   }
   getCourseById(idToken: string, id: string) {
     return this.httpClient.get<Course>(environment.local_url + `course/${id}`, {

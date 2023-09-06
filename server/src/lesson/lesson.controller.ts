@@ -13,7 +13,6 @@ import {
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { Lesson } from './entities/lesson.entity';
-import { CourseService } from 'src/course/course.service';
 import { LessonService } from './lesson.service';
 
 @Controller('v1/lesson')

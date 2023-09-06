@@ -8,7 +8,14 @@ import {
 import { Router } from '@angular/router';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { Course } from 'src/app/models/course.model';
-import { Subscription } from 'rxjs';
+import {
+  Subject,
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  pipe,
+  switchMap,
+} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
 import { CourseState } from 'src/app/ngrx/states/course.state';
@@ -59,6 +66,16 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.subscriptions.push(
+      this.newList$
+        .pipe(debounceTime(500), distinctUntilChanged())
+        .subscribe((newList) => {
+          console.log('update ordinal num: ', newList);
+          // newList.forEach((val, i) => {
+          //   this.store.dispatch(
+          //     LessonActions.update({ idToken: this.idToken, lesson: val })
+          //   );
+          // });
+        }),
       this.store.select('auth', 'idToken').subscribe((idToken) => {
         if (idToken != '' && idToken != null && idToken != undefined) {
           this.idToken = idToken;
@@ -82,6 +99,9 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.course = course;
         }
       }),
+      this.store.select('course', 'isLoading').subscribe((val) => {
+        this.isGettingCourse = val;
+      }),
       this.store.select('course', 'isSuccess').subscribe((val) => {
         if (val) {
           this.alerts
@@ -96,18 +116,72 @@ export class LessonComponent implements OnInit, OnDestroy {
       }),
       this.store.select('lesson', 'lessons').subscribe((lessons) => {
         if (lessons != null && lessons != undefined) {
-          this.lessonList = lessons;
+          this.lessonList = [...lessons];
+          //sort lesson list by ordinal num
           console.log(this.lessonList);
+          this.lessonList.sort((a, b) => {
+            return a.ordinalNum - b.ordinalNum;
+          });
         }
       }),
-      this.store.select('lesson', 'isGetSuccess').subscribe((val) => {
-        if (val) {
-          this.alerts
-            .open('Get lesson success !!!', { status: 'success' })
-            .subscribe();
-        }
+      this.store.select('lesson', 'isGetting').subscribe((val) => {
+        this.isGettingLessons = val;
       }),
       this.store.select('lesson', 'getMessError').subscribe((err) => {
+        if (err != null && err != undefined && err != '') {
+          this.alerts.open(err, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('lesson', 'isCreateSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Create lesson success !!!', { status: 'success' })
+            .subscribe();
+          this.store.dispatch(
+            LessonActions.getAllByCourseId({
+              idToken: this.idToken,
+              courseId: this.router.url.split('/')[4],
+            })
+          );
+        }
+      }),
+      this.store.select('lesson', 'createMessError').subscribe((err) => {
+        if (err != null && err != undefined && err != '') {
+          this.alerts.open(err, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('lesson', 'isUpdateSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Update lesson success !!!', { status: 'success' })
+            .subscribe();
+          this.store.dispatch(
+            LessonActions.getAllByCourseId({
+              idToken: this.idToken,
+              courseId: this.router.url.split('/')[4],
+            })
+          );
+        }
+      }),
+      this.store.select('lesson', 'updateMessError').subscribe((err) => {
+        if (err != null && err != undefined && err != '') {
+          this.alerts.open(err, { status: 'error' }).subscribe();
+        }
+      }),
+      this.store.select('lesson', 'isDeleteSuccess').subscribe((val) => {
+        if (val) {
+          this.alerts
+            .open('Delete lesson success !!!', { status: 'success' })
+            .subscribe();
+          this.store.dispatch(
+            LessonActions.getAllByCourseId({
+              idToken: this.idToken,
+              courseId: this.router.url.split('/')[4],
+            })
+          );
+        }
+      }),
+      this.store.select('lesson', 'deleteMessError').subscribe((err) => {
         if (err != null && err != undefined && err != '') {
           this.alerts.open(err, { status: 'error' }).subscribe();
         }
@@ -136,18 +210,20 @@ export class LessonComponent implements OnInit, OnDestroy {
   //add func
   lessonList: Lesson[] = [];
   addLesson() {
-    this.lessonList = [
-      ...this.lessonList,
-      {
-        _id: Date.now().toString(),
-        title: 'Lesson ' + Date.now().toString(),
-        content: this.generateDummyContent('Lesson ' + Date.now().toString()),
-        courseId: '1',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        ordinalNum: this.lessonList.length + 1,
-      },
-    ];
+    let newLesson = {
+      title: 'Lesson ' + Date.now().toString(),
+      content: this.generateDummyContent('Lesson ' + Date.now().toString()),
+      courseId: this.router.url.split('/')[4],
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      ordinalNum: this.lessonList.length,
+    };
+    this.store.dispatch(
+      LessonActions.create({
+        idToken: this.idToken,
+        lesson: newLesson as Lesson,
+      })
+    );
   }
 
   //update func
@@ -159,17 +235,9 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   updateLessonInfo($event: Lesson) {
-    this.lessonList = this.lessonList.map((lesson) => {
-      if (lesson._id === $event._id) {
-        return $event;
-      } else {
-        return lesson;
-      }
-    });
-    this.alerts
-      .open('Lesson info updated success !!!', { status: 'success' })
-      .subscribe();
-    console.log('lesonList: ', this.lessonList);
+    this.store.dispatch(
+      LessonActions.update({ idToken: this.idToken, lesson: $event })
+    );
   }
 
   saveLessonContent() {
@@ -180,23 +248,17 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   updateLessonContent(content: string) {
-    console.log(JSON.parse(content));
-    if (this.selectedLesson != null) {
-      this.lessonList = this.lessonList.map((lesson) => {
-        if (lesson._id === this.selectedLesson?._id) {
-          return {
-            ...lesson,
-            content: content,
-          };
-        } else {
-          return lesson;
-        }
-      });
-      this.alerts
-        .open('Lesson content updated success !!!', { status: 'success' })
-        .subscribe();
-      console.log('lesonList: ', this.lessonList);
-    }
+    let newLesson: any = {
+      ...this.selectedLesson,
+      content: content,
+    };
+    if (this.selectLesson == null) return;
+    this.store.dispatch(
+      LessonActions.update({
+        idToken: this.idToken,
+        lesson: newLesson as Lesson,
+      })
+    );
   }
 
   //delete func
@@ -206,30 +268,34 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   deleteLesson(index: number) {
     this.lessonList = this.lessonList.filter((val, i) => {
-      if (index != i) {
-        return val;
-      } else {
-        if (this.selectedLesson != null) {
-          if (val._id == this.selectedLesson._id) {
-            this.selectedLesson = null;
-          }
+      if (this.selectedLesson != null) {
+        if (val._id == this.selectedLesson._id) {
+          this.selectedLesson = null;
         }
-        return;
       }
+      return val;
     });
-    this.alerts
-      .open('Delete question success !!!', { status: 'success' })
-      .subscribe();
-    console.log(this.lessonList);
+    this.store.dispatch(
+      LessonActions.deleteLesson({
+        idToken: this.idToken,
+        lessonId: this.lessonList[index]._id,
+      })
+    );
   }
 
   //update lesson ordinal num
+  newList$ = new Subject<Lesson[]>();
   order = new Map();
   updateOrdinalList() {
+    let newList = [...this.lessonList];
     console.log('order change: ', this.order);
     this.order.forEach((val, i) => {
-      this.lessonList[i].ordinalNum = val;
+      newList[i] = {
+        ...newList[i],
+        ordinalNum: val,
+      };
     });
-    console.log(this.lessonList);
+    console.log(newList);
+    this.newList$.next(newList);
   }
 }

@@ -13,7 +13,6 @@
     #left-side {
       height: 100%;
       width: 100%;
-
       padding: 0.625rem;
       .shadow(4);
       .breadcrumbs {
@@ -23,10 +22,13 @@
         overflow: auto;
         width: 100%;
         height: calc(100% - 44px - 0.625rem - 40px);
-        .tiles {
-          gap: 1rem;
-          grid-template-rows: repeat(auto-fill, minmax(auto-fit, 1fr));
-        }
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        // .tiles {
+        //   gap: 1rem;
+        //   grid-auto-rows: minmax(220px, auto);
+        // }
         tui-island {
           .transition(box-shadow);
           margin: 0.625rem;
@@ -69,7 +71,7 @@
     width: 70%;
     min-width: 750px;
     display: flex;
-    margin: 1rem 0;
+
     #right-side {
       height: 100%;
       width: 100%;

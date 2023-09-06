@@ -20,8 +20,10 @@ export class UserEffects {
       map(() => {
         return UserAction.createUserSuccess();
       }),
-      catchError((error) => {
-        return of(UserAction.createUserFailure({ errorMessage: error }));
+      catchError((e) => {
+        return of(
+          UserAction.createUserFailure({ errorMessage: e.error.message })
+        );
       })
     )
   );

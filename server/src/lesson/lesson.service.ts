@@ -63,10 +63,7 @@ export class LessonService {
   async getLessonsByCourseId(courseId: string): Promise<Lesson[]> {
     try {
       //populate nestjs object mongoose
-      return await this.lessonModel
-        .find({ courseId: courseId })
-        .populate('courseId')
-        .exec();
+      return await this.lessonModel.find({ courseId: courseId }).exec();
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
