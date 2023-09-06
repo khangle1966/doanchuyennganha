@@ -36,6 +36,8 @@ import { quizReducer } from './ngrx/reducers/quiz.reducer';
 import { QuizEffects } from './ngrx/effects/quiz.effects';
 import { questionReducer } from './ngrx/reducers/question.reducer';
 import { QuestionEffects } from './ngrx/effects/question.effects';
+import { quizBankReducer } from './ngrx/reducers/quizBank.reducer';
+import { QuizBankEffects } from './ngrx/effects/quizBank.effects';
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   imports: [
@@ -52,6 +54,7 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
         lesson: LessonReducer,
         quiz: quizReducer,
         question: questionReducer,
+        quizBank: quizBankReducer,
       },
       {}
     ),
@@ -63,6 +66,7 @@ import { QuestionEffects } from './ngrx/effects/question.effects';
       LessonEffect,
       QuizEffects,
       QuestionEffects,
+      QuizBankEffects,
     ]),
     BrowserAnimationsModule,
     HttpClientModule,
