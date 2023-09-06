@@ -33,8 +33,20 @@ export class CourseEffect {
       exhaustMap((action) =>
         this.courseService.getCourseById(action.idToken, action.id).pipe(
           map((items) => {
-            console.log(items);
-            return CourseAction.getCourseDetailSuccess({ courseDetail: items });
+            if (items != undefined && items != null) {
+              if ((items as any).message) {
+                return CourseAction.getCourseDetailFailure({
+                  error: (items as any).message,
+                });
+              }
+              return CourseAction.getCourseDetailSuccess({
+                courseDetail: items,
+              });
+            } else {
+              return CourseAction.getCourseDetailFailure({
+                error: 'Course is undefined or null',
+              });
+            }
           }),
           catchError((error) => {
             return of(CourseAction.getCourseDetailFailure({ error }));
@@ -95,6 +107,32 @@ export class CourseEffect {
           }),
           catchError((error) => of(CourseAction.updateFailure({ error })))
         )
+      )
+    )
+  );
+
+  getCourseByUser$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(CourseAction.getByUser),
+      exhaustMap((action) =>
+        this.courseService
+          .getCourseByUserId(action.idToken, action.userId)
+          .pipe(
+            map((items) => {
+              if (items != undefined || items != null) {
+                return CourseAction.getByUserSuccess({
+                  courseList: items,
+                });
+              } else {
+                return CourseAction.getByUserFailure({
+                  getErrMess: 'Course is undefined or null',
+                });
+              }
+            }),
+            catchError((error) =>
+              of(CourseAction.getByUserFailure({ getErrMess: error }))
+            )
+          )
       )
     )
   );

@@ -9,6 +9,8 @@ import * as CartAction from 'src/app/ngrx/actions/cart.actions';
 import { CartState } from 'src/app/ngrx/states/cart.state';
 import { TuiAlertService } from '@taiga-ui/core';
 import { AuthState } from 'src/app/ngrx/states/auth.state';
+import { ProfileState } from 'src/app/ngrx/states/profile.state';
+import { Profile } from 'src/app/models/profile.model';
 
 @Component({
   selector: 'app-browse',
@@ -21,6 +23,8 @@ export class BrowseComponent implements OnInit, OnDestroy {
   cartList: Course[] = [];
   idToken$: Observable<string> = this.store.select('auth', 'idToken');
   subscriptions: Subscription[] = [];
+  idToken = '';
+  profile: Profile = <Profile>{};
 
   constructor(
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
@@ -29,6 +33,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
       course: CourseState;
       cart: CartState;
       auth: AuthState;
+      profile: ProfileState;
     }>
   ) {}
   ngOnDestroy(): void {
@@ -48,7 +53,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
       this.idToken$.subscribe((value) => {
         console.log(value);
         if (value) {
-          // console.log('đúng rồi đó' + value);
           this.store.dispatch(CourseAction.get({ idToken: value }));
         }
       }),
@@ -56,6 +60,30 @@ export class BrowseComponent implements OnInit, OnDestroy {
       this.courseList$.subscribe((item) => {
         if (item != undefined && item.length > 0) {
           console.log('courseList: ', item);
+        }
+      }),
+
+      this.store.select('auth', 'idToken').subscribe((val) => {
+        if (val != '') {
+          this.idToken = val;
+        }
+      }),
+
+      this.store.select('profile', 'profile').subscribe((profile) => {
+        if (profile != null && profile != undefined) {
+          this.profile = profile;
+        }
+      }),
+
+      //how to subscribe getByUser
+      this.store.select('course', 'courseList').subscribe((item) => {
+        if (item != undefined && item.length > 0) {
+          this.store.dispatch(
+            CourseAction.getByUser({
+              idToken: this.idToken,
+              userId: this.profile.id,
+            })
+          );
         }
       })
     );

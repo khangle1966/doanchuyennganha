@@ -30,10 +30,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseReducer } from './ngrx/reducers/course.reducer';
 import { CartReducer } from './ngrx/reducers/cart.reducer';
 import { CourseEffect } from './ngrx/effects/course.effects';
-import { LessonReducer } from './ngrx/reducers/lesson.reducer';
-import { LessonEffect } from './ngrx/effects/lesson.effects';
 import { quizReducer } from './ngrx/reducers/quiz.reducer';
 import { QuizEffects } from './ngrx/effects/quiz.effects';
+import { lessonReducer } from './ngrx/reducers/lesson.reducer';
+import { LessonEffects } from './ngrx/effects/lesson.effects';
 import { questionReducer } from './ngrx/reducers/question.reducer';
 import { QuestionEffects } from './ngrx/effects/question.effects';
 import { quizBankReducer } from './ngrx/reducers/quizBank.reducer';
@@ -51,7 +51,7 @@ import { QuizBankEffects } from './ngrx/effects/quizBank.effects';
         profile: profileReducer,
         course: CourseReducer,
         cart: CartReducer,
-        lesson: LessonReducer,
+        lesson: lessonReducer,
         quiz: quizReducer,
         question: questionReducer,
         quizBank: quizBankReducer,
@@ -63,10 +63,10 @@ import { QuizBankEffects } from './ngrx/effects/quizBank.effects';
       UserEffects,
       ProfileEffects,
       CourseEffect,
-      LessonEffect,
       QuizEffects,
       QuestionEffects,
       QuizBankEffects,
+      LessonEffects,
     ]),
     BrowserAnimationsModule,
     HttpClientModule,

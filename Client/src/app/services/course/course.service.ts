@@ -68,4 +68,15 @@ export class CourseService {
       }
     );
   }
+
+  getCourseByUserId(idToken: string, userId: string) {
+    return this.httpClient.get<Course[]>(
+      `http://localhost:3000/v1/course/user/${userId}`,
+      {
+        headers: new HttpHeaders({
+          Authorization: `Bearer ${idToken}`,
+        }),
+      }
+    );
+  }
 }

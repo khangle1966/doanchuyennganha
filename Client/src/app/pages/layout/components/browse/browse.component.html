@@ -8,9 +8,6 @@
                 </h4>
                 <h4>Browse Course</h4>
             </div>
-
-
-
             <div class="nav-right">
                 <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [tuiTextfieldSize]="'m'" [(ngModel)]="search">
                     Search
@@ -112,9 +109,7 @@
                 <div class="main">
                     <tui-push class="course" *ngFor="let course of courseList$ | async; let i=index;"
                         heading={{course.name}}>
-                        <!-- <tui-push class="course" *ngFor="let course of courseList ; let i=index;" heading={{course.name}}> -->
                         <img [src]=course.img alt="" />
-                        <!-- <tui-svg src="tuiIconSettingsLarge"></tui-svg> -->
                         <div class="cate-price">
                             <p>
                                 {{course.category}}

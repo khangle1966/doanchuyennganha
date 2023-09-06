@@ -15,4 +15,9 @@ export interface CourseState {
   courseList: Course[];
   courseDetail: Course;
   error: string;
+
+  //getBuyUser
+  isGetLoading: boolean;
+  isGetSuccess: boolean;
+  getErrMess: string;
 }
