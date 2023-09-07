@@ -66,7 +66,7 @@ export class HomeComponent implements OnDestroy, OnInit {
       auth: AuthState;
       user: UserState;
     }>
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((val) => {
@@ -132,5 +132,4 @@ export class HomeComponent implements OnDestroy, OnInit {
   toQuiz() {
     this.router.navigate(['base/quiz']);
   }
-
-} 
+}
