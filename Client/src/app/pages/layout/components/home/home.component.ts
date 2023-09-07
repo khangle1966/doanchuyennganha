@@ -29,16 +29,29 @@ export class HomeComponent implements OnDestroy, OnInit {
   private timerSubscription: Subscription | undefined;
   currentTime: string = '';
 
+  getOrdinal(n) {
+    if (n === 1 || n === 21 || n === 31) {
+      return n + 'st';
+    } else if (n === 2 || n === 22) {
+      return n + 'nd';
+    } else if (n === 3 || n === 23) {
+      return n + 'rd';
+    } else {
+      return n + 'th';
+    }
+  }
+
   getDateTime() {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
+    const month = now.toLocaleString('default', { month: 'short' });
+    const day = this.getOrdinal(now.getDate());
     const hour = String(now.getHours()).padStart(2, '0');
     const minute = String(now.getMinutes()).padStart(2, '0');
     const second = String(now.getSeconds()).padStart(2, '0');
-
-    return `${day}/${month}/${year}<br><br>${hour}:${minute}:${second}`;
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dayOfWeek = daysOfWeek[now.getDay()];
+    return `${dayOfWeek},${day} ${month} ${year} --- ${hour}:${minute}:${second}`;
   }
 
   updateCurrentTime() {
@@ -153,6 +166,12 @@ export class HomeComponent implements OnDestroy, OnInit {
   }
 
   toCourse(course: Course) {
-    this.router.navigate(['base/course', course._id]);
+    this.router.navigate(['base/home/course', course._id]);
+  }
+  toReview() {
+    this.router.navigate(['base/review']);
+  }
+  toQuiz() {
+    this.router.navigate(['base/quiz']);
   }
 }
