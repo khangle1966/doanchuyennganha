@@ -4,7 +4,7 @@
       <div id="header">
         <div class="title">
           <h1>WELCOME {{homeForm.value.userName}} TO GNOSIS</h1>
-          <p>Sat, 24th Aug 2023</p>
+          <div class="date" [innerHTML]="currentTime" id="time"></div>
         </div>
         <div class="search">
           <tui-input tuiTextfieldIconLeft="tuiIconSearchLarge" [(ngModel)]="search" [tuiTextfieldSize]="'m'">
