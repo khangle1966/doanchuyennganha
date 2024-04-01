@@ -1,18 +1,19 @@
 /* eslint-disable prettier/prettier */
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Course } from './entities/course.entity';
 import { Model } from 'mongoose';
 import { Profile } from 'src/profile/entities/profile.entity';
+import { HttpStatus } from '@nestjs/common';
 
 @Injectable()
 export class CourseService {
   constructor(
     @InjectModel(Course.name) private courseModel: Model<Course>,
     @InjectModel(Profile.name) private profileModel: Model<Profile>,
-  ) {}
+  ) { }
 
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
     try {
@@ -54,13 +55,16 @@ export class CourseService {
 
   async remove(id: string): Promise<Course> {
     try {
-      const deleteCourse = await this.courseModel.findOneAndDelete({ _id: id });
-      return deleteCourse;
+      const course = await this.courseModel.findById(id); // Tìm đối tượng trước
+      if (!course) {
+        throw new NotFoundException(`Course with ID ${id} not found`);
+      }
+      await this.courseModel.deleteOne({ _id: id }); // Sau đó xóa đối tượng
+      return course; // Trả về đối tượng đã tìm được
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
   async buyCourse(courseId: string, userId: string): Promise<Profile> {
     const filter = { id: userId };
     const update = { $addToSet: { courses: courseId } };

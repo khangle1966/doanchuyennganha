@@ -5,13 +5,14 @@ import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { HttpStatus } from '@nestjs/common';
 // import { select } from '@ngrx/store';
 
 @Injectable()
 export class QuestionService {
   constructor(
     @InjectModel(Question.name) private questionModel: Model<Question>,
-  ) {}
+  ) { }
 
   async create(createCourseDto: CreateQuestionDto): Promise<Question> {
     try {
@@ -64,14 +65,23 @@ export class QuestionService {
     }
   }
 
+
   async remove(id: string): Promise<Question> {
     try {
-      const deleteQuestion = await this.questionModel.findOneAndDelete({
-        _id: id,
-      });
-      return deleteQuestion;
+      // Tìm câu hỏi trước khi xóa để có thể trả về dữ liệu của nó
+      const question = await this.questionModel.findById(id);
+      if (!question) {
+        throw new NotFoundException(`Question with ID ${id} not found`);
+      }
+
+      // Tiến hành xóa câu hỏi
+      await this.questionModel.findOneAndDelete({ _id: id });
+
+      // Vì đã kiểm tra question tồn tại, có thể an toàn trả về như dưới đây
+      return question;
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      // Sử dụng HttpStatus.INTERNAL_SERVER_ERROR cho trường hợp catch tổng quát
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

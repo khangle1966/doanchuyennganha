@@ -17,7 +17,7 @@ export class PermissionsService {
   constructor(
     private store: Store<{ profile: ProfileState }>,
     private router: Router
-  ) {}
+  ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,

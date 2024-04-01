@@ -17,7 +17,7 @@ export class PermissionsService {
   constructor(
     private store: Store<{ user: UserState }>,
     private router: Router
-  ) {}
+  ) { }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -28,7 +28,7 @@ export class PermissionsService {
     | UrlTree {
     return this.store.select('user', 'user').pipe(
       map((user) => {
-        // console.log(user);
+        console.log(user);
         if (user.uid != '' && user.uid != undefined && user.uid != null) {
           return true;
         } else {
